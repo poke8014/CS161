@@ -1,0 +1,12 @@
+.menu{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    height: 100%;
+    background-color: #0D191E;
+    top: 10vh;
+    color: white;
+    align-items: center;
+    font-size: larger;
+}
