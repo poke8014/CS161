@@ -39,11 +39,19 @@
     padding-left: 3rem;
 }
 
+.brand-name:hover{
+    cursor: pointer;
+}
+
 .login-button{
     background-color: #ACBDBA;
     padding: 2px 20px;
     border-radius: 12px;
     margin-right: 4vw;
+}
+
+.login-button:hover{
+    cursor: pointer;
 }
 
 .login-text{
