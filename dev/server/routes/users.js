@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user')
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 // Getting all
 router.get('/', async (req, res) => {
@@ -17,12 +18,22 @@ router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
 });
 
+/* TODO:
+ * Move this function to a login page ?
+ */
 // Creating one
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
+    const { email, password } = req.body;
+
+    // Check if email is in use
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.status(400).json({ message: 'Email already taken' });
+    }
+    
     const user = new User({
-        email: req.body.email,
-        password: req.body.password,
-        // songLibrary: {}
+        email: email,
+        password: password
     });
     try {
         const newUser = await user.save();
