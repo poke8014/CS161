@@ -4,12 +4,18 @@
   "description": "audio visualizer web app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devStart": "nodemon server/server.js"
   },
   "author": "Luc Tang",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.3.3",
+    "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "mongoose": "^6.9.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
   }
 }
