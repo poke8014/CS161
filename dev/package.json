@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "devStart": "nodemon server/server.js",
-    "clientStart": "npm start --prefix client",
+    "clientStart": "react-scripts start --prefix client",
     "start": "concurrently \"npm run devStart\" \"npm run clientStart\""
   },
   "author": "Luc Tang and Miguel Vazquez",
