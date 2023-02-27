@@ -1,22 +1,21 @@
 import React from "react"
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
-import "./UploadPage.css"
 import uploadIcon from "../../images/upload.png"
+import "./UploadPage.css"
 
 export default function UploadPage() {
     
     const [showMenu, setShowMenu] = React.useState(false)
     
     function toggleShowMenu(){
-        console.log(showMenu)
         setShowMenu(prevState => !prevState)
     }
 
     return (
         <div className="upload-page">
             <NavBar 
-                showMenu={toggleShowMenu} 
+                openMenu={toggleShowMenu}
             />
             <div className="content">
                 {showMenu && <Menu/>}
