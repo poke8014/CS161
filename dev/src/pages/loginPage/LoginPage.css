@@ -1,0 +1,22 @@
+.login-page{
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-signup-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #161D20;
+    width: 100%;
+    height: 100%;
+}
+
+.login-signup-box{
+    background-color: #727F84;
+    width: 60%;
+    height: 90%;
+    border-radius: 20px;
+}
