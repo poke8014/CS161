@@ -20,4 +20,4 @@ the user can also drag and drop the audio file to upload it.
 
 When the user clicks the login button, it will display the following page with a login or registration form.
 
-![login page design](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/login_page.jpg)
+![login page design](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/login_signup_page.jpg)
