@@ -1,5 +1,5 @@
 {
-  "name": "client and server",
+  "name": "client_and_server",
   "version": "0.1.0",
   "description": "audiovision",
   "main": "server.js",
