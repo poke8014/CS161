@@ -65,3 +65,14 @@
     background-color: #727F84;
     color: #051014;
 }
+
+.forgot-password{
+    width: 75%;
+    color: #003A92;
+}
+
+.login-signup-box .login-button-submit{
+    background-color: #003A92;
+    color: white;
+    padding: 20px 0px;
+}
