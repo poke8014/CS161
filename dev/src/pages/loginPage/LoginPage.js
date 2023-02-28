@@ -9,19 +9,18 @@ export default function LoginPage(){
                 showLoginButton={false}
             />
             <div className="login-signup-container">
-                <div className="login-signup-box">
-                    <h1>Login</h1>
+                <form className="login-signup-box" method="get">
+                    <p className="form-type">Login</p>
                     <div className="login-signup-buttons">
-                        <button className="login-button">Login</button>
-                        <button className="signup-button">Sign Up</button>
+                        <button className="login-button-form">Login</button>
+                        <button className="signup-button-form">Sign Up</button>
                     </div>
-                    <form>
-                        <input type={"text"} placeholder="Email Address" />
-                        <input type={"text"} placeholder="Password" />
-                        <p>Forgot Password?</p>
-                        <input type={"submit"}  value="Login"/>
-                    </form>
-                </div>
+                    <input type={"text"} placeholder="Email Address" />
+                    <input type={"text"} placeholder="Password" />
+                    <p>Forgot Password?</p>
+                    <input type={"submit"}  value="Login"/>
+                    <p>Don't have an account? Sign Up now</p>
+                </form>
             </div>
         </div>
     )
