@@ -16,10 +16,52 @@
 
 .login-signup-box{
     background-color: #727F84;
-    width: 60%;
+    width: 50%;
     height: 90%;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+}
+
+.login-signup-buttons{
+    width: 75%;
+    height: fit-content;
+    display: flex;
+}
+
+.login-button-form, .signup-button-form{
+    margin: 0;
+    font-size: 4ch;
+    padding: 10px 0px;
+    flex: 1;
+    border-radius: 10px;
+    border: 1px solid rgb(103, 103, 103);
+}
+
+.login-button-form{
+    background-color: #2678F3;
+    color: white;
+}
+
+.signup-button-form{
+    background-color: #727F84;
+}
+
+.form-type{
+    font-size: 5vh;
+    font-weight: bold;
+    margin: 0;
+}
+
+.login-signup-box input{
+    width: 75%;
+    border-radius: 10px;
+    border: 1px solid #585858;
+    margin: 0;
+    font-size: 3ch;
+    padding: 10px 0px;
+    background-color: #727F84;
+    color: #051014;
 }
