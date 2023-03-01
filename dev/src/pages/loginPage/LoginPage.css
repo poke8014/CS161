@@ -50,6 +50,7 @@
 }
 
 .form-type{
+    padding: 20px 0px;
     font-size: 5vh;
     font-weight: bold;
     margin: 0;
@@ -58,7 +59,7 @@
 .login-signup-box input{
     width: 75%;
     border-radius: 10px;
-    border: 1px solid #585858;
+    border: 1px solid rgb(103, 103, 103);
     margin: 0;
     font-size: 3ch;
     padding: 10px 0px;
@@ -69,10 +70,38 @@
 .forgot-password{
     width: 75%;
     color: #003A92;
+    font-size: 2ch;
 }
 
 .login-signup-box .login-button-submit{
     background-color: #003A92;
     color: white;
     padding: 20px 0px;
+    font-size: 3ch;
+}
+
+.signup-now-button{
+    background-color: #727F84;
+    border: none;
+    margin: 0;
+    margin-left: 5px;
+    padding: 0;
+    color: #003A92;
+    transition: font-size 0.2s;
+}
+
+.signup-now-button:hover{
+    cursor: pointer;
+    text-decoration-line: underline;
+    font-size: 2ch;
+    font-weight: bold;
+}
+
+.no-account{
+    font-size: 2ch;
+}
+
+.login-button-form:hover, .signup-button-form:hover{
+    box-shadow: 0px 0px 2px #003A92;
+    cursor: pointer;
 }
