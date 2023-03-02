@@ -17,7 +17,7 @@
     display: flex;
     margin: auto;
     width: 60%;
-    height: 70%;
+    height: 75%;
     border-radius: 30px;
     background-color: #727F84;
 }
@@ -36,7 +36,7 @@
     background-color: #051014;
     color: white;
     font-size: 2rem;
-    padding: 5px 20px;
+    padding: 10px 20px;
 }
 
 .upload-audio-button p{
@@ -45,12 +45,12 @@
 
 .upload-icon{
     margin-left: 10px;
-    width: 35px;
+    width: 2.2rem;
     height: auto;
 }
 
 .drag-drop-area{
-    margin-top: 20px;
+    margin-top: 1em;
 }
 
 .drag-drop-area p{

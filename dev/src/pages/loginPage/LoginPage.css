@@ -34,10 +34,11 @@
 .login-button-form, .signup-button-form{
     margin: 0;
     font-size: 4ch;
-    padding: 10px 0px;
+    padding: 2vh 0;
     flex: 1;
     border-radius: 10px;
     border: 1px solid rgb(103, 103, 103);
+    background-color: #727F84;
 }
 
 .form-type-selected{
@@ -45,13 +46,9 @@
     color: white;
 }
 
-.signup-button-form, .login-button-form{
-    background-color: #727F84;
-}
-
 .form-type{
-    padding: 20px 0px;
-    font-size: 5vh;
+    padding: 2vw 0;
+    font-size: 5ch;
     font-weight: bold;
     margin: 0;
 }
@@ -61,23 +58,30 @@
     border-radius: 10px;
     border: 1px solid rgb(103, 103, 103);
     margin: 0;
-    font-size: 3ch;
-    padding: 10px 0px;
+    font-size: 4ch;
+    padding: 2vh 0;
     background-color: #727F84;
     color: #051014;
+}
+
+.login-signup-box input::placeholder{
+    color: black;
+    opacity: 50%;
 }
 
 .forgot-password{
     width: 75%;
     color: #003A92;
-    font-size: 2ch;
+    font-size: 2.5ch;
+    margin: 0;
+    font-weight: 600;
 }
 
-.login-signup-box .login-button-submit{
+.login-signup-box .form-submit{
     background-color: #003A92;
     color: white;
-    padding: 20px 0px;
-    font-size: 3ch;
+    font-size: 4ch;
+    margin: 0;
 }
 
 .signup-now-button{
@@ -88,20 +92,22 @@
     padding: 0;
     color: #003A92;
     transition: font-size 0.3s ease-out;
+    font-size: 2ch;
 }
 
 .signup-now-button:hover{
     cursor: pointer;
     text-decoration-line: underline;
-    font-size: 2ch;
+    font-size: 2.5ch;
     font-weight: bold;
 }
 
 .no-account{
-    font-size: 2ch;
+    margin: 0;
+    font-size: 3ch;
 }
 
-.login-button-form:hover, .signup-button-form:hover, .login-button-submit:hover{
+.login-button-form:hover, .signup-button-form:hover, .form-submit:hover{
     box-shadow: 0px 0px 2px #003A92;
     cursor: pointer;
 }
