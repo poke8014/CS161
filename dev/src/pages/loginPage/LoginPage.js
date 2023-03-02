@@ -36,7 +36,8 @@ export default function LoginPage(){
         "padding": "10px 0px",
         "flex": "1",
         "borderRadius": "10px",
-        "border": "1px solid rgb(103, 103, 103)"
+        "border": "1px solid rgb(103, 103, 103)",
+        "backgroundColor": "#727F84"
     }
 
     return (
@@ -44,6 +45,7 @@ export default function LoginPage(){
             <NavBar 
                 showMenuButton={false}
                 showLoginButton={false}
+                showBackArrow={true}
             />
             <div className="login-signup-container">
                 <form className="login-signup-box" method="get">
@@ -59,7 +61,7 @@ export default function LoginPage(){
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
                         : <input type={"password"} placeholder="Confirm Password" />
                     }
-                    <input className="login-button-submit" type={"submit"} 
+                    <input className="form-submit" type={"submit"} 
                         value={formLogin ? "Login": "Create Account"}/>
                     {formLogin &&
                         <p className="no-account">Don't have an account? 
