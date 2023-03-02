@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = 8000
 
-const {db_url} = require("../config/config.json");
+const { db_url } = require("../config/config.json");
 
 async function connect() {
   try {
