@@ -2,14 +2,20 @@ import React from "react"
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
 import uploadIcon from "../../images/upload.png"
+import { useNavigate } from "react-router-dom";
 import "./UploadPage.css"
 
 export default function UploadPage() {
     
     const [showMenu, setShowMenu] = React.useState(false)
+    const navigate = useNavigate();
     
     function toggleShowMenu(){
         setShowMenu(prevState => !prevState)
+    }
+
+    function handleAudioUpload(){
+        navigate("/visualization")
     }
 
     return (
@@ -21,7 +27,7 @@ export default function UploadPage() {
                 {showMenu && <Menu/>}
                 <div className="upload-box">
                     <div className="upload-options">
-                        <button className="upload-audio-button">
+                        <button className="upload-audio-button" onClick={handleAudioUpload}>
                             <p>Upload Audio File</p>
                             <img className="upload-icon" src={uploadIcon} alt="upload icon"/>
                         </button>
