@@ -13,10 +13,14 @@ export default function LoginPage(){
         let buttonPressed = String(e.target.className)
         switch(buttonPressed){
             case "signup-button-form":
-                setFormType(prev => !prev)
+                if(formLogin){
+                    setFormType(prev => !prev)
+                }
                 break;
             case "login-button-form":
-                setFormType(prev => !prev)
+                if (!formLogin){
+                    setFormType(prev => !prev)
+                }
                 break;
             case "signup-now-button":
                 setFormType(false)
