@@ -66,4 +66,4 @@ async function getUser(req, res, next) {
     next();
 };
 
-module.exports = { getUser, createUser, deleteUser, updateUser }
+module.exports = { getUser, createUser, deleteUser, updateUser };

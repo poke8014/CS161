@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const { getUser, createUser, deleteUser, updateUser } = require('../controllers/mongoDBController')
 
-// Getting all
+// Getting all users
 router.get('/', async (req, res) => {
     try {
         const users = await User.find();
@@ -13,18 +13,18 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Getting one
+// Getting user by ID
 router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
 });
 
-// Creating one
+// Creating one user
 router.post('/signup', createUser);
 
-// Updating one
+// Updating user by ID
 router.patch('/:id', getUser, updateUser);
 
-// Deleting one
+// Deleting user by ID
 router.delete('/:id', getUser, deleteUser);
 
-module.exports = router
+module.exports = router;
