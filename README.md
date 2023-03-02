@@ -1,11 +1,11 @@
-#Team name
+##Team name
 Codescapes
-#Team members
+##Team members
 Luc Tang, Miguel Vazquez
 
 Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. Users can input their own audio files or choose from a database of audio files.
 
-# Tech Stack
+## Tech Stack
 - MongoDB
 - Express
 - React
