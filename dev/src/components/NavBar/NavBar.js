@@ -1,8 +1,9 @@
 import "./NavBar.css";
 import UserIcon from "../../images/userIcon.png"
+import backArrow from "../../images/backArrow.png"
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar({openMenu, showMenuButton=true, showLoginButton=true}){
+export default function NavBar({openMenu, showMenuButton=true, showLoginButton=true, showBackArrow=false}){
 
     const navigate = useNavigate();
 
@@ -23,6 +24,8 @@ export default function NavBar({openMenu, showMenuButton=true, showLoginButton=t
                     <div></div>
                     <div></div>
                 </div>}
+                {showBackArrow && 
+                <img className="back-arrow" src={backArrow} onClick={handleBrandClick}/>}
                 <p className="brand-name" onClick={handleBrandClick}>audiovision</p>
             </div>
             {showLoginButton && 
