@@ -1,6 +1,6 @@
 import "./VisualizationPage.css"
 import NavBar from "../../components/NavBar/NavBar"
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function VisualizationPage(){
     return (
