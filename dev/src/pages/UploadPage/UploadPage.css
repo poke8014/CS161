@@ -39,6 +39,10 @@
     padding: 10px 20px;
 }
 
+.upload-audio-button:hover{
+    cursor: pointer;
+}
+
 .upload-audio-button p{
     margin: 0;
 }
