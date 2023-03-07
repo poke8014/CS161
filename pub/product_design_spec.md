@@ -1,11 +1,11 @@
-*Team:* Codescapes
-*Members:* Luc Tang and Miguel Vazquez
-*Project:* Audiovision
+**Team:** Codescapes<br/>
+**Members:** Luc Tang and Miguel Vazquez<br/>
+**Project:** Audiovision<br/>
 
-##Market Space:
+## Market Space:
 This project is a web app designed for users looking to get into audiovisual design or users looking for visuals for music. Since the project is focused on user customization, the general use of the app will be to explore different visual patterns for an audio file that a user chooses.
 
-##Features:
+## Features:
 - Login / Signup
 - Upload audio
 - Select audio
@@ -14,7 +14,7 @@ This project is a web app designed for users looking to get into audiovisual des
 - Customize visualization
 - Download visualization with audio
 
-##Functional specifications:
+## Functional specifications:
 1. User Registration
     Entry conditions:
     - User opens registration page
@@ -75,11 +75,11 @@ This project is a web app designed for users looking to get into audiovisual des
     - File appears in user’s downloaded directory
 
 
-##Database ER Diagram:
+## Database ER Diagram:
 
 
 
-##Testing plans:
+## Testing plans:
 1. User registration
     - Enter information into registration page
     - Check to see if user information is in database
@@ -99,7 +99,7 @@ This project is a web app designed for users looking to get into audiovisual des
     - Verify video file download onto local system
     - Check if visual and audio are synchronized
 
-##Milestones:
+## Milestones:
 M1: Set up front-end
 - Login page
 - Upload page
