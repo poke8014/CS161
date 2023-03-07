@@ -33,7 +33,7 @@
 
 .login-button-form, .signup-button-form{
     margin: 0;
-    font-size: 4ch;
+    font-size: 3ch;
     padding: 2vh 0;
     flex: 1;
     border-radius: 10px;
@@ -58,8 +58,8 @@
     border-radius: 10px;
     border: 1px solid rgb(103, 103, 103);
     margin: 0;
-    font-size: 4ch;
-    padding: 2vh 0;
+    font-size: 3ch;
+    padding: 1.5vh 0;
     background-color: #727F84;
     color: #051014;
 }
