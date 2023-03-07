@@ -17,7 +17,7 @@
     display: flex;
     margin: auto;
     width: 60%;
-    height: 70%;
+    height: 75%;
     border-radius: 30px;
     background-color: #727F84;
 }
@@ -36,21 +36,30 @@
     background-color: #051014;
     color: white;
     font-size: 2rem;
-    padding: 5px 20px;
+    padding: 10px 20px;
+    transition: padding 0.5s ease-out;
+}
+
+.upload-audio-button:hover{
+    cursor: pointer;
 }
 
 .upload-audio-button p{
     margin: 0;
 }
 
+.upload-audio-button:hover{
+    padding: 20px 30px;
+}
+
 .upload-icon{
     margin-left: 10px;
-    width: 35px;
+    width: 2.2rem;
     height: auto;
 }
 
 .drag-drop-area{
-    margin-top: 20px;
+    margin-top: 1em;
 }
 
 .drag-drop-area p{

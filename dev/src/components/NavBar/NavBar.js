@@ -1,24 +1,41 @@
 import "./NavBar.css";
 import UserIcon from "../../images/userIcon.png"
+import backArrow from "../../images/backArrow.png"
+import { useNavigate } from "react-router-dom";
 
-export default function NavBar({showMenu}){
+export default function NavBar({openMenu, showMenuButton=true, showLoginButton=true, showBackArrow=false}){
+
+    const navigate = useNavigate();
+
+    function handleLoginClick(){
+        navigate("/login")
+    }
+
+    function handleBrandClick(){
+        navigate("/")
+    }
+
     return (
-        <div className="nav-bar">
+        <nav className="nav-bar">
             <div className="menu-logo">
-                <div className="menu-button" onClick={showMenu}>
+                {showMenuButton && 
+                <div className="menu-button" onClick={openMenu}>
                     <div></div>
                     <div></div>
                     <div></div>
-                </div>
-                <p className="brand-name">audiovision</p>
+                </div>}
+                {showBackArrow && 
+                <img className="back-arrow" src={backArrow} onClick={handleBrandClick}/>}
+                <p className="brand-name" onClick={handleBrandClick}>audiovision</p>
             </div>
-            <div className="login">
+            {showLoginButton && 
+            <div className="login" onClick={handleLoginClick}>
                 <button className="login-button">
                     <p className="login-text">Login</p>
                     <img src={UserIcon} className="user-icon" alt="user icon"/>
                     {/* <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a> */}
                 </button>
-            </div>
-        </div>
+            </div>}
+        </nav>
     );
 }
