@@ -37,7 +37,7 @@
     color: white;
     font-size: 2rem;
     padding: 10px 20px;
-    transition: padding 0.5s ease-out;
+    transition: all 0.25s ease-out;
 }
 
 .upload-audio-button:hover{
@@ -49,7 +49,7 @@
 }
 
 .upload-audio-button:hover{
-    padding: 20px 30px;
+    transform: scale(1.08);
 }
 
 .upload-icon{
