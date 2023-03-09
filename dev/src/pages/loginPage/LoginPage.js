@@ -1,48 +1,50 @@
 import NavBar from "../../components/NavBar/NavBar"
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css"
 
 export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
-
-    const signUpRef = React.useRef(null)
+    const [userSignUpInfo, setUserSignUpInfo] = React.useState({
+        "email": "",
+        "password": "",
+        "confirmPassword": ""
+    })
+    const navigate = useNavigate();
 
     function changeFormType(e){
-        e.preventDefault()
-        let buttonPressed = String(e.target.className)
-        switch(buttonPressed){
-            case "signup-button-form":
-                if(formLogin){
-                    setFormType(prev => !prev)
-                }
-                break;
-            case "login-button-form":
-                if (!formLogin){
-                    setFormType(prev => !prev)
-                }
-                break;
-            case "signup-now-button":
-                setFormType(false)
-                signUpRef.current.focus()
-                break;
+        e.preventDefault();
+        setFormType(prev => !prev)
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        if (checkEmail() && checkPasswords()){
+            navigate("/")
+            return true;
         }
     }
 
-    const selectedStyle = {
-        "backgroundColor": "#2678F3",
-        "color": "white"
+    function handleChange(e){
+        setUserSignUpInfo( prevData => {
+            return {
+                ...prevData,
+                [e.target.name] : [e.target.value]
+            }
+        })
     }
 
-    const defaultStyle = {
-        "margin": "0",
-        "fontSize": "4ch",
-        "padding": "10px 0px",
-        "flex": "1",
-        "borderRadius": "10px",
-        "border": "1px solid rgb(103, 103, 103)",
-        "backgroundColor": "#727F84"
+    function checkEmail(){
+        let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regExp.test(userSignUpInfo.email)
     }
+
+    function checkPasswords(){
+        return String(userSignUpInfo.password) === String(userSignUpInfo.confirmPassword);
+    }
+
+    console.log(userSignUpInfo);
 
     return (
         <div className="login-page">
@@ -54,24 +56,19 @@ export default function LoginPage(){
             <div className="login-signup-container">
                 <form className="login-signup-box" method="get">
                     <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
-                    <div className="login-signup-buttons">
-                        <button className="login-button-form" onClick={changeFormType} 
-                        style={formLogin ? selectedStyle : defaultStyle}>Login</button>
-                        <button className="signup-button-form" onClick={changeFormType}
-                        style={!formLogin ? selectedStyle : defaultStyle}>Sign Up</button>
-                    </div>
-                    <input type={"email"} placeholder="Email Address" ref={signUpRef} name="email"/>
-                    <input type={"password"} placeholder="Password" name="pass"/>
+                    <input type={"email"} placeholder="Email Address" name="email" 
+                        onChange={handleChange} value={userSignUpInfo.email}/>
+                    <input type={"password"} placeholder="Password" name="password" 
+                        onChange={handleChange} value={userSignUpInfo.password}/>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
-                        : <input type={"password"} placeholder="Confirm Password" />
+                        : <input type={"password"} placeholder="Confirm Password" name="confirmPassword" 
+                            onChange={handleChange} value={userSignUpInfo.confirmPassword}/>
                     }
                     <input className="form-submit" type={"submit"} 
-                        value={formLogin ? "Login": "Create Account"}/>
-                    {formLogin &&
-                        <p className="no-account">Don't have an account? 
-                            <button className="signup-now-button" onClick={changeFormType}>Sign Up now</button>
-                        </p>
-                    }
+                        value={formLogin ? "Login": "Create Account"} onClick={handleSubmit}/>
+                    <p className="no-account">{formLogin ? "Don't have an account?" : "Already have an account?"}  
+                        <button className="signup-now-button" onClick={changeFormType}>{formLogin ? "Sign Up Now" : "Log in"}</button>
+                    </p>
                 </form>
             </div>
         </div>
