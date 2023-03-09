@@ -32,6 +32,14 @@
     margin: 0;
 }
 
+.login-signup-box .user-input{
+    width: 75%;
+}
+
+.login-signup-box .user-input input{
+    width: 100%;
+}
+
 .login-signup-box input{
     width: 75%;
     border-radius: 10px;
@@ -93,4 +101,12 @@
 .login-button-form:hover, .signup-button-form:hover, .form-submit:hover{
     box-shadow: 0px 0px 2px #003A92;
     cursor: pointer;
+}
+
+.login-signup-box .error{
+    display: block;
+    text-align: left;
+    color: red;
+    opacity: 70%;
+    font-size: larger;
 }
