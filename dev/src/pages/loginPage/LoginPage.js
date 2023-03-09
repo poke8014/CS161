@@ -6,6 +6,8 @@ import "./LoginPage.css"
 export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
+    const [invalidEmail, setInvalidEmail] = React.useState(false);
+    const [passwordsNoMatch, setPasswordsNoMatch] = React.useState(false);
     const [userSignUpInfo, setUserSignUpInfo] = React.useState({
         "email": "",
         "password": "",
@@ -20,17 +22,21 @@ export default function LoginPage(){
 
     function handleSubmit(e){
         e.preventDefault();
-        if (checkEmail() && checkPasswords()){
+        let emailValid = checkEmail()
+        let passMatch = checkPasswords()
+        if (emailValid && passMatch){
             navigate("/")
             return true;
         }
+        !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
+        !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
     }
 
     function handleChange(e){
         setUserSignUpInfo( prevData => {
             return {
                 ...prevData,
-                [e.target.name] : [e.target.value]
+                [e.target.name] : e.target.value
             }
         })
     }
@@ -41,6 +47,8 @@ export default function LoginPage(){
     }
 
     function checkPasswords(){
+        if (String(userSignUpInfo.password).length == 0 && String(userSignUpInfo.confirmPassword) == 0)
+            return false;
         return String(userSignUpInfo.password) === String(userSignUpInfo.confirmPassword);
     }
 
@@ -56,13 +64,21 @@ export default function LoginPage(){
             <div className="login-signup-container">
                 <form className="login-signup-box" method="get">
                     <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
-                    <input type={"email"} placeholder="Email Address" name="email" 
-                        onChange={handleChange} value={userSignUpInfo.email}/>
-                    <input type={"password"} placeholder="Password" name="password" 
-                        onChange={handleChange} value={userSignUpInfo.password}/>
+                    <div className="user-input">
+                        <input type={"email"} placeholder="Email Address" name="email" 
+                            onChange={handleChange} value={userSignUpInfo.email}/>
+                        {invalidEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
+                    </div>
+                    <div className="user-input">
+                        <input type={"password"} placeholder="Password" name="password" 
+                            onChange={handleChange} value={userSignUpInfo.password}/>
+                    </div>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
-                        : <input type={"password"} placeholder="Confirm Password" name="confirmPassword" 
-                            onChange={handleChange} value={userSignUpInfo.confirmPassword}/>
+                        :   <div className="user-input">
+                                <input type={"password"} placeholder="Confirm Password" name="confirmPassword" 
+                                    onChange={handleChange} value={userSignUpInfo.confirmPassword}/>
+                                {passwordsNoMatch && <label htmlFor="confirmPassword" className="error">The passwords entered do not match!</label>}
+                            </div> 
                     }
                     <input className="form-submit" type={"submit"} 
                         value={formLogin ? "Login": "Create Account"} onClick={handleSubmit}/>
