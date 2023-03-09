@@ -1,36 +1,35 @@
 const AWS = require('aws-sdk');
 const Audio = require('../models/audio');
-const { s3_access_key, s3_secret_access_key } = require("../../config/config.json");
+const { s3_access_key, s3_secret_access_key, s3_bucket_region, s3_bucket_name } = require("../../config/config.json");
 
 // Amazon S3 instance
 const s3 = new AWS.S3({
     accessKeyId: String(s3_access_key),
-    secretAccessKey: String(s3_secret_access_key)
+    secretAccessKey: String(s3_secret_access_key),
+    region: String(s3_bucket_region)
 });
 
 async function uploadAudio(req, res) {
+    const params = {
+        Key: req.originalname,
+        Bucket: s3_bucket_name,
+        Body: req.buffer,
+        ContentType: 'audio/mpeg'
+        // ACL: 'public-read' 
+    };
+
     try {
-        const params = {
-            Key: filename,
-            Bucket: bucketname,
-            Body: file,
-            ContentType: 'audio/mpeg',
-            ACL: 'public-read' 
-        };
-
-        const link = await s3.upload(params).promise();
-        const audio = new Audio({
-            title: filename,
-            link: Location
-        });
-        const saveAudio = await audio.save();
-
-        res.status(201).json(saveAudio);
+        const result = await s3.upload(params).promise();
+        // const audio = new Audio({
+        //     title: filename,
+        //     link: result.Location
+        // });
+        // const saveAudio = await audio.save();
+        res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-// not sure what file this goes in
 
 // TODO: Add audio information to mongoDB
 
