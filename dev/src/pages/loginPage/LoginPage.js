@@ -25,11 +25,25 @@ export default function LoginPage(){
         let emailValid = checkEmail()
         let passMatch = checkPasswords()
         if (emailValid && passMatch){
+            postNewAccount()
             navigate("/")
-            return true;
+            return true
         }
         !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
         !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
+    }
+
+    function postNewAccount(){
+        const newUser = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userSignUpInfo)
+        };
+          
+        fetch('/users/signup', newUser)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
     }
 
     function handleChange(e){
