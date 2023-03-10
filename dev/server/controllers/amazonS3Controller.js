@@ -15,23 +15,23 @@ async function uploadAudio(req, res) {
         Bucket: s3_bucket_name,
         Body: req.buffer,
         ContentType: 'audio/mpeg'
-        // ACL: 'public-read' 
     };
 
     try {
+        // upload to s3
         const result = await s3.upload(params).promise();
-        // const audio = new Audio({
-        //     title: filename,
-        //     link: result.Location
-        // });
-        // const saveAudio = await audio.save();
+        // creating mongoDB object
+        const audio = new Audio({
+            title: req.originalname,
+            link: result.Location
+        });
+        // uploading to mongoDB
+        const saveAudio = await audio.save();
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
-
-// TODO: Add audio information to mongoDB
 
 module.exports = { uploadAudio };
 
