@@ -2,20 +2,22 @@
 
 ## Prerequisites
     
-    Postman installed
+    Postman
 
 Although there are other ways to test API calls, we will demo how to test API Calls using Postman.
 
-## MongoDB API testing
+## User API testing
 
 1. Start the Postman desktop or web app and create a workspace.
 2. Create a new HTTP request by clicking the plus near the workspace sidebar menu or the [GET] button if you have no tabs open
-![http_request](link)
+![http_request](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/http_request.png)
+
 See below for request template
+
 3. Select request type and enter request URL
 4. Send request
 5. View changes by retrieving all users or by user ID
-![postman_request](link)
+![postman_request](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/postman_request.png)
 
 ```
 # Retrieve all users
@@ -44,22 +46,13 @@ Content-Type: application/json
     "email": "update@email.com"
 }
 
-# DO NOT USE
-# exmaple request when audio file is posted
-POST http://localhost:8000/audioFiles/uploadAudio
-Content-Type: application/json
-
-{
-    "title": "song_title",
-    "link": "s3_link"
-}
 ```
 
-### API Testing Notes
+### User API Testing Notes
 - If information is required, select Body and replace the text body
 - Replace [userID] with an existing user's ID in the URL
 
-## MongoDB API testing
+## Audio file API testing
 
 1. Start the Postman desktop or web app and create a workspace.
 2. Create a new HTTP request by clicking the plus near the workspace
@@ -67,7 +60,7 @@ Content-Type: application/json
 4. Select Body and click the form-data radio button
 5. Enter 'audiofile' for the KEY
 6. Change the value type to File
-![audio_upload](link)
+![audio_upload](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/audio_upload.png)
 7. Select an mp3 file to upload
 8. Send request
 9. Click on link returned in response with the key 'Location'
