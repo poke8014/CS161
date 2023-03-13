@@ -1,47 +1,104 @@
 import NavBar from "../../components/NavBar/NavBar"
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css"
 
 export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
-
-    const signUpRef = React.useRef(null)
+    const [invalidEmail, setInvalidEmail] = React.useState(false);
+    const [passwordsNoMatch, setPasswordsNoMatch] = React.useState(false);
+    const [passwordValidFormat, setPasswordValidFormat] = React.useState(true);/////
+    const [passwordReq, setPasswordReq] = React.useState({
+        "passLength": 0,
+        "OneUpperCase": false,
+        "oneLowerCase": false,
+        "oneNumber": false,
+        "oneSymbol": false
+    })
+    const [userSignUpInfo, setUserSignUpInfo] = React.useState({
+        "email": "",
+        "password": "",
+        "confirmPassword": ""
+    })
+    const navigate = useNavigate();
 
     function changeFormType(e){
-        e.preventDefault()
-        let buttonPressed = String(e.target.className)
-        switch(buttonPressed){
-            case "signup-button-form":
-                if(formLogin){
-                    setFormType(prev => !prev)
-                }
-                break;
-            case "login-button-form":
-                if (!formLogin){
-                    setFormType(prev => !prev)
-                }
-                break;
-            case "signup-now-button":
-                setFormType(false)
-                signUpRef.current.focus()
-                break;
+        e.preventDefault();
+        setFormType(prev => !prev)
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        let emailValid = checkEmail()
+        let passMatch = checkPasswords()
+        let validPass = checkPasswordValidity();
+        if (passMatch && emailValid && validPass){
+            postNewAccount()
+            navigate("/")
+            return true
         }
+        if (!validPass) setPasswordValidFormat(false)
+        !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
+        !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
     }
 
-    const selectedStyle = {
-        "backgroundColor": "#2678F3",
-        "color": "white"
+    function postNewAccount(){
+        const newUser = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(userSignUpInfo)
+        };
+          
+        fetch('/users/signup', newUser)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
     }
 
-    const defaultStyle = {
-        "margin": "0",
-        "fontSize": "4ch",
-        "padding": "10px 0px",
-        "flex": "1",
-        "borderRadius": "10px",
-        "border": "1px solid rgb(103, 103, 103)",
-        "backgroundColor": "#727F84"
+    function handleChange(e){
+        setUserSignUpInfo( prevData => {
+            return {
+                ...prevData,
+                [e.target.name] : e.target.value
+            }
+        })
+    }
+
+    function checkEmail(){
+        let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regExp.test(userSignUpInfo.email)
+    }
+
+    function checkPasswords(){
+        if (String(userSignUpInfo.password).length === 0 && String(userSignUpInfo.confirmPassword) === 0)
+            return false;
+        return String(userSignUpInfo.password) === String(userSignUpInfo.confirmPassword);
+    }
+
+    function checkPasswordValidity(){
+        let currentPass = userSignUpInfo.password
+        setPasswordReq( prevReq => {
+            let passLength = currentPass.length
+            let oneUpper = /[A-Z]/.test(currentPass)
+            let oneLow = /[a-z]/.test(currentPass)
+            let oneNum = /[0-9]/.test(currentPass)
+            let specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+            let symbol = specialChars.test(currentPass)
+            return {
+                "passLength": passLength,
+                "OneUpperCase": oneUpper,
+                "oneLowerCase": oneLow,
+                "oneNumber": oneNum,
+                "oneSymbol": symbol
+            }
+        })
+        if (passwordReq.oneLowerCase && passwordReq.passLength > 8 && passwordReq.OneUpperCase 
+            && passwordReq.oneNumber && passwordReq.oneSymbol){
+                setPasswordValidFormat(true)
+                return true
+        }
+        return false
     }
 
     return (
@@ -54,24 +111,39 @@ export default function LoginPage(){
             <div className="login-signup-container">
                 <form className="login-signup-box" method="get">
                     <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
-                    <div className="login-signup-buttons">
-                        <button className="login-button-form" onClick={changeFormType} 
-                        style={formLogin ? selectedStyle : defaultStyle}>Login</button>
-                        <button className="signup-button-form" onClick={changeFormType}
-                        style={!formLogin ? selectedStyle : defaultStyle}>Sign Up</button>
+                    <div className="user-input">
+                        <input type={"email"} placeholder="Email Address" name="email" 
+                            onChange={handleChange} value={userSignUpInfo.email}/>
+                        {invalidEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
                     </div>
-                    <input type={"email"} placeholder="Email Address" ref={signUpRef} name="email"/>
-                    <input type={"password"} placeholder="Password" name="pass"/>
+                    <div className="user-input">
+                        <input type={"password"} placeholder="Password" name="password" 
+                            onChange={handleChange} value={userSignUpInfo.password}/>
+                    </div>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
-                        : <input type={"password"} placeholder="Confirm Password" />
+                        :   <div className="user-input">
+                                <input type={"password"} placeholder="Confirm Password" name="confirmPassword" 
+                                    onChange={handleChange} value={userSignUpInfo.confirmPassword}/>
+                                {passwordsNoMatch && <label htmlFor="confirmPassword" className="error">The passwords entered do not match!</label>}
+                            </div> 
                     }
+                    { (!passwordValidFormat && !formLogin) &&
+                        <div className="password-requirements">
+                            <label htmlFor="requirements">Your password needs the following requirements:</label>
+                            <ul className="requirements" name="requirements">
+                                <li className={passwordReq.passLength > 8 ? "valid-req" : "invalid-req"}>More than 8 characters</li>
+                                <li className={passwordReq.oneLowerCase ? "valid-req" : "invalid-req"}>1 lower case letter</li>
+                                <li className={passwordReq.OneUpperCase ? "valid-req" : "invalid-req"}>1 upper case letter</li>
+                                <li className={passwordReq.oneNumber ? "valid-req" : "invalid-req"}>1 number</li>
+                                <li className={passwordReq.oneSymbol ? "valid-req" : "invalid-req"}>1 special character</li>
+                            </ul>
+                        </div>
+                    }   
                     <input className="form-submit" type={"submit"} 
-                        value={formLogin ? "Login": "Create Account"}/>
-                    {formLogin &&
-                        <p className="no-account">Don't have an account? 
-                            <button className="signup-now-button" onClick={changeFormType}>Sign Up now</button>
-                        </p>
-                    }
+                        value={formLogin ? "Login": "Create Account"} onClick={handleSubmit}/>
+                    <p className="no-account">{formLogin ? "Don't have an account?" : "Already have an account?"}  
+                        <button className="signup-now-button" onClick={changeFormType}>{formLogin ? "Sign Up Now" : "Log in"}</button>
+                    </p>
                 </form>
             </div>
         </div>

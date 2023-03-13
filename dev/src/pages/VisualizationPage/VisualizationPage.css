@@ -1,0 +1,17 @@
+.visualization-page{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container{
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.visualization-container{
+    background-color: #161D20;
+    flex: 1;
+    color: white;
+    font-size: xx-large;
+}
