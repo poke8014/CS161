@@ -3,7 +3,13 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = 8000
 
-const {db_url} = require("../config/config.json");
+const { db_url } = require("../config/config.json");
+const userRouter = require('./routes/users');
+const audioRouter = require('./routes/audioFiles');
+
+app.use(express.json());
+app.use('/users', userRouter);
+app.use('/audioFiles', audioRouter);
 
 async function connect() {
   try {
@@ -15,11 +21,6 @@ async function connect() {
 }
 
 connect();
-
-app.use(express.json());
-
-const userRouter = require('./routes/users');
-app.use('/users', userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);

@@ -1,6 +1,3 @@
-﻿Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. Users can input their own audio files or choose from a database of audio files. The visualizer utilizes MERN (MongoDB, Express, React, and Node.js) and the javascript library p5.js as its base stack.
-
-
 Use Case: Song visualization
 1. User logs into their account
 2. User uploads a song into their library
@@ -12,7 +9,6 @@ Week 2: project planning
 * Define project goals
 * Choose the technology stack
 * Create detailed project plan with specific tasks and deadlines (14 weeks)
-
 
 Week 3-4: Set up + back-end
 * Set up development environment
@@ -45,8 +41,3 @@ Week 9: Non-essential features
 * Exporting audio visual along with audio (Luc)
 * Customizability for audio visualizer (Miguel)
    * Choosing visual / color palette
----
-Team name: Codescapes
-Team members: Luc Tang, Miguel Vazquez
-
-Github: https://github.com/poke8014/CS161
