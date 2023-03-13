@@ -26,7 +26,7 @@
 }
 
 .form-type{
-    padding: 2vw 0;
+    padding: 2vh 0;
     font-size: 5ch;
     font-weight: bold;
     margin: 0;
@@ -62,7 +62,7 @@
     font-size: large;
     margin: 0;
     font-weight: 600;
-    transition: font-size 0.1s ease-out;
+    transition: font-size 0.2s ease-in;
 }
 
 .forgot-password:hover{
@@ -109,4 +109,28 @@
     color: red;
     opacity: 70%;
     font-size: larger;
+}
+
+.password-requirements{
+    margin: 0;
+    padding: 0;
+}
+
+.requirements{
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.requirements li{
+    margin: 0 5px;
+}
+
+.valid-req{
+    color: green;
+}
+
+.invalid-req{
+    color: red;
+    opacity: 70%;
 }
