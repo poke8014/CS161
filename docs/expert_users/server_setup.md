@@ -20,7 +20,7 @@ This document provides step-by-step instructions for setting up the Audiovision 
 
 4. Create a config.json file using the template config.example.json file.
 
-4. Fill in the required API keys in the config.json file.
+4. Fill in the required API keys in the config.json file (ask the contributors for the API keys).
 
 5. Return to the `dev` folder
 
