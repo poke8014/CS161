@@ -40,9 +40,14 @@ export default function UploadPage() {
             console.error("Error uploading file:", err);
         }
     }
-
+// TODO: Display error message and maybe modularize code!
     function handleFileChange(e) {
-        setFile(e.target.files[0]);
+        file = e.target.files[0];
+
+        const validExt = ['mp3'];
+        if (validExt.includes(String(file.type).split('/')[1])) {
+            setFile(file);
+        }
     }
 
     const menuItems = [
