@@ -35,7 +35,7 @@ export default function LoginPage(){
         let validPass = checkPasswordValidity();
         if (passMatch && emailValid && validPass){
             postNewAccount()
-            navigate("/")
+            navigate("/visualization")
             return true
         }
         if (!validPass) setPasswordValidFormat(false)

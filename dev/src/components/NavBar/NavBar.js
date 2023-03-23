@@ -12,7 +12,7 @@ export default function NavBar({openMenu, showMenuButton=true, showLoginButton=t
     }
 
     function handleBrandClick(){
-        navigate("/")
+        navigate("/visualization")
     }
 
     return (
