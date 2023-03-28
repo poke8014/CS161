@@ -6,7 +6,8 @@ import "./LoginPage.css"
 export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
-    const [invalidEmail, setInvalidEmail] = React.useState(false);
+
+    const [validEmail, setValidEmail] = React.useState(true);
     const [passwordsNoMatch, setPasswordsNoMatch] = React.useState(false);
     const [passwordValidFormat, setPasswordValidFormat] = React.useState(true);
     const [emailTaken, setEmailTaken] = React.useState(false);
@@ -17,39 +18,41 @@ export default function LoginPage(){
         "oneNumber": false,
         "oneSymbol": false
     })
-
-    const passwordLengthRequirement = 8;
-
     const [userSignUpInfo, setUserSignUpInfo] = React.useState({
         "email": "",
         "password": "",
         "confirmPassword": ""
     })
+
+    const passwordLengthRequirement = 8;
+
+    const [userLoginInfo, setUserLoginInfo] = React.useState({
+        "email": "",
+        "password": ""
+    })
+
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        if (!formLogin){
-            let passLength = false;
-            if (userSignUpInfo.password.length > passwordLengthRequirement){
-                passLength = true;
-            }
-            let oneUpper = /[A-Z]/.test(userSignUpInfo.password)
-            let oneLow = /[a-z]/.test(userSignUpInfo.password)
-            let oneNum = /[0-9]/.test(userSignUpInfo.password)
-            let specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
-            let symbol = specialChars.test(userSignUpInfo.password)
-
-            setPasswordReq( prevReq => {
-                return {
-                    "passLength": passLength,
-                    "OneUpperCase": oneUpper,
-                    "oneLowerCase": oneLow,
-                    "oneNumber": oneNum,
-                    "oneSymbol": symbol
-                }
-            })
-            checkPasswordValidity();
+        let passLength = false;
+        if (userSignUpInfo.password.length > passwordLengthRequirement){
+            passLength = true;
         }
+        let oneUpper = /[A-Z]/.test(userSignUpInfo.password)
+        let oneLow = /[a-z]/.test(userSignUpInfo.password)
+        let oneNum = /[0-9]/.test(userSignUpInfo.password)
+        let specialChars = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/
+        let symbol = specialChars.test(userSignUpInfo.password)
+
+        setPasswordReq( prevReq => {
+            return {
+                "passLength": passLength,
+                "OneUpperCase": oneUpper,
+                "oneLowerCase": oneLow,
+                "oneNumber": oneNum,
+                "oneSymbol": symbol
+            }
+        })
     },[userSignUpInfo.password])
 
     async function checkPasswordValidity(){
@@ -64,23 +67,32 @@ export default function LoginPage(){
     function changeFormType(e){
         e.preventDefault();
         setFormType(prev => !prev)
+        setValidEmail(true)
+        setPasswordsNoMatch(false)
+        setPasswordValidFormat(true)
     }
 
     async function handleSubmit(e){
         e.preventDefault();
-        let emailValid = await checkEmail()
-        let passMatch = await checkPasswords()
-        await checkPasswordValidity();
-        if (passMatch && emailValid && passwordValidFormat){
-            let response = await postNewAccount()
-            if (response){
-                console.log("Account Created!")
-                navigate("/")
-                return true
+        let emailValid = checkEmail(e.target.value)
+        console.log(emailValid)
+        if (formLogin){
+            console.log("login!")
+        }else{
+            console.log("sign up!")
+            let passMatch = await checkPasswords()
+            await checkPasswordValidity();
+            if (passMatch && emailValid && passwordValidFormat){
+                let response = await postNewAccount()
+                if (response){
+                    console.log("Account Created!")
+                    navigate("/")
+                    return true
+                }
             }
+            !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
         }
-        !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
-        !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
+        emailValid ? setValidEmail(true) : setValidEmail(false)   
     }
 
     async function postNewAccount(){
@@ -109,17 +121,34 @@ export default function LoginPage(){
     }
 
     async function handleChange(e){
-        await setUserSignUpInfo( prevData => {
-            return {
-                ...prevData,
-                [e.target.name] : e.target.value
-            }
-        })
+        if (formLogin){
+            setUserLoginInfo( prevData => {
+                return{
+                    ...prevData,
+                    [e.target.name] : e.target.value
+                }
+            })
+        }else{
+            setUserSignUpInfo( prevData => {
+                return {
+                    ...prevData,
+                    [e.target.name] : e.target.value
+                }
+            })
+        }
     }
 
-    function checkEmail(){
-        let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regExp.test(userSignUpInfo.email)
+    function checkEmail(e){
+        let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        let answer
+        if (e == "login"){
+            answer = regExp.test(userLoginInfo.email)
+        }else{
+            answer = regExp.test(userSignUpInfo.email)
+        }
+        console.log("answer: " + answer)
+        console.log(userLoginInfo.email)
+        return answer
     }
 
     function checkPasswords(){
@@ -137,17 +166,17 @@ export default function LoginPage(){
                 showBackArrow={true}
             />
             <div className="login-signup-container">
-                <form className="login-signup-box" method="get">
+                <form className="login-signup-box" method="post">
                     <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
                     <div className="user-input">
                         <input type={"email"} placeholder="Email Address" name="email" 
-                            onChange={handleChange} value={userSignUpInfo.email}/>
-                        {invalidEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
+                            onChange={handleChange} value={formLogin ? userLoginInfo.email : userSignUpInfo.email}/>
+                        {!validEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
                         {emailTaken && <label htmlFor="email" className="error">An account with this email already exists!</label>}
                     </div>
                     <div className="user-input">
                         <input type={"password"} placeholder="Password" name="password" 
-                            onChange={handleChange} value={userSignUpInfo.password}/>
+                            onChange={handleChange} value={formLogin ? userLoginInfo.password : userSignUpInfo.password}/>
                     </div>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
                         :   <div className="user-input">
