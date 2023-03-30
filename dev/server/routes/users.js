@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const { getUser, createUser, deleteUser, updateUser } = require('../controllers/mongoDBController')
+const { getUser, createUser, deleteUser, updateUser, handleLogin } = require('../controllers/mongoDBController')
 
 // Getting all users
 router.get('/', async (req, res) => {
@@ -12,6 +12,9 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+// User Login
+router.get('/login', handleLogin);
 
 // Getting user by ID
 router.get('/:id', getUser, (req, res) => {
