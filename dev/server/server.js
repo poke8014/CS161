@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 const PORT = 8000
 
@@ -10,6 +11,8 @@ const audioRouter = require('./routes/audioFiles');
 app.use(express.json());
 app.use('/users', userRouter);
 app.use('/audioFiles', audioRouter);
+
+//app.use(cors());
 
 async function connect() {
   try {
