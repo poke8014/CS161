@@ -1,9 +1,13 @@
 import NavBar from "../../components/NavBar/NavBar"
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import AuthContext from "../../context/AuthProvider";
 import "./LoginPage.css"
 
 export default function LoginPage(){
+
+    const { setAuth } = useContext(AuthContext);
 
     const [formLogin, setFormType] = React.useState(true);
 
@@ -55,7 +59,7 @@ export default function LoginPage(){
         })
     },[userSignUpInfo.password])
 
-    async function checkPasswordValidity(){
+    function checkPasswordValidity(){
         if (passwordReq.oneLowerCase && passwordReq.passLength && passwordReq.OneUpperCase 
             && passwordReq.oneNumber && passwordReq.oneSymbol){
                 setPasswordValidFormat(true)
@@ -75,12 +79,15 @@ export default function LoginPage(){
     async function handleSubmit(e){
         e.preventDefault();
         let emailValid = checkEmail(e.target.value)
-        console.log(emailValid)
         if (formLogin){
             console.log("login!")
+            if (emailValid){
+                let email = userLoginInfo.email
+                let password = userLoginInfo.password
+            }
         }else{
             console.log("sign up!")
-            let passMatch = await checkPasswords()
+            let passMatch = checkIfPasswordsMatch()
             await checkPasswordValidity();
             if (passMatch && emailValid && passwordValidFormat){
                 let response = await postNewAccount()
@@ -92,7 +99,7 @@ export default function LoginPage(){
             }
             !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
         }
-        emailValid ? setValidEmail(true) : setValidEmail(false)   
+        emailValid ? setValidEmail(true) : setValidEmail(false)
     }
 
     async function postNewAccount(){
@@ -139,19 +146,17 @@ export default function LoginPage(){
     }
 
     function checkEmail(e){
-        let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        let regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         let answer
-        if (e == "login"){
+        if (e == "Login"){
             answer = regExp.test(userLoginInfo.email)
         }else{
             answer = regExp.test(userSignUpInfo.email)
         }
-        console.log("answer: " + answer)
-        console.log(userLoginInfo.email)
         return answer
     }
 
-    function checkPasswords(){
+    function checkIfPasswordsMatch(){
         if (String(userSignUpInfo.password).length === 0 || String(userSignUpInfo.confirmPassword) === 0){
             return false;
         }
@@ -169,14 +174,26 @@ export default function LoginPage(){
                 <form className="login-signup-box" method="post">
                     <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
                     <div className="user-input">
-                        <input type={"email"} placeholder="Email Address" name="email" 
-                            onChange={handleChange} value={formLogin ? userLoginInfo.email : userSignUpInfo.email}/>
+                        <input 
+                            type={"email"} 
+                            placeholder="Email Address" 
+                            name="email" 
+                            onChange={handleChange} 
+                            value={formLogin ? userLoginInfo.email : userSignUpInfo.email}
+                            required
+                        />
                         {!validEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
                         {emailTaken && <label htmlFor="email" className="error">An account with this email already exists!</label>}
                     </div>
                     <div className="user-input">
-                        <input type={"password"} placeholder="Password" name="password" 
-                            onChange={handleChange} value={formLogin ? userLoginInfo.password : userSignUpInfo.password}/>
+                        <input 
+                        type={"password"} 
+                        placeholder="Password" 
+                        name="password" 
+                        onChange={handleChange} 
+                        value={formLogin ? userLoginInfo.password : userSignUpInfo.password}
+                        required
+                    />
                     </div>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
                         :   <div className="user-input">
@@ -206,4 +223,8 @@ export default function LoginPage(){
             </div>
         </div>
     )
+}
+
+LoginPage.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
