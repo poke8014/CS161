@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // User Login
-router.get('/login', handleLogin);
+router.post('/login', handleLogin);
 
 // Getting user by ID
 router.get('/:id', getUser, (req, res) => {
