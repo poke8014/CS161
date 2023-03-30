@@ -23,6 +23,27 @@ async function createUser(req, res) {
     }
 };
 
+// login a user
+async function handleLogin(req, res) {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({'message': 'Email and password are required.'});
+    try {
+        const foundUser = await User.findOne({ email: email }); 
+
+        if (!foundUser) return res.status(401).json({ message: 'Invalid email or password.' });
+    
+        //evaluate hashed password
+        const match = await bcrypt.compare(password, foundUser.password);
+        if (match){
+            res.json({ success: `User is logged in!` });
+        }else{
+            res.status(401).json({ message: 'Invalid email or password.' });
+        }   
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 // Updating one
 async function updateUser(req, res) {
     if (req.body.email != null) {
@@ -66,4 +87,4 @@ async function getUser(req, res, next) {
     next();
 };
 
-module.exports = { getUser, createUser, deleteUser, updateUser };
+module.exports = { getUser, createUser, deleteUser, updateUser, handleLogin };
