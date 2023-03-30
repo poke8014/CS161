@@ -1,9 +1,11 @@
 import NavBar from "../../components/NavBar/NavBar"
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
 import AuthContext from "../../context/AuthProvider";
+import axios from "../../axios";
 import "./LoginPage.css"
+
+const LOGIN_URL = "/users/login"
 
 export default function LoginPage(){
 
@@ -82,8 +84,7 @@ export default function LoginPage(){
         if (formLogin){
             console.log("login!")
             if (emailValid){
-                let email = userLoginInfo.email
-                let password = userLoginInfo.password
+                loginUser()
             }
         }else{
             console.log("sign up!")
@@ -100,6 +101,23 @@ export default function LoginPage(){
             !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
         }
         emailValid ? setValidEmail(true) : setValidEmail(false)
+    }
+
+    async function loginUser(){
+        try {
+            const response = await axios.post(LOGIN_URL, 
+                            JSON.stringify(userLoginInfo),
+                            {
+                                headers: {'Content-Type': 'application/json'},
+                                withCredentials: true
+                            }
+            );
+            console.log(JSON.stringify(response.data))
+        } catch (error) {
+            console.error(error)
+            return false
+        }
+        return true
     }
 
     async function postNewAccount(){
@@ -223,8 +241,4 @@ export default function LoginPage(){
             </div>
         </div>
     )
-}
-
-LoginPage.propTypes = {
-    setToken: PropTypes.func.isRequired
 }
