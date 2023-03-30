@@ -30,6 +30,7 @@
   "proxy": "http://localhost:8000",
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
   },
