@@ -6,6 +6,8 @@ import axios from "../../axios";
 import "./LoginPage.css"
 
 const LOGIN_URL = "/users/login"
+const SIGNUP_URL = "/users/signup"
+const PASSWORD_LENGTH_REQUIREMENT = 8;
 
 export default function LoginPage(){
 
@@ -30,8 +32,6 @@ export default function LoginPage(){
         "confirmPassword": ""
     })
 
-    const passwordLengthRequirement = 8;
-
     const [userLoginInfo, setUserLoginInfo] = React.useState({
         "email": "",
         "password": ""
@@ -41,7 +41,7 @@ export default function LoginPage(){
 
     React.useEffect(() => {
         let passLength = false;
-        if (userSignUpInfo.password.length > passwordLengthRequirement){
+        if (userSignUpInfo.password.length > PASSWORD_LENGTH_REQUIREMENT){
             passLength = true;
         }
         let oneUpper = /[A-Z]/.test(userSignUpInfo.password)
@@ -59,10 +59,13 @@ export default function LoginPage(){
                 "oneSymbol": symbol
             }
         })
+        checkPasswordValidity();
     },[userSignUpInfo.password])
 
     function checkPasswordValidity(){
-        if (passwordReq.oneLowerCase && passwordReq.passLength && passwordReq.OneUpperCase 
+        if (String(userSignUpInfo.password).length === 0){
+            setPasswordValidFormat(false)
+        }else if (passwordReq.oneLowerCase && passwordReq.passLength && passwordReq.OneUpperCase 
             && passwordReq.oneNumber && passwordReq.oneSymbol){
                 setPasswordValidFormat(true)
         }else{
@@ -84,12 +87,13 @@ export default function LoginPage(){
         if (formLogin){
             console.log("login!")
             if (emailValid){
-                loginUser()
+                if (await loginUser()){
+                    navigate("/")
+                }
             }
         }else{
             console.log("sign up!")
             let passMatch = checkIfPasswordsMatch()
-            await checkPasswordValidity();
             if (passMatch && emailValid && passwordValidFormat){
                 let response = await postNewAccount()
                 if (response){
@@ -112,34 +116,27 @@ export default function LoginPage(){
                                 withCredentials: true
                             }
             );
-            console.log(JSON.stringify(response.data))
+            console.log(response?.data.success)
+            const accessToken = response?.data?.accessToken
         } catch (error) {
-            console.error(error)
             return false
         }
         return true
     }
 
     async function postNewAccount(){
-        const newUser = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(userSignUpInfo)
-        };
-          
         try{
-            await fetch('/users/signup', newUser)
-            .then(response => response.json())
-            .then(res => {
-                if (res.message === "Email already taken"){
-                    setEmailTaken(true)
-                    return Promise.reject(res)
-                }else{
-                    setEmailTaken(false)
-                }
-            })
+            const response = await axios.post(SIGNUP_URL, 
+                            JSON.stringify(userSignUpInfo),
+                            {
+                                headers: {'Content-Type': 'application/json'},
+                                withCredentials: true
+                            }
+            );
+            setEmailTaken(false)
         }catch (error){
-            console.error(error)
+            if (error.response.data.message == "Email already taken")
+                setEmailTaken(true)
             return false;
         }
         return true
@@ -224,7 +221,7 @@ export default function LoginPage(){
                         <div className="password-requirements">
                             <label htmlFor="requirements">Your password needs the following requirements:</label>
                             <ul className="requirements" name="requirements">
-                                <li className={userSignUpInfo.password.length > passwordLengthRequirement ? "valid-req" : "invalid-req"}>More than 8 characters</li>
+                                <li className={userSignUpInfo.password.length > PASSWORD_LENGTH_REQUIREMENT ? "valid-req" : "invalid-req"}>More than 8 characters</li>
                                 <li className={passwordReq.oneLowerCase ? "valid-req" : "invalid-req"}>1 lower case letter</li>
                                 <li className={passwordReq.OneUpperCase ? "valid-req" : "invalid-req"}>1 upper case letter</li>
                                 <li className={passwordReq.oneNumber ? "valid-req" : "invalid-req"}>1 number</li>
