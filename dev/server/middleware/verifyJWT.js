@@ -14,7 +14,7 @@ const verifyJWT = (req, res, next) => {
             req.email = decodedInfo.email
             next()
         }
-    )
+    );
 }
 
 module.exports = verifyJWT
