@@ -89,6 +89,8 @@ export default function LoginPage(){
             if (emailValid){
                 if (await loginUser()){
                     navigate("/")
+                }else{
+                    console.log("The password and/or email entered does not match our records!")
                 }
             }
         }else{
@@ -118,6 +120,11 @@ export default function LoginPage(){
             );
             console.log(response?.data.success)
             const accessToken = response?.data?.accessToken
+            setAuth(`{ ${userLoginInfo.email}, ${userLoginInfo.password}, ${accessToken} }`)
+            setUserLoginInfo({
+                "email": "",
+                "password": ""
+            });
         } catch (error) {
             return false
         }
@@ -163,7 +170,7 @@ export default function LoginPage(){
     function checkEmail(e){
         let regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         let answer
-        if (e == "Login"){
+        if (e === "Login"){
             answer = regExp.test(userLoginInfo.email)
         }else{
             answer = regExp.test(userSignUpInfo.email)
