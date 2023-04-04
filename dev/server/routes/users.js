@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const { getUser, createUser, deleteUser, updateUser, handleLogin } = require('../controllers/mongoDBController')
+const { getUser, createUser, deleteUser, updateUser, handleLogin, 
+    handleLogout } = require('../controllers/mongoDBController')
 
 const verifyJWT = require("../middleware/verifyJWT")
 
@@ -20,6 +21,9 @@ router.post('/login', handleLogin);
 
 // Creating one user
 router.post('/signup', createUser);
+
+// logout user
+router.get("/logout", handleLogout);
 
 // Getting user by ID
 router.get('/:id', getUser, (req, res) => {
