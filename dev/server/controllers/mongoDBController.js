@@ -29,7 +29,7 @@ async function createUser(req, res) {
 async function handleLogin(req, res) {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({'message': 'Email and password are required.'});
-    const foundUser = await User.findOne({ email: email }); 
+    const foundUser = await User.findOne({ email: email });
 
     if (!foundUser) return res.sendStatus(401);
 
@@ -40,23 +40,19 @@ async function handleLogin(req, res) {
         const accessToken = jwt.sign(
             {"email": foundUser.email},
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '300s' }
+            { expiresIn: '30s' }
         )
         const refreshToken = jwt.sign(
             {"email": foundUser.email},
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
+            { expiresIn: '30s' }
         )
-        // Saving refreshToken with current user
-        const query = { _id: foundUser._id };
-        const update = { refreshToken };
-        const options = { new: true };
 
-        const updatedUser = await User.findOneAndUpdate(query, update, options);
-        
+        // Saving refreshToken with current user
+        const updatedInDB = await User.findOneAndUpdate({email: foundUser.email}, {refreshToken: refreshToken});
+
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
-        res.json({ accessToken });
-        res.json({ success: 'User is logged in!' });
+        res.json({ accessToken, success: 'User is logged in!' });
     }else{
         res.sendStatus(401)
     }   
