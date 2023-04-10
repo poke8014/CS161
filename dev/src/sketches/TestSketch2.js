@@ -32,11 +32,7 @@ export default (props) => {
         }
     };
 
-    return (
-        <div className="canvas-wrapper">
-            <Sketch setup={setup} draw={draw} />
-        </div>
-    );        
+    return <Sketch setup={setup} draw={draw} />;        
 }
 
 /*

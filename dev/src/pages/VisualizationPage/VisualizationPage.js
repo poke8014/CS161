@@ -21,7 +21,9 @@ export default function VisualizationPage(){
              <main className="content-container">
                 {showMenu && <Menu/>}
                 <div className="visualization-container">
-                    <Sketches.TestSketch2 />
+                    {/* <div className="canvas-wrapper"> */}
+                        <Sketches.TestSketch2 />
+                    {/* </div> */}
                 </div>
              </main>
         </div>
