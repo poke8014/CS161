@@ -107,16 +107,18 @@
     display: block;
     text-align: left;
     color: red;
-    opacity: 70%;
+    opacity: 80%;
     font-size: larger;
 }
 
 .password-requirements{
+    text-align: center;
     margin: 0;
     padding: 0;
 }
 
 .requirements{
+    margin: 2px 0px;
     columns: 2;
     -webkit-columns: 2;
     -moz-columns: 2;
@@ -127,10 +129,10 @@
 }
 
 .valid-req{
-    color: green;
+    color: darkgreen;
 }
 
 .invalid-req{
     color: red;
-    opacity: 70%;
+    opacity: 80%;
 }

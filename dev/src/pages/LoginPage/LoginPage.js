@@ -8,14 +8,18 @@ export default function LoginPage(){
     const [formLogin, setFormType] = React.useState(true);
     const [invalidEmail, setInvalidEmail] = React.useState(false);
     const [passwordsNoMatch, setPasswordsNoMatch] = React.useState(false);
-    const [passwordValidFormat, setPasswordValidFormat] = React.useState(true);/////
+    const [passwordValidFormat, setPasswordValidFormat] = React.useState(true);
+    const [emailTaken, setEmailTaken] = React.useState(false);
     const [passwordReq, setPasswordReq] = React.useState({
-        "passLength": 0,
+        "passLength": false,
         "OneUpperCase": false,
         "oneLowerCase": false,
         "oneNumber": false,
         "oneSymbol": false
     })
+
+    const passwordLengthRequirement = 8;
+
     const [userSignUpInfo, setUserSignUpInfo] = React.useState({
         "email": "",
         "password": "",
@@ -23,41 +27,89 @@ export default function LoginPage(){
     })
     const navigate = useNavigate();
 
+    React.useEffect(() => {
+        if (!formLogin){
+            let passLength = false;
+            if (userSignUpInfo.password.length > passwordLengthRequirement){
+                passLength = true;
+            }
+            let oneUpper = /[A-Z]/.test(userSignUpInfo.password)
+            let oneLow = /[a-z]/.test(userSignUpInfo.password)
+            let oneNum = /[0-9]/.test(userSignUpInfo.password)
+            let specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+            let symbol = specialChars.test(userSignUpInfo.password)
+
+            setPasswordReq( prevReq => {
+                return {
+                    "passLength": passLength,
+                    "OneUpperCase": oneUpper,
+                    "oneLowerCase": oneLow,
+                    "oneNumber": oneNum,
+                    "oneSymbol": symbol
+                }
+            })
+            checkPasswordValidity();
+        }
+    },[userSignUpInfo.password])
+
+    async function checkPasswordValidity(){
+        if (passwordReq.oneLowerCase && passwordReq.passLength && passwordReq.OneUpperCase 
+            && passwordReq.oneNumber && passwordReq.oneSymbol){
+                setPasswordValidFormat(true)
+        }else{
+            setPasswordValidFormat(false)
+        }
+    }
+
     function changeFormType(e){
         e.preventDefault();
         setFormType(prev => !prev)
     }
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
-        let emailValid = checkEmail()
-        let passMatch = checkPasswords()
-        let validPass = checkPasswordValidity();
-        if (passMatch && emailValid && validPass){
-            postNewAccount()
-            navigate("/visualization")
-            return true
+        let emailValid = await checkEmail()
+        let passMatch = await checkPasswords()
+        await checkPasswordValidity();
+        if (passMatch && emailValid && passwordValidFormat){
+            let response = await postNewAccount()
+            if (response){
+                console.log("Account Created!")
+                navigate("/")
+                return true
+            }
         }
-        if (!validPass) setPasswordValidFormat(false)
         !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
         !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
     }
 
-    function postNewAccount(){
+    async function postNewAccount(){
         const newUser = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userSignUpInfo)
         };
           
-        fetch('/users/signup', newUser)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
+        try{
+            await fetch('/users/signup', newUser)
+            .then(response => response.json())
+            .then(res => {
+                if (res.message === "Email already taken"){
+                    setEmailTaken(true)
+                    return Promise.reject(res)
+                }else{
+                    setEmailTaken(false)
+                }
+            })
+        }catch (error){
+            console.error(error)
+            return false;
+        }
+        return true
     }
 
-    function handleChange(e){
-        setUserSignUpInfo( prevData => {
+    async function handleChange(e){
+        await setUserSignUpInfo( prevData => {
             return {
                 ...prevData,
                 [e.target.name] : e.target.value
@@ -71,34 +123,10 @@ export default function LoginPage(){
     }
 
     function checkPasswords(){
-        if (String(userSignUpInfo.password).length === 0 && String(userSignUpInfo.confirmPassword) === 0)
+        if (String(userSignUpInfo.password).length === 0 || String(userSignUpInfo.confirmPassword) === 0){
             return false;
-        return String(userSignUpInfo.password) === String(userSignUpInfo.confirmPassword);
-    }
-
-    function checkPasswordValidity(){
-        let currentPass = userSignUpInfo.password
-        setPasswordReq( prevReq => {
-            let passLength = currentPass.length
-            let oneUpper = /[A-Z]/.test(currentPass)
-            let oneLow = /[a-z]/.test(currentPass)
-            let oneNum = /[0-9]/.test(currentPass)
-            let specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
-            let symbol = specialChars.test(currentPass)
-            return {
-                "passLength": passLength,
-                "OneUpperCase": oneUpper,
-                "oneLowerCase": oneLow,
-                "oneNumber": oneNum,
-                "oneSymbol": symbol
-            }
-        })
-        if (passwordReq.oneLowerCase && passwordReq.passLength > 8 && passwordReq.OneUpperCase 
-            && passwordReq.oneNumber && passwordReq.oneSymbol){
-                setPasswordValidFormat(true)
-                return true
         }
-        return false
+        return String(userSignUpInfo.password) === String(userSignUpInfo.confirmPassword);
     }
 
     return (
@@ -115,6 +143,7 @@ export default function LoginPage(){
                         <input type={"email"} placeholder="Email Address" name="email" 
                             onChange={handleChange} value={userSignUpInfo.email}/>
                         {invalidEmail && <label htmlFor="email" className="error">Enter a valid email!</label>}
+                        {emailTaken && <label htmlFor="email" className="error">An account with this email already exists!</label>}
                     </div>
                     <div className="user-input">
                         <input type={"password"} placeholder="Password" name="password" 
@@ -131,7 +160,7 @@ export default function LoginPage(){
                         <div className="password-requirements">
                             <label htmlFor="requirements">Your password needs the following requirements:</label>
                             <ul className="requirements" name="requirements">
-                                <li className={passwordReq.passLength > 8 ? "valid-req" : "invalid-req"}>More than 8 characters</li>
+                                <li className={userSignUpInfo.password.length > passwordLengthRequirement ? "valid-req" : "invalid-req"}>More than 8 characters</li>
                                 <li className={passwordReq.oneLowerCase ? "valid-req" : "invalid-req"}>1 lower case letter</li>
                                 <li className={passwordReq.OneUpperCase ? "valid-req" : "invalid-req"}>1 upper case letter</li>
                                 <li className={passwordReq.oneNumber ? "valid-req" : "invalid-req"}>1 number</li>
