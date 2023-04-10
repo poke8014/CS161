@@ -15,3 +15,10 @@
     color: white;
     font-size: xx-large;
 }
+
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
