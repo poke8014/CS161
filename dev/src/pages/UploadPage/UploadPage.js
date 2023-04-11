@@ -73,11 +73,19 @@ export default function UploadPage() {
                 <div className="upload-box">
                     <div className="upload-options">
                         <form onSubmit={handleAudioUpload}>
-                            <label className="upload-audio-button">
+                            {/* <label className="upload-audio-button">
                                 <p>Upload Audio File</p>
                                 <img className="upload-icon" src={uploadIcon} alt="upload icon"/>
                                 <input type="file" onChange={handleFileChange} />
+                            </label> */}
+                            <label className="upload-audio-button">
+                                <div className="upload-content">
+                                    <p>Upload Audio File</p>
+                                    <img className="upload-icon" src={uploadIcon} alt="upload icon" />
+                                </div>
+                                <input type="file" onChange={handleFileChange} />
                             </label>
+
                             <button type="submit" disabled={!file}>Upload</button>
                         </form>
                         {/* <a target="_blank" href="https://icons8.com/icon/RXegk50IKV5u/upload">Upload</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}

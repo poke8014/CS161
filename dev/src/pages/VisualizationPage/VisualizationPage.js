@@ -15,15 +15,25 @@ export default function VisualizationPage(){
         setShowMenu(prev => !prev)
     }
 
+    const menuItems = [
+        "Click on an existing audio",
+        "Audio 1",
+        "Audio 2",
+        "Audio 3",
+        "Audio 4",
+        "Audio 5",
+        "Audio 6"
+    ];
+
     return (
         <div className="visualization-page">
              <NavBar openMenu={toggleShowMenu} />
              <main className="content-container">
-                {showMenu && <Menu/>}
+                {showMenu && <Menu menuItems={menuItems}/>}
                 <div className="visualization-container">
-                    {/* <div className="canvas-wrapper"> */}
-                        <Sketches.TestSketch2 />
-                    {/* </div> */}
+                    <div className="canvas-wrapper">
+                        <Sketches.TestSketch3 />
+                    </div>
                 </div>
              </main>
         </div>

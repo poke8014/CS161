@@ -1,4 +1,4 @@
-.upload-page{
+.upload-page {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -6,14 +6,14 @@
     flex-direction: column;
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: row;
-    flex: 1 1 auto; 
+    flex: 1 1 auto;
     background-color: #161D20;
 }
 
-.upload-box{
+.upload-box {
     display: flex;
     margin: auto;
     width: 60%;
@@ -22,13 +22,14 @@
     background-color: #727F84;
 }
 
-.upload-options{
+.upload-options {
     margin: auto;
     text-align: center;
 }
 
-.upload-audio-button{
-    display: flex;
+.upload-audio-button {
+    position: relative;
+    display: inline-block;
     vertical-align: middle;
     width: fit-content;
     height: auto;
@@ -38,31 +39,44 @@
     font-size: 2rem;
     padding: 10px 20px;
     transition: all 0.25s ease-out;
-}
-
-.upload-audio-button:hover{
     cursor: pointer;
 }
 
-.upload-audio-button p{
-    margin: 0;
-}
-
-.upload-audio-button:hover{
+.upload-audio-button:hover {
     transform: scale(1.08);
 }
 
-.upload-icon{
+.upload-audio-button p {
+    margin: 0;
+}
+
+.upload-audio-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-icon {
     margin-left: 10px;
     width: 2.2rem;
     height: auto;
 }
 
-.drag-drop-area{
+.drag-drop-area {
     margin-top: 1em;
 }
 
-.drag-drop-area p{
+.drag-drop-area p {
     color: #051014;
     font-size: 2rem;
     margin: 0;

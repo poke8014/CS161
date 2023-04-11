@@ -16,7 +16,7 @@ export default (props) => {
 		// NOTE: Do not use setState in the draw function or in functions that are executed
 		// in the draw function...
 		// please use normal variables or class properties for these purposes
-		x++;
+		// x++;
 	};
 
 	return <Sketch setup={setup} draw={draw} />;
