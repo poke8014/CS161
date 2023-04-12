@@ -28,3 +28,13 @@ If the user doesn't have an account, the user can click on sign up and enter
 An email and password.
 
 An account is necessary to download a video of the visualization generated.
+
+![user_validation](https://github.com/poke8014/CS161/blob/main/docs/app_users/images_docs/user_validation.jpg)
+
+The user needs the following requirements to create a password
+  - More than 8 characters
+  - 1 lower case letter
+  - 1 upper case letter
+  - 1 special character (eg. $)
+  - 1 number
+  

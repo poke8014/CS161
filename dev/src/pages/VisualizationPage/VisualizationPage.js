@@ -2,6 +2,9 @@ import "./VisualizationPage.css"
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
 import React from "react"
+import * as Sketches from "../../sketches"
+// import TestSketch2 from "../../sketches/TestSketch2"
+
 // import { useNavigate } from "react-router-dom";
 
 export default function VisualizationPage(){
@@ -24,9 +27,7 @@ export default function VisualizationPage(){
 
     return (
         <div className="visualization-page">
-             <NavBar
-                openMenu={toggleShowMenu}
-             />
+             <NavBar openMenu={toggleShowMenu} />
              <main className="content-container">
                 {showMenu &&
                     <Menu
@@ -34,9 +35,11 @@ export default function VisualizationPage(){
                     />
                 }
                 <div className="visualization-container">
-                    <p>Work in Progress.....</p>
+                    <div className="canvas-wrapper">
+                        <Sketches.TestSketch3 />
+                    </div>
                 </div>
              </main>
         </div>
-    )
+    );
 }

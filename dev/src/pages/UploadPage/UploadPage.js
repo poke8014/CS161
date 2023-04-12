@@ -1,14 +1,16 @@
-import React from "react"
+import React, { useState } from "react";
+import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
-import uploadIcon from "../../images/upload.png"
+import uploadIcon from "../../images/upload.png";
 import { useNavigate } from "react-router-dom";
-import "./UploadPage.css"
+import "./UploadPage.css";
 
 export default function UploadPage() {
     
     const [showMenu, setShowMenu] = React.useState(false)
     // const [users, setUsers] = React.useState();
+    const [file, setFile] = useState(null)
     const navigate = useNavigate();
 
     // React.useEffect(() => {
@@ -22,8 +24,30 @@ export default function UploadPage() {
         setShowMenu(prevState => !prevState)
     }
 
-    function handleAudioUpload(){
-        navigate("/visualization")
+    async function handleAudioUpload(e){
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("audiofile", file);
+        try {
+            const response = await axios.post("/audioFiles/uploadAudio", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            console.log("File uploaded:", response.data);
+            // navigate("/visualization")
+        } catch (err) {
+            console.error("Error uploading file:", err);
+        }
+    }
+// TODO: Display error message and maybe modularize code!
+    function handleFileChange(e) {
+        file = e.target.files[0];
+
+        const validExt = ['mp3'];
+        if (validExt.includes(String(file.type).split('/')[1])) {
+            setFile(file);
+        }
     }
 
     const menuItems = [
@@ -48,10 +72,22 @@ export default function UploadPage() {
                 />}
                 <div className="upload-box">
                     <div className="upload-options">
-                        <button className="upload-audio-button" onClick={handleAudioUpload}>
-                            <p>Upload Audio File</p>
-                            <img className="upload-icon" src={uploadIcon} alt="upload icon"/>
-                        </button>
+                        <form onSubmit={handleAudioUpload}>
+                            {/* <label className="upload-audio-button">
+                                <p>Upload Audio File</p>
+                                <img className="upload-icon" src={uploadIcon} alt="upload icon"/>
+                                <input type="file" onChange={handleFileChange} />
+                            </label> */}
+                            <label className="upload-audio-button">
+                                <div className="upload-content">
+                                    <p>Upload Audio File</p>
+                                    <img className="upload-icon" src={uploadIcon} alt="upload icon" />
+                                </div>
+                                <input type="file" onChange={handleFileChange} />
+                            </label>
+
+                            <button type="submit" disabled={!file}>Upload</button>
+                        </form>
                         {/* <a target="_blank" href="https://icons8.com/icon/RXegk50IKV5u/upload">Upload</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
                         <div className="drag-drop-area">
                             <p>Or</p>
