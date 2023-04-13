@@ -66,14 +66,14 @@ async function handleLogout(req, res) {
     const foundUser = await User.findOne({ refreshToken }); 
 
     if (!foundUser) {
-        res.clearCookie('jwt', {httpOnly:true}, {maxAge:14*60*60*1000})
+        res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
         return res.sendStatus(204)
     }
 
     //delete it from db
     const deleteToken = await User.findOneAndUpdate({email: foundUser.email}, {$unset: {refreshToken}});
 
-    res.clearCookie('jwt', {httpOnly:true}, {maxAge:14*60*60*1000})
+    res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
     res.sendStatus(204)
 }
 
