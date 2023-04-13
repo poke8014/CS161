@@ -5,18 +5,23 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css"
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth"
+import PersistentLogin from "./components/PersistentLogin";
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
+
+        <Route path="login" element={<LoginPage />} />
+        
+        <Route element={<PersistentLogin/>}>
+
           <Route path="/" element={<UploadPage />} />
-          <Route path="login" element={<LoginPage />} />
-          {/* protected routes */}
-          {/* <Route element={<RequireAuth/>}> */}
-            <Route path="visualization" element={<VisualizationPage/>} />
-          {/* </Route> */}
+          <Route path="visualization" element={<VisualizationPage/>} />
+
+        </Route>
+
           <Route path="*" element={<p>Not found</p>} />
         </Route>
       </Routes>
