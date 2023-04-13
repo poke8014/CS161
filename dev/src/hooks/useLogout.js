@@ -7,7 +7,7 @@ export default function useLogout(){
     const logout = async () => {
         setAuth({});
         try{
-            const res = await axios('logout', {
+            const res = await axios('/users/logout', {
                 withCredentials: true
             });
         }catch(error){
