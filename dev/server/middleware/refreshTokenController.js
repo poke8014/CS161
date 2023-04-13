@@ -17,12 +17,13 @@ async function handleRefreshToken(req, res) {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decodedInfo) => {
             if (err || foundUser.email !== decodedInfo.email) return res.sendStatus(403)
+            const email = foundUser.email
             const accessToken = jwt.sign(
                 { "email": decodedInfo.email },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '300s' }
             );
-            res.json({ accessToken })
+            res.json({ accessToken, email })
         } 
     )
 }
