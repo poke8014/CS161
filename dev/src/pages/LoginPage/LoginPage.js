@@ -1,8 +1,9 @@
 import NavBar from "../../components/NavBar/NavBar"
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthProvider";
-import axios from "../../axios";
+import React from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+//import axios from "../../axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./LoginPage.css"
 
 const LOGIN_URL = "/users/login"
@@ -11,7 +12,13 @@ const PASSWORD_LENGTH_REQUIREMENT = 8;
 
 export default function LoginPage(){
 
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
+    const axiosPrivate = useAxiosPrivate();
+
+    const navigate = useNavigate();
+    //to be used when the download button is implemented
+    const location = useLocation();
+    const from = location.state?.from?.pathName || "/";
 
     const [formLogin, setFormType] = React.useState(true);
 
@@ -36,8 +43,6 @@ export default function LoginPage(){
         "email": "",
         "password": ""
     })
-
-    const navigate = useNavigate();
 
     React.useEffect(() => {
         let passLength = false;
@@ -88,7 +93,8 @@ export default function LoginPage(){
             console.log("login!")
             if (emailValid){
                 if (await loginUser()){
-                    navigate("/")
+                    console.log("location: " + from);
+                    //navigate(from, {replace: true})
                 }else{
                     console.log("The password and/or email entered does not match our records!")
                 }
@@ -100,7 +106,7 @@ export default function LoginPage(){
                 let response = await postNewAccount()
                 if (response){
                     console.log("Account Created!")
-                    navigate("/")
+                    navigate("/login")
                     return true
                 }
             }
@@ -110,8 +116,9 @@ export default function LoginPage(){
     }
 
     async function loginUser(){
+        console.log("before login: " + from)
         try {
-            const response = await axios.post(LOGIN_URL, 
+            const response = await axiosPrivate.post(LOGIN_URL, 
                             JSON.stringify(userLoginInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
@@ -125,6 +132,7 @@ export default function LoginPage(){
                 "email": "",
                 "password": ""
             });
+            console.log("location: " + from);
         } catch (error) {
             return false
         }
@@ -133,7 +141,7 @@ export default function LoginPage(){
 
     async function postNewAccount(){
         try{
-            const response = await axios.post(SIGNUP_URL, 
+            const response = await axiosPrivate.post(SIGNUP_URL, 
                             JSON.stringify(userSignUpInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
