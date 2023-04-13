@@ -135,12 +135,12 @@ export default function LoginPage(){
         } catch (error) {
             return false
         }
-        emailValid ? setValidEmail(true) : setValidEmail(false)
+        validEmail ? setValidEmail(true) : setValidEmail(false)
     }
 
     async function loginUser(){
         try {
-            const response = await axios.post(LOGIN_URL, 
+            const response = await axiosPrivate.post(LOGIN_URL, 
                             JSON.stringify(userLoginInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
