@@ -23,6 +23,58 @@ async function createUser(req, res) {
     }
 };
 
+// login a user
+async function handleLogin(req, res) {
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({'message': 'Email and password are required.'});
+    const foundUser = await User.findOne({ email: email });
+
+    if (!foundUser) return res.sendStatus(401);
+
+    //evaluate hashed password
+    const match = await bcrypt.compare(password, foundUser.password);
+    if (match){
+        // JWTs
+        const accessToken = jwt.sign(
+            {"email": foundUser.email},
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '300s' }
+        )
+        const refreshToken = jwt.sign(
+            {"email": foundUser.email},
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '1h' }
+        )
+
+        // Saving refreshToken with current user
+        const updatedInDB = await User.findOneAndUpdate({email: foundUser.email}, {refreshToken: refreshToken});
+
+        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
+        res.json({ accessToken, success: 'User is logged in!' });
+    }else{
+        res.sendStatus(401)
+    }   
+}
+
+async function handleLogout(req, res) {
+    const cookies = req.cookies
+    if (!cookies?.jwt) return res.sendStatus(204) // success, no content
+    const refreshToken = cookies.jwt
+
+    const foundUser = await User.findOne({ refreshToken }); 
+
+    if (!foundUser) {
+        res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
+        return res.sendStatus(204)
+    }
+
+    //delete it from db
+    const deleteToken = await User.findOneAndUpdate({email: foundUser.email}, {$unset: {refreshToken}});
+
+    res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
+    res.sendStatus(204)
+}
+
 // Updating one
 async function updateUser(req, res) {
     if (req.body.email != null) {

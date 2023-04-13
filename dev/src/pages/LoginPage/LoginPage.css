@@ -114,7 +114,10 @@
 .password-requirements{
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 5px 0px;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
 }
 
 .requirements{
@@ -126,13 +129,13 @@
 
 .requirements li{
     margin: 0 5px;
+    text-align: left;
 }
 
 .valid-req{
-    color: darkgreen;
+    color: green;
 }
 
 .invalid-req{
     color: red;
-    opacity: 80%;
 }

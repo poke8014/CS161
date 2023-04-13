@@ -1,9 +1,20 @@
 import NavBar from "../../components/NavBar/NavBar"
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+//import axios from "../../axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./LoginPage.css"
 
 export default function LoginPage(){
+
+    const { setAuth } = useAuth();
+    const axiosPrivate = useAxiosPrivate();
+
+    const navigate = useNavigate();
+    //to be used when the download button is implemented
+    const location = useLocation();
+    const from = location.state?.from?.pathName || "/";
 
     const [formLogin, setFormType] = React.useState(true);
     const [invalidEmail, setInvalidEmail] = React.useState(false);
@@ -25,7 +36,11 @@ export default function LoginPage(){
         "password": "",
         "confirmPassword": ""
     })
-    const navigate = useNavigate();
+
+    const [userLoginInfo, setUserLoginInfo] = React.useState({
+        "email": "",
+        "password": ""
+    })
 
     React.useEffect(() => {
         if (!formLogin){
@@ -68,16 +83,53 @@ export default function LoginPage(){
 
     async function handleSubmit(e){
         e.preventDefault();
-        let emailValid = await checkEmail()
-        let passMatch = await checkPasswords()
-        await checkPasswordValidity();
-        if (passMatch && emailValid && passwordValidFormat){
-            let response = await postNewAccount()
-            if (response){
-                console.log("Account Created!")
-                navigate("/")
-                return true
+        let emailValid = checkEmail(e.target.value)
+        if (formLogin){
+            console.log("login!")
+            if (emailValid){
+                if (await loginUser()){
+                    console.log("location: " + from);
+                    //navigate(from, {replace: true})
+                }else{
+                    console.log("The password and/or email entered does not match our records!")
+                }
             }
+        }else{
+            console.log("sign up!")
+            let passMatch = checkIfPasswordsMatch()
+            if (passMatch && emailValid && passwordValidFormat){
+                let response = await postNewAccount()
+                if (response){
+                    console.log("Account Created!")
+                    navigate("/login")
+                    return true
+                }
+            }
+            !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
+        }
+        emailValid ? setValidEmail(true) : setValidEmail(false)
+    }
+
+    async function loginUser(){
+        console.log("before login: " + from)
+        try {
+            const response = await axiosPrivate.post(LOGIN_URL, 
+                            JSON.stringify(userLoginInfo),
+                            {
+                                headers: {'Content-Type': 'application/json'},
+                                withCredentials: true
+                            }
+            );
+            console.log(response?.data.success)
+            const accessToken = response?.data?.accessToken
+            setAuth(`{ ${userLoginInfo.email}, ${userLoginInfo.password}, ${accessToken} }`)
+            setUserLoginInfo({
+                "email": "",
+                "password": ""
+            });
+            console.log("location: " + from);
+        } catch (error) {
+            return false
         }
         !emailValid ? setInvalidEmail(true) : setInvalidEmail(false)
         !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
@@ -91,16 +143,14 @@ export default function LoginPage(){
         };
           
         try{
-            await fetch('/users/signup', newUser)
-            .then(response => response.json())
-            .then(res => {
-                if (res.message === "Email already taken"){
-                    setEmailTaken(true)
-                    return Promise.reject(res)
-                }else{
-                    setEmailTaken(false)
-                }
-            })
+            const response = await axiosPrivate.post(SIGNUP_URL, 
+                            JSON.stringify(userSignUpInfo),
+                            {
+                                headers: {'Content-Type': 'application/json'},
+                                withCredentials: true
+                            }
+            );
+            setEmailTaken(false)
         }catch (error){
             console.error(error)
             return false;
