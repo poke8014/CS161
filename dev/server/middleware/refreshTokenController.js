@@ -17,7 +17,6 @@ async function handleRefreshToken(req, res) {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decodedInfo) => {
             if (err || foundUser.email !== decodedInfo.email) return res.sendStatus(403)
-<<<<<<< HEAD
             const email = foundUser.email
             const accessToken = jwt.sign(
                 { "email": decodedInfo.email },
@@ -25,14 +24,6 @@ async function handleRefreshToken(req, res) {
                 { expiresIn: '300s' }
             );
             res.json({ accessToken, email })
-=======
-            const accessToken = jwt.sign(
-                { "email": decodedInfo.email },
-                process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30s' }
-            );
-            res.json({ accessToken })
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
         } 
     )
 }

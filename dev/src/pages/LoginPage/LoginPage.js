@@ -1,15 +1,8 @@
 import NavBar from "../../components/NavBar/NavBar"
-<<<<<<< HEAD
 import React from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-=======
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthProvider";
-import axios from "../../axios";
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
 import "./LoginPage.css"
 
 const LOGIN_URL = "/users/login"
@@ -18,7 +11,6 @@ const PASSWORD_LENGTH_REQUIREMENT = 8;
 
 export default function LoginPage(){
 
-<<<<<<< HEAD
     const { setAuth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
 
@@ -26,9 +18,6 @@ export default function LoginPage(){
     //to be used when the download button is implemented
     const location = useLocation();
     const from = location.state?.from?.pathName || "/";
-=======
-    const { setAuth } = useContext(AuthContext);
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
 
     const [formLogin, setFormType] = React.useState(true);
 
@@ -53,11 +42,6 @@ export default function LoginPage(){
         "email": "",
         "password": ""
     })
-<<<<<<< HEAD
-=======
-
-    const navigate = useNavigate();
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
 
     React.useEffect(() => {
         let passLength = false;
@@ -108,12 +92,8 @@ export default function LoginPage(){
             console.log("login!")
             if (emailValid){
                 if (await loginUser()){
-<<<<<<< HEAD
                     console.log("location: " + from);
                     navigate(from, {replace: true})
-=======
-                    navigate("/")
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
                 }else{
                     console.log("The password and/or email entered does not match our records!")
                 }
@@ -125,16 +105,11 @@ export default function LoginPage(){
                 let response = await postNewAccount()
                 if (response){
                     console.log("Account Created!")
-<<<<<<< HEAD
                     navigate("/login")
-=======
-                    navigate("/")
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
                     return true
                 }
             }
             !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
-<<<<<<< HEAD
         }
         emailValid ? setValidEmail(true) : setValidEmail(false)
     }
@@ -159,8 +134,6 @@ export default function LoginPage(){
             console.log("location: " + from);
         } catch (error) {
             return false
-=======
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
         }
         emailValid ? setValidEmail(true) : setValidEmail(false)
     }
@@ -189,11 +162,7 @@ export default function LoginPage(){
 
     async function postNewAccount(){
         try{
-<<<<<<< HEAD
             const response = await axiosPrivate.post(SIGNUP_URL, 
-=======
-            const response = await axios.post(SIGNUP_URL, 
->>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
                             JSON.stringify(userSignUpInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
