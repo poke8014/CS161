@@ -2,8 +2,8 @@
     display: flex;
     background-color: #051014;
     color: white;
-    height: 80px;
-    min-height: fit-content;
+    height: 10vh;
+    min-height: 10vh;
     justify-content: space-between;
     align-items: center;
     min-width: fit-content;

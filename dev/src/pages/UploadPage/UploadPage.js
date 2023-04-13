@@ -8,9 +8,10 @@ import "./UploadPage.css";
 
 export default function UploadPage() {
     
-    const [showMenu, setShowMenu] = React.useState(false)
+    const [showMenu, setShowMenu] = React.useState(false);
     // const [users, setUsers] = React.useState();
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     // React.useEffect(() => {
@@ -21,7 +22,7 @@ export default function UploadPage() {
     // }, []);
     
     function toggleShowMenu(){
-        setShowMenu(prevState => !prevState)
+        setShowMenu(prevState => !prevState);
     }
 
     async function handleAudioUpload(e){
@@ -42,11 +43,15 @@ export default function UploadPage() {
     }
 // TODO: Display error message and maybe modularize code!
     function handleFileChange(e) {
-        file = e.target.files[0];
+        const selectedFile = e.target.files[0];
+        const validExt = ['audio/mpeg'];
 
-        const validExt = ['mp3'];
-        if (validExt.includes(String(file.type).split('/')[1])) {
-            setFile(file);
+        if (selectedFile && validExt.includes(String(selectedFile.type))) {
+            setFile(selectedFile);
+            setErrorMessage("")
+        } else {
+            setFile(null);
+            setErrorMessage("Invalid file type. Please upload an audio file.");
         }
     }
 
@@ -70,30 +75,26 @@ export default function UploadPage() {
                 <Menu
                     menuItems={menuItems}        
                 />}
-                <div className="upload-box">
-                    <div className="upload-options">
-                        <form onSubmit={handleAudioUpload}>
-                            {/* <label className="upload-audio-button">
-                                <p>Upload Audio File</p>
-                                <img className="upload-icon" src={uploadIcon} alt="upload icon"/>
-                                <input type="file" onChange={handleFileChange} />
-                            </label> */}
-                            <label className="upload-audio-button">
-                                <div className="upload-content">
-                                    <p>Upload Audio File</p>
-                                    <img className="upload-icon" src={uploadIcon} alt="upload icon" />
-                                </div>
-                                <input type="file" onChange={handleFileChange} />
-                            </label>
-
-                            <button type="submit" disabled={!file}>Upload</button>
-                        </form>
-                        {/* <a target="_blank" href="https://icons8.com/icon/RXegk50IKV5u/upload">Upload</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
-                        <div className="drag-drop-area">
-                            <p>Or</p>
-                            <p>Drag and Drop Here!</p>
+                <div className="upload-container">
+                    <div className="upload-box">
+                        <div className="upload-options">
+                            <form>
+                                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                                <label className="upload-audio-button">
+                                    <div className="upload-content">
+                                        <p>Upload Audio File</p>
+                                        <img className="upload-icon" src={uploadIcon} alt="upload icon" />
+                                    </div>
+                                    <input type="file" onChange={handleFileChange} />
+                                </label>
+                            </form>
+                            <div className="drag-drop-area">
+                                <p>Or</p>
+                                <p>Drag and Drop Here!</p>
+                            </div>
                         </div>
                     </div>
+                    <button className="submit-button" type="submit" disabled={!file} onClick={handleAudioUpload}>Upload</button>
                 </div>
             </div>
         </div>

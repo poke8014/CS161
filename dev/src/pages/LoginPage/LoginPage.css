@@ -53,7 +53,7 @@
 
 .login-signup-box input::placeholder{
     color: black;
-    opacity: 90%;
+    opacity: 50%;
 }
 
 .forgot-password{
