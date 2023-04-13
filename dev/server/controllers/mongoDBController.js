@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Creating one
 async function createUser(req, res) {
@@ -118,4 +120,5 @@ async function getUser(req, res, next) {
     next();
 };
 
-module.exports = { getUser, createUser, deleteUser, updateUser };
+module.exports = { getUser, createUser, deleteUser, 
+            updateUser, handleLogin, handleLogout };
