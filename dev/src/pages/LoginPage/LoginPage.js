@@ -2,7 +2,6 @@ import NavBar from "../../components/NavBar/NavBar"
 import React from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-//import axios from "../../axios";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./LoginPage.css"
 
@@ -89,7 +88,7 @@ export default function LoginPage(){
             if (emailValid){
                 if (await loginUser()){
                     console.log("location: " + from);
-                    //navigate(from, {replace: true})
+                    navigate(from, {replace: true})
                 }else{
                     console.log("The password and/or email entered does not match our records!")
                 }
