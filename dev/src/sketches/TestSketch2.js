@@ -18,7 +18,7 @@ export default (props) => {
 
         // Draw a circle
         p5.stroke(50);
-        p5.fill(100);
+        p5.fill(255);
         p5.ellipse(x, y, 24, 24);
 
         // Jiggling randomly on the horizontal axis

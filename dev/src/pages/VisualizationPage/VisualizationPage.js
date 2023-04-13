@@ -1,12 +1,15 @@
-import "./VisualizationPage.css"
+import React, { useContext } from "react"
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
-import React from "react"
 import * as Sketches from "../../sketches"
+import { FileContext } from "../../components/FileContext"
+import "./VisualizationPage.css"
 
 export default function VisualizationPage(){
 
-    const [showMenu, setShowMenu] = React.useState(false)
+    const [showMenu, setShowMenu] = React.useState(false);
+    const { fileData } = useContext(FileContext);
+    // const testAudio = require("../../testAudio/FlyAway.mp3");
 
     function toggleShowMenu(){
         setShowMenu(prev => !prev)
@@ -24,15 +27,15 @@ export default function VisualizationPage(){
 
     return (
         <div className="visualization-page">
-             <NavBar openMenu={toggleShowMenu} />
-             <main className="content-container">
-                {showMenu && <Menu menuItems={menuItems}/>}
+            <NavBar openMenu={toggleShowMenu} />
+            <main className="content-container">
+                {showMenu && <Menu menuItems={menuItems} />}
                 <div className="visualization-container">
                     <div className="canvas-wrapper">
-                        <Sketches.TestSketch3 />
+                        <Sketches.TestSketch2 audioData={fileData} />
                     </div>
                 </div>
-             </main>
+            </main>
         </div>
     );
 }
