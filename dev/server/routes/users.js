@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const { getUser, createUser, deleteUser, updateUser } = require('../controllers/mongoDBController')
+const { getUser, createUser, deleteUser, updateUser, handleLogin, 
+    handleLogout } = require('../controllers/mongoDBController')
+
+const verifyJWT = require("../middleware/verifyJWT")
 
 // Getting all users
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => {  //testing jwt
     try {
         const users = await User.find();
         res.json(users);
@@ -13,13 +16,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+// User Login
+router.post('/login', handleLogin);
+
+// Creating one user
+router.post('/signup', createUser);
+
+// logout user
+router.get("/logout", handleLogout);
+
 // Getting user by ID
 router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
 });
-
-// Creating one user
-router.post('/signup', createUser);
 
 // Updating user by ID
 router.patch('/:id', getUser, updateUser);

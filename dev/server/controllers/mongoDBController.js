@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Creating one
 async function createUser(req, res) {
@@ -38,12 +40,20 @@ async function handleLogin(req, res) {
         const accessToken = jwt.sign(
             {"email": foundUser.email},
             process.env.ACCESS_TOKEN_SECRET,
+<<<<<<< HEAD
             { expiresIn: '300s' }
+=======
+            { expiresIn: '30s' }
+>>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
         )
         const refreshToken = jwt.sign(
             {"email": foundUser.email},
             process.env.REFRESH_TOKEN_SECRET,
+<<<<<<< HEAD
             { expiresIn: '1h' }
+=======
+            { expiresIn: '30s' }
+>>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
         )
 
         // Saving refreshToken with current user
@@ -64,14 +74,22 @@ async function handleLogout(req, res) {
     const foundUser = await User.findOne({ refreshToken }); 
 
     if (!foundUser) {
+<<<<<<< HEAD
         res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
+=======
+        res.clearCookie('jwt', {httpOnly:true}, {maxAge:14*60*60*1000})
+>>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
         return res.sendStatus(204)
     }
 
     //delete it from db
     const deleteToken = await User.findOneAndUpdate({email: foundUser.email}, {$unset: {refreshToken}});
 
+<<<<<<< HEAD
     res.clearCookie('jwt', {httpOnly:true}, {maxAge:24*60*60*1000})
+=======
+    res.clearCookie('jwt', {httpOnly:true}, {maxAge:14*60*60*1000})
+>>>>>>> parent of e3be92d (Revert "Merge branch 'client' into main")
     res.sendStatus(204)
 }
 
@@ -118,4 +136,5 @@ async function getUser(req, res, next) {
     next();
 };
 
-module.exports = { getUser, createUser, deleteUser, updateUser };
+module.exports = { getUser, createUser, deleteUser, 
+            updateUser, handleLogin, handleLogout };
