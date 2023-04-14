@@ -10,3 +10,16 @@
     align-items: center;
     font-size: larger;
 }
+
+.menu p {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.menu p.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* add hover for menu items*/

@@ -62,11 +62,10 @@ export default function LoginPage(){
                 "oneNumber": oneNum,
                 "oneSymbol": symbol
             }
-        })
-        checkPasswordValidity();
+        });
     },[userSignUpInfo.password])
 
-    function checkPasswordValidity(){
+    React.useEffect(() => {
         if (String(userSignUpInfo.password).length === 0){
             setPasswordValidFormat(false)
         }else if (passwordReq.oneLowerCase && passwordReq.passLength && passwordReq.OneUpperCase 
@@ -75,7 +74,7 @@ export default function LoginPage(){
         }else{
             setPasswordValidFormat(false)
         }
-    }
+    }, [passwordReq])
 
     function changeFormType(e){
         e.preventDefault();
@@ -89,7 +88,6 @@ export default function LoginPage(){
         e.preventDefault();
         let emailValid = checkEmail(e.target.value)
         if (formLogin){
-            console.log("login!")
             if (emailValid){
                 if (await loginUser()){
                     console.log("location: " + from);
@@ -99,14 +97,20 @@ export default function LoginPage(){
                 }
             }
         }else{
-            console.log("sign up!")
             let passMatch = checkIfPasswordsMatch()
             if (passMatch && emailValid && passwordValidFormat){
                 let response = await postNewAccount()
                 if (response){
                     console.log("Account Created!")
-                    navigate("/login")
-                    return true
+                    setFormType(prev => !prev)
+                    setValidEmail(true)
+                    setPasswordsNoMatch(false)
+                    setPasswordValidFormat(true)
+                    setUserSignUpInfo({
+                        "email": "",
+                        "password": "",
+                        "confirmPassword": ""
+                    })
                 }
             }
             !passMatch ? setPasswordsNoMatch(true) : setPasswordsNoMatch(false)
@@ -115,32 +119,8 @@ export default function LoginPage(){
     }
 
     async function loginUser(){
-        console.log("before login: " + from)
         try {
             const response = await axiosPrivate.post(LOGIN_URL, 
-                            JSON.stringify(userLoginInfo),
-                            {
-                                headers: {'Content-Type': 'application/json'},
-                                withCredentials: true
-                            }
-            );
-            console.log(response?.data.success)
-            const accessToken = response?.data?.accessToken
-            setAuth(`{ ${userLoginInfo.email}, ${userLoginInfo.password}, ${accessToken} }`)
-            setUserLoginInfo({
-                "email": "",
-                "password": ""
-            });
-            console.log("location: " + from);
-        } catch (error) {
-            return false
-        }
-        emailValid ? setValidEmail(true) : setValidEmail(false)
-    }
-
-    async function loginUser(){
-        try {
-            const response = await axios.post(LOGIN_URL, 
                             JSON.stringify(userLoginInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
