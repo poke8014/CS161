@@ -27,6 +27,7 @@ const TestSketch = (props) => {
     const y = p5.mouseY;
     const centerX = p5.width / 2;
     const centerY = p5.height / 2;
+    audioRef.current.volume = 0.3;
 
     if (
       x > centerX - 50 &&
