@@ -26,7 +26,7 @@ async function uploadAudio(req, res) {
             link: result.Location
         });
         // uploading to mongoDB
-        const saveAudio = await audio.save();
+        // const saveAudio = await audio.save();
         res.status(201).json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });

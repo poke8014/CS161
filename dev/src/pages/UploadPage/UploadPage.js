@@ -32,13 +32,17 @@ export default function UploadPage() {
         const formData = new FormData();
         formData.append("audiofile", file);
         try {
-            const response = await axios.post("/audioFiles/uploadAudio", formData, {
+            const response = await axios.post("http://localhost:8080/audioFiles/uploadAudio", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             });
             console.log("File uploaded:", response.data);
-            setFileData(response.data);     // set uploaded file data in context
+            setFileData({
+                ...response.data,
+                url: response.data.Location          // set audio link in context
+            });
+            console.log(file);
             navigate("/visualization")
         } catch (err) {
             console.error("Error uploading file:", err);

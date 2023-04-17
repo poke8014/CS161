@@ -1,7 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
 import "p5/lib/addons/p5.sound";
-import testAudio from "../testAudio/FlyAway.mp3";
 
 const TestSketch = (props) => {
   const { audioRef } = props;
@@ -18,20 +17,27 @@ const TestSketch = (props) => {
     } else {
       p5.fill(0, 255, 0);
     }
-    p5.rect(p5.width / 2 - 50, p5.height / 2 - 25, 100, 50);
+
+    p5.rectMode(p5.CENTER);
+    p5.rect(p5.width / 2, p5.height / 2, 100, 50);
   };
 
   const mouseClicked = (p5) => {
+    const x = p5.mouseX;
+    const y = p5.mouseY;
+    const centerX = p5.width / 2;
+    const centerY = p5.height / 2;
+
     if (
-      p5.mouseX > p5.width / 2 - 50 &&
-      p5.mouseX < p5.width / 2 + 50 &&
-      p5.mouseY > p5.height / 2 - 25 &&
-      p5.mouseY < p5.height / 2 + 25
+      x > centerX - 50 &&
+      x < centerX + 50 &&
+      y > centerY - 25 &&
+      y < centerY + 25
     ) {
-      if (!audioRef.current.paused) {
-        audioRef.current.pause();
-      } else {
+      if (audioRef.current.paused) {
         audioRef.current.play();
+      } else {
+        audioRef.current.pause();
       }
     }
   };
