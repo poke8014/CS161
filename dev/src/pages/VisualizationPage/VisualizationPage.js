@@ -9,8 +9,7 @@ export default function VisualizationPage(){
 
     const [showMenu, setShowMenu] = React.useState(false);
     const { fileData } = useContext(FileContext);
-    const audioUrl = fileData.url;
-    const audioRef = useRef();
+    const audioLink = fileData.Location;
 
     function toggleShowMenu(){
         setShowMenu(prev => !prev)
@@ -26,8 +25,6 @@ export default function VisualizationPage(){
         "Audio 6"
     ];
 
-    const audioLink = fileData.audioLink;
-
     return (
         <div className="visualization-page">
             <NavBar openMenu={toggleShowMenu} />
@@ -35,8 +32,7 @@ export default function VisualizationPage(){
                 {showMenu && <Menu menuItems={menuItems} />}
                 <div className="visualization-container">
                     <div className="canvas-wrapper">
-                        <audio ref={audioRef} src ={audioUrl} />
-                        <Sketches.TestSketch audioRef={audioRef} />
+                        <Sketches.TestSketch3 audioLink={audioLink} />
                     </div>
                 </div>
             </main>
