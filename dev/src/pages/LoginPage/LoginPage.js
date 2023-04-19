@@ -11,7 +11,7 @@ const PASSWORD_LENGTH_REQUIREMENT = 8;
 
 export default function LoginPage(){
 
-    const { setAuth } = useAuth();
+    const { setAuth, setLoggedIn } = useAuth();
     const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
@@ -21,7 +21,6 @@ export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
 
-    const [userLoggedIn, setUserLoggedIn] = React.useState(false);
     const [userCreated, setUserCreated] = React.useState(false);
 
     const [validCredentials, setValidCredentials] = React.useState(true);
@@ -87,6 +86,7 @@ export default function LoginPage(){
         setValidEmail(true)
         setPasswordsNoMatch(false)
         setPasswordValidFormat(true)
+        setValidCredentials(false)
     }
 
     async function handleSubmit(e){
@@ -95,8 +95,8 @@ export default function LoginPage(){
         if (formLogin){
             if (emailValid){
                 if (await loginUser()){
-                    console.log("location: " + from);
-                    setUserLoggedIn(true)
+                    console.log("location: " + from)
+                    setLoggedIn(true)
                     navigate(from, {replace: true})
                 }else{
                     setValidCredentials(false)
@@ -262,7 +262,6 @@ export default function LoginPage(){
                 </form>
             </div>
             { userCreated && <p className="user-created">Account created successfully! Login to continue!</p>}
-            { userLoggedIn && <p className="user-created">You have logged in successfully!</p>}
         </div>
     )
 }
