@@ -1,23 +1,54 @@
 import React from "react";
 import Sketch from "react-p5";
+import "p5/lib/addons/p5.sound";
 
-	let x = 50;
-	let y = 50;
-export default (props) => {
-	const setup = (p5, canvasParentRef) => {
-		// use parent to render the canvas in this ref
-		// (without that p5 will render the canvas outside of your component)
-		p5.createCanvas(500, 500).parent(canvasParentRef);
-	};
+const TestSketch = (props) => {
+  const { audioLink } = props;
+  let sound;
 
-	const draw = (p5) => {
-		p5.background(0);
-		p5.ellipse(x, y, 70, 70);
-		// NOTE: Do not use setState in the draw function or in functions that are executed
-		// in the draw function...
-		// please use normal variables or class properties for these purposes
-		// x++;
-	};
+  const preload = (p5) => {
+	sound = p5.loadSound(audioLink);
+  };
 
-	return <Sketch setup={setup} draw={draw} />;
+  const setup = (p5, canvasParentRef) => {
+    p5.createCanvas(400, 400).parent(canvasParentRef);
+  };
+
+  const draw = (p5) => {
+    p5.background(220);
+
+    if (sound.isPlaying()) {
+		p5.fill(255, 0, 0);
+	} else {
+		p5.fill(0, 255, 0);
+	}
+
+    p5.rectMode(p5.CENTER);
+    p5.rect(p5.width / 2, p5.height / 2, 100, 50);
+  };
+
+  const mouseClicked = (p5) => {
+    const x = p5.mouseX;
+    const y = p5.mouseY;
+    const centerX = p5.width / 2;
+    const centerY = p5.height / 2;
+    sound.setVolume = 0.3;
+
+    if (
+      x > centerX - 50 &&
+      x < centerX + 50 &&
+      y > centerY - 25 &&
+      y < centerY + 25
+    ) {
+      if (sound.isPlaying()) {
+		sound.pause();
+	  } else {
+		sound.play();
+	  }
+    }
+  };
+
+  return <Sketch preload={preload} setup={setup} draw={draw} mouseClicked={mouseClicked} />;
 };
+
+export default TestSketch;
