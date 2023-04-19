@@ -29,11 +29,6 @@ export default function PersistentLogin(){
         return () => isMounted = false;
     }, [])
 
-    react.useEffect(() => {
-        console.log("loading " + loading)
-        console.log("at: " + JSON.stringify(auth?.email))
-    },[loading])
-
     return(
         <>
             {loading
