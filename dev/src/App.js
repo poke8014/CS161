@@ -4,10 +4,10 @@ import { FileProvider } from './components/FileContext';
 import UploadPage from "./pages/UploadPage/UploadPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import VisualizationPage from "./pages/VisualizationPage/VisualizationPage"
-import "./App.css"
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth"
 import PersistentLogin from "./components/PersistentLogin";
+import "./App.css"
 
 function App() {
   return (
