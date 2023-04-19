@@ -9,6 +9,9 @@ export default function PersistentLogin(){
     const {auth} = useAuth()
 
     react.useEffect(() => {
+
+        let isMounted = true;
+
         const verifyRT = async () => {
             try{
                 await refresh()
@@ -17,11 +20,13 @@ export default function PersistentLogin(){
                 console.error(error)
             }
             finally{
-                setLoading(false)
+                isMounted && setLoading(false)
             }
         }
 
         !auth?.accessToken ? verifyRT() : setLoading(false)
+
+        return () => isMounted = false;
     }, [])
 
     react.useEffect(() => {
