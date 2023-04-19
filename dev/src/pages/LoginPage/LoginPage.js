@@ -21,6 +21,11 @@ export default function LoginPage(){
 
     const [formLogin, setFormType] = React.useState(true);
 
+    const [userLoggedIn, setUserLoggedIn] = React.useState(false);
+    const [userCreated, setUserCreated] = React.useState(false);
+
+    const [validCredentials, setValidCredentials] = React.useState(true);
+ 
     const [validEmail, setValidEmail] = React.useState(true);
     const [passwordsNoMatch, setPasswordsNoMatch] = React.useState(false);
     const [passwordValidFormat, setPasswordValidFormat] = React.useState(true);
@@ -91,8 +96,10 @@ export default function LoginPage(){
             if (emailValid){
                 if (await loginUser()){
                     console.log("location: " + from);
+                    setUserLoggedIn(true)
                     navigate(from, {replace: true})
                 }else{
+                    setValidCredentials(false)
                     console.log("The password and/or email entered does not match our records!")
                 }
             }
@@ -102,6 +109,7 @@ export default function LoginPage(){
                 let response = await postNewAccount()
                 if (response){
                     console.log("Account Created!")
+                    setUserCreated(true);
                     setFormType(prev => !prev)
                     setValidEmail(true)
                     setPasswordsNoMatch(false)
@@ -218,13 +226,14 @@ export default function LoginPage(){
                     </div>
                     <div className="user-input">
                         <input 
-                        type={"password"} 
-                        placeholder="Password" 
-                        name="password" 
-                        onChange={handleChange} 
-                        value={formLogin ? userLoginInfo.password : userSignUpInfo.password}
-                        required
-                    />
+                            type={"password"} 
+                            placeholder="Password" 
+                            name="password" 
+                            onChange={handleChange} 
+                            value={formLogin ? userLoginInfo.password : userSignUpInfo.password}
+                            required
+                        />
+                        { !validCredentials ? <label htmlFor="password"className="error">The password and/or email entered does not match our records!</label> : ""}
                     </div>
                     {formLogin ? <p className="forgot-password">Forgot Password?</p>
                         :   <div className="user-input">
@@ -252,6 +261,8 @@ export default function LoginPage(){
                     </p>
                 </form>
             </div>
+            { userCreated && <p className="user-created">Account created successfully! Login to continue!</p>}
+            { userLoggedIn && <p className="user-created">You have logged in successfully!</p>}
         </div>
     )
 }
