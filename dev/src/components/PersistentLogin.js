@@ -17,7 +17,7 @@ export default function PersistentLogin(){
                 await refresh()
             }
             catch(error){
-                console.error(error)
+                console.log("guest user")
             }
             finally{
                 isMounted && setLoading(false)
