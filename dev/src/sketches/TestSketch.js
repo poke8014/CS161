@@ -2,6 +2,7 @@ import React from "react";
 import Sketch from "react-p5";
 import "p5/lib/addons/p5.sound";
 
+
 const TestSketch = (props) => {
   const { audioLink } = props;
   const song = React.useRef();
@@ -33,7 +34,7 @@ const TestSketch = (props) => {
     fft.current.setInput(song.current);
     let vol = fft.current.getLevel();
     volhistory.current.push(vol);
-    p5.stroke(255);
+    p5.stroke(255, 0, 0); // Change the stroke color here
     p5.noFill();
 
     p5.translate(p5.width / 2, p5.height / 2);
@@ -52,7 +53,12 @@ const TestSketch = (props) => {
   };
 
   const mouseClicked = (p5) => {
-    toggleSong();
+    const x = p5.mouseX;
+    const y = p5.mouseY;
+
+    if (x >= 0 && x <= p5.width && y >= 0 && y <= p5.height) {
+      toggleSong();
+    }
   };
 
   return (

@@ -1,27 +1,10 @@
 import React from "react";
 import Sketch from "react-p5";
-<<<<<<< HEAD
-// import "p5/lib/addons/p5.sound";
-=======
 import "p5/lib/addons/p5.sound";
->>>>>>> main
 
 const TestSketch = (props) => {
   const { audioLink } = props;
   let sound;
-<<<<<<< HEAD
-  //Q: documentation on how to use p5.sound?
-  //A: https://p5js.org/reference/#/libraries/p5.sound
-  const preload = (p5) => {
-	sound = p5.loadSound(audioLink);
-  sound.setVolume = 0.3;
-  };
-
-  const setup = (p5, canvasParentRef) => {
-    p5.createCanvas(400, 400).parent(canvasParentRef);
-  };
-
-=======
 
   const preload = (p5) => {
 	sound = p5.loadSound(audioLink);
@@ -32,7 +15,6 @@ const TestSketch = (props) => {
     p5.createCanvas(400, 400).parent(canvasParentRef);
   };
 
->>>>>>> main
   const draw = (p5) => {
     p5.background(220);
 
