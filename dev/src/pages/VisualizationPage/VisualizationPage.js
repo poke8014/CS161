@@ -27,15 +27,15 @@ export default function VisualizationPage(){
 
     return (
         <div className="visualization-page">
-             <NavBar openMenu={toggleShowMenu} />
-             <main className="content-container">
-                {showMenu && <Menu/>}
+            <NavBar openMenu={toggleShowMenu} />
+            <main className="content-container">
+                {showMenu && <Menu menuItems={menuItems} />}
                 <div className="visualization-container">
                     <div className="canvas-wrapper">
                         <Sketches.TestSketch audioLink={audioLink} />
                     </div>
                 </div>
-             </main>
+            </main>
         </div>
     );
 }

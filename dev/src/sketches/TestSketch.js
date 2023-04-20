@@ -1,5 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
+import "p5/lib/addons/p5.sound";
 
 const TestSketch = (props) => {
   const { audioLink } = props;
@@ -64,4 +65,4 @@ const TestSketch = (props) => {
   );
 };
 
-export default MySketch
+export default TestSketch;
