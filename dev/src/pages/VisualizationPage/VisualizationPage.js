@@ -1,19 +1,29 @@
-import "./VisualizationPage.css"
+import React, { useContext, useRef } from "react"
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
-import React from "react"
 import * as Sketches from "../../sketches"
-// import TestSketch2 from "../../sketches/TestSketch2"
-
-// import { useNavigate } from "react-router-dom";
+import { FileContext } from "../../components/FileContext"
+import "./VisualizationPage.css"
 
 export default function VisualizationPage(){
 
-    const [showMenu, setShowMenu] = React.useState(false)
+    const [showMenu, setShowMenu] = React.useState(false);
+    const { fileData } = useContext(FileContext);
+    const audioLink = fileData.Location;
 
     function toggleShowMenu(){
         setShowMenu(prev => !prev)
     }
+
+    const menuItems = [
+        "Click on an existing audio",
+        "Audio 1",
+        "Audio 2",
+        "Audio 3",
+        "Audio 4",
+        "Audio 5",
+        "Audio 6"
+    ];
 
     return (
         <div className="visualization-page">

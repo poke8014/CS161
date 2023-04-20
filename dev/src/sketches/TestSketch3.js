@@ -1,6 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
-import "p5/lib/addons/p5.sound";
+// import "p5/lib/addons/p5.sound";
 
 const TestSketch = (props) => {
   const { audioLink } = props;
