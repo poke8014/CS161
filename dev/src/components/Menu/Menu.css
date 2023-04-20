@@ -3,12 +3,17 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 18%;
     height: auto;
     background-color: #0D191E;
     color: white;
     align-items: center;
     font-size: larger;
+    transition: width 0.5s ease-in-out;
+}
+
+.menu:hover{
+    width: 22%;
 }
 
 .menu p {
@@ -19,7 +24,21 @@
 
 .menu p.selected {
     background-color: #4CAF50;
-    color: white;
+    color: black;
+    font-weight: bold;
+    scale: 1.2;
 }
 
-/* add hover for menu items*/
+.audios{
+    margin: 50px 0px;
+    font-size: larger;
+    font-weight: bold;
+}
+
+/* hover for menu items*/
+.menu p:hover {
+    background-color: #4CAF50;
+    opacity: 90%;
+    font-weight: bold;
+}
+
