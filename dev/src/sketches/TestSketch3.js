@@ -8,6 +8,7 @@ const TestSketch = (props) => {
 
   const preload = (p5) => {
 	sound = p5.loadSound(audioLink);
+  sound.setVolume = 0.3;
   };
 
   const setup = (p5, canvasParentRef) => {
@@ -32,7 +33,6 @@ const TestSketch = (props) => {
     const y = p5.mouseY;
     const centerX = p5.width / 2;
     const centerY = p5.height / 2;
-    sound.setVolume = 0.3;
 
     if (
       x > centerX - 50 &&
@@ -41,10 +41,10 @@ const TestSketch = (props) => {
       y < centerY + 25
     ) {
       if (sound.isPlaying()) {
-		sound.pause();
-	  } else {
-		sound.play();
-	  }
+		    sound.pause();
+	    } else {
+		    sound.play();
+	    }
     }
   };
 

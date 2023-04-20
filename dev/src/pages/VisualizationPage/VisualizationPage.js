@@ -32,7 +32,7 @@ export default function VisualizationPage(){
                 {showMenu && <Menu menuItems={menuItems} />}
                 <div className="visualization-container">
                     <div className="canvas-wrapper">
-                        <Sketches.TestSketch3 audioLink={audioLink} />
+                        <Sketches.TestSketch audioLink={audioLink} />
                     </div>
                 </div>
             </main>
