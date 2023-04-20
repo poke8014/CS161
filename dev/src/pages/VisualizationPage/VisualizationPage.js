@@ -21,9 +21,9 @@ export default function VisualizationPage(){
              <main className="content-container">
                 {showMenu && <Menu/>}
                 <div className="visualization-container">
-                    {/* <div className="canvas-wrapper"> */}
-                        <Sketches.TestSketch2 />
-                    {/* </div> */}
+                    <div className="canvas-wrapper">
+                        <Sketches.TestSketch audioLink={audioLink} />
+                    </div>
                 </div>
              </main>
         </div>
