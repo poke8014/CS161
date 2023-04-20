@@ -9,19 +9,14 @@ import "./UploadPage.css";
 
 export default function UploadPage() {
     
-    const [showMenu, setShowMenu] = React.useState(false);
-    // const [users, setUsers] = React.useState();
+    const [showMenu, setShowMenu] = React.useState(true);
     const [file, setFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const { setFileData } = useContext(FileContext);
-
-    // React.useEffect(() => {
-    //     fetch("/users")
-    //     .then(response => response.json())
-    //     .then(data => console.log(data))
-    //     .catch(err => console.log("error: " + err))
-    // }, []);
+    const { setFileData, selectedFile, setSelectedFile } = useContext(FileContext);
+    
+    const [guestAudios, setGuestAudios] = React.useState([])
+    const [menuItems, setMenuItems] = React.useState([]);
     
     function toggleShowMenu(){
         setShowMenu(prevState => !prevState);
@@ -62,20 +57,40 @@ export default function UploadPage() {
         }
     }
 
+    React.useEffect(() => {
+        setMenuItems(prev => {
+            return [
+                ...prev,
+                file?.name
+            ]
+        })
+    },[file])
+
+    React.useEffect(() => {
+        const options = {method: 'GET', url: 'http://localhost:8000/audioFiles/existingAudioFiles'};
+        axios.request(options).then(function (response) {
+        setGuestAudios(response.data)
+        }).catch(function (error) {
+            console.error(error);
+        });
+        return () => setMenuItems([])
+    },[])
+
+    React.useEffect(() => {
+        let titles = guestAudios.map(audio => {
+            return audio.title.replace(/[^a-zA-Z ]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+        })
+        setMenuItems(titles)
+    },[guestAudios])
+
     return (
         <div className="upload-page">
             <NavBar openMenu={toggleShowMenu} />
             <div className="content">
-                {showMenu && <Menu menuItems={[
-                    "Click on an existing audio",
-                    file ? file.name : "",
-                    "Audio 1",
-                    "Audio 2",
-                    "Audio 3",
-                    "Audio 4",
-                    "Audio 5",
-                    "Audio 6"
-                    ]}
+                {showMenu && 
+                    <Menu menuItems={menuItems}
+                    selected={selectedFile}
+                    setSelected={setSelectedFile}
                 />}
                 <div className="upload-container">
                     <div className="upload-box">
