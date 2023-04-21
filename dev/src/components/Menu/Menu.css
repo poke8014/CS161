@@ -14,8 +14,8 @@
 }
 
 .menu:hover{
-    padding-right: 5%;
-    padding-left: 5%;
+    padding-right: 2%;
+    padding-left: 2%;
 }
 
 .menu p {
@@ -24,14 +24,14 @@
     padding: 0px 10px;
     max-width: 100%;
     cursor: pointer;
-    transition: background-color 0.5s ease-in-out;
+    transition: background-color scale 0.5s ease-in-out;
 }
 
 .menu p.selected {
     background-color: #4CAF50;
     color: black;
     font-weight: bold;
-    scale: 1.2;
+    scale: 1.25;
 }
 
 .audios{
@@ -48,5 +48,6 @@
     background-color: #4CAF50;
     opacity: 90%;
     font-weight: bold;
+    scale: 1.1;
 }
 
