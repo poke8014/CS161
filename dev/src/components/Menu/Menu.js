@@ -7,18 +7,18 @@ export default function Menu({ menuItems, selected, setSelected }){
 
     React.useEffect(() => {
         if (menuItems.length > 6 && !lastItemAdded) {
-        setSelected(menuItems[menuItems.length - 1]);
-        setLastItemAdded(true);
+            setSelected(menuItems[menuItems.length - 1]);
+            setLastItemAdded(true);
         }
     }, [menuItems, selected, setSelected, lastItemAdded]);
 
     const renderMenuItems = menuItems?.map((item) => (
         <p
-        key={item}
+        key={item[0]}
         className={item === selected ? "selected" : ""}
         onClick={() => setSelected(item)}
         >
-        {item}
+        {item[0]}
         </p>
     ));
 
