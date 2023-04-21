@@ -9,19 +9,16 @@ import "./UploadPage.css";
 
 export default function UploadPage() {
     
-    const [showMenu, setShowMenu] = React.useState(false);
-    // const [users, setUsers] = React.useState();
+    const [showMenu, setShowMenu] = React.useState(true);
     const [file, setFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const { setFileData } = useContext(FileContext);
+    const { setFileData, selectedFile, setSelectedFile } = useContext(FileContext);
+    
+    const [guestAudios, setGuestAudios] = React.useState([])
+    const [menuItems, setMenuItems] = React.useState([]);
 
-    // React.useEffect(() => {
-    //     fetch("/users")
-    //     .then(response => response.json())
-    //     .then(data => console.log(data))
-    //     .catch(err => console.log("error: " + err))
-    // }, []);
+    const [existingAudioSelected, setExistingAudioSelected] = React.useState(false)
     
     function toggleShowMenu(){
         setShowMenu(prevState => !prevState);
@@ -29,23 +26,36 @@ export default function UploadPage() {
 
     async function handleAudioUpload(e){
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("audiofile", file);
-        try {
-            const response = await axios.post("http://localhost:8000/audioFiles/uploadAudio", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
+        if (existingAudioSelected){
+            let existingAudioId = selectedFile[1]
+            for (let audio in guestAudios){
+                if (guestAudios[audio]._id == existingAudioId){
+                    setFileData({
+                        Location: guestAudios[audio].link
+                    })
+                    break 
                 }
-            });
-            console.log("File uploaded:", response.data);
-            setFileData({
-                ...response.data,
-                url: response.data.Location          // set audio link in context
-            });
-            console.log(file);
+            }
             navigate("/visualization")
-        } catch (err) {
-            console.error("Error uploading file:", err);
+        }else{
+            const formData = new FormData();
+            formData.append("audiofile", file);
+            try {
+                const response = await axios.post("http://localhost:8000/audioFiles/uploadAudio", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                });
+                console.log("File uploaded:", response.data);
+                setFileData({
+                    ...response.data,
+                    url: response.data.Location          // set audio link in context
+                });
+                console.log(file);
+                navigate("/visualization")
+            } catch (err) {
+                console.error("Error uploading file:", err);
+            }
         }
     }
 
@@ -62,20 +72,66 @@ export default function UploadPage() {
         }
     }
 
+    React.useEffect(() => {
+        console.log(selectedFile)
+        console.log(guestAudios)
+        console.log(file)
+        let audioExists = false
+        if (selectedFile){
+            for (let audio in guestAudios){
+                if (guestAudios[audio]._id == selectedFile[1]){
+                    audioExists = true
+                    break
+                }
+            }
+        }
+        if(audioExists){
+            setExistingAudioSelected(true)
+        }else{
+            setExistingAudioSelected(false) 
+        }
+    }, [selectedFile])
+
+    React.useEffect(() => {
+        setMenuItems(prev => {
+            return [
+                ...prev,
+                [
+                    file?.name
+                ]
+            ]
+        })
+        console.log(file)
+    },[file])
+
+    React.useEffect(() => {
+        const options = {method: 'GET', url: 'http://localhost:8000/audioFiles/existingAudioFiles'};
+        axios.request(options).then(function (response) {
+        setGuestAudios(response.data)
+        }).catch(function (error) {
+            console.error(error);
+        });
+        return () => setMenuItems([])
+    },[])
+
+    React.useEffect(() => {
+        let titles = guestAudios.map(audio => {
+            return [
+                audio.title.replace(/[^a-zA-Z ]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+                audio._id
+            ]
+        })
+        setMenuItems(titles)
+    },[guestAudios])
+
     return (
         <div className="upload-page">
             <NavBar openMenu={toggleShowMenu} />
             <div className="content">
-                {showMenu && <Menu menuItems={[
-                    "Click on an existing audio",
-                    file ? file.name : "",
-                    "Audio 1",
-                    "Audio 2",
-                    "Audio 3",
-                    "Audio 4",
-                    "Audio 5",
-                    "Audio 6"
-                    ]}
+                {showMenu && 
+                    <Menu menuItems={menuItems}
+                    selected={selectedFile}
+                    setSelected={setSelectedFile}
                 />}
                 <div className="upload-container">
                     <div className="upload-box">
@@ -96,7 +152,7 @@ export default function UploadPage() {
                             </div>
                         </div>
                     </div>
-                    <button className="submit-button" type="submit" disabled={!file} onClick={handleAudioUpload}>Upload</button>
+                    <button className="submit-button" type="submit" disabled={!file && !existingAudioSelected} onClick={handleAudioUpload}>Visualize</button>
                 </div>
             </div>
         </div>

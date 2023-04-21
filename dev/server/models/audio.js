@@ -8,6 +8,9 @@ const audioSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true
+    },
+    guest: {
+        type: Boolean
     }
 })
 

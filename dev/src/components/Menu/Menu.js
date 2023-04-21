@@ -1,32 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./Menu.css"
 
-export default function Menu({ menuItems, onSelect, selectedFile }){
-    
-    const [selectedItem, setSelectedItem] = useState(null);
+export default function Menu({ menuItems, selected, setSelected }){
 
-    useEffect(() => {
-        setSelectedItem(selectedFile);
-    }, [selectedFile]);
+    const [lastItemAdded, setLastItemAdded] = React.useState(false);
 
-    const handleClick = (item) => {
-        // ignore clicks on first item
-        if (item === menuItems[0]) {
-            return;
+    React.useEffect(() => {
+        if (menuItems.length > 6 && !lastItemAdded) {
+            setSelected(menuItems[menuItems.length - 1]);
+            setLastItemAdded(true);
         }
-        setSelectedItem(item);
-        onSelect(item);
-    }
+    }, [menuItems, selected, setSelected, lastItemAdded]);
 
-    const renderMenuItems = menuItems.map(item => {
-        const className = selectedItem === item ? "selected" : "";
-        return (
-            <p key={item} className={className} onClick={() => handleClick(item)}>
-                {item}
-            </p>
-        );
-    });
+    const renderMenuItems = menuItems?.map((item) => (
+        <p
+        key={item[0]}
+        className={item === selected ? "selected" : ""}
+        onClick={() => setSelected(item)}
+        >
+        {item[0]}
+        </p>
+    ));
 
-    return (<div className="menu">{renderMenuItems}</div>
+    return (
+        <div className="menu">
+            <div className="audios">Click on an existing audio</div>
+            {renderMenuItems}
+        </div>
     )
 }

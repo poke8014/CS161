@@ -17,7 +17,7 @@ export default function PersistentLogin(){
                 await refresh()
             }
             catch(error){
-                console.error(error)
+                console.log("guest user")
             }
             finally{
                 isMounted && setLoading(false)
@@ -28,11 +28,6 @@ export default function PersistentLogin(){
 
         return () => isMounted = false;
     }, [])
-
-    react.useEffect(() => {
-        console.log("loading " + loading)
-        console.log("at: " + JSON.stringify(auth?.email))
-    },[loading])
 
     return(
         <>

@@ -86,7 +86,47 @@
 
 .submit-button {
     display: block;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    font-size: 1em;
     margin-top: 20px;
+}
+
+.submit-button:enabled{
+    background-color: #4CAF50;
+    transition: background-color 0.3s ease-in-out;
+    animation-name: button-pulse;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-button:enabled:hover{
+    animation-play-state: paused;
+}
+
+@keyframes button-pulse {
+    0% {
+      transform: scale(1) translateY(0);
+    }
+    50% {
+      transform: scale(1.1) translateY(-10px);
+    }
+    100% {
+      transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes button-pulse-paused {
+    from {
+      transform: scale(1.1) translateY(-10px);
+    }
+    to {
+      transform: scale(1) translateY(0);
+    }
 }
 
 .upload-container {
