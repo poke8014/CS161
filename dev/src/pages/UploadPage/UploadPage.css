@@ -86,10 +86,10 @@
 
 .submit-button {
     display: block;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
-    font-size: larger;
+    font-size: 1em;
     margin-top: 20px;
 }
 
