@@ -10,8 +10,8 @@ export default function HomePage(){
         <main className="home-page">
             <NavBar showMenuButton={false}/>
             <div className="first">
-                <div>
-                    <p>Unleash the power <span>of music with</span><span>audiovision</span></p>
+                <div className="left">
+                    <p>Unleash the power <span>of music with</span><span className="audiovision-span">audiovision</span></p>
                     <button>Let's Go!</button>
                 </div>
                 <img src={catChill} />
