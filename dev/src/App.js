@@ -4,6 +4,7 @@ import { FileProvider } from './components/FileContext';
 import UploadPage from "./pages/UploadPage/UploadPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import VisualizationPage from "./pages/VisualizationPage/VisualizationPage"
+import HomePage from './pages/HomePage/HomePage';
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth"
 import PersistentLogin from "./components/PersistentLogin";
@@ -20,7 +21,8 @@ function App() {
           
           <Route element={<PersistentLogin/>}>
 
-            <Route path="/" element={<UploadPage />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path="upload" element={<UploadPage />} />
             <Route path="visualization" element={<VisualizationPage/>} />
 
           </Route>

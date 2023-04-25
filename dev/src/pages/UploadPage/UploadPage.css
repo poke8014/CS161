@@ -31,6 +31,7 @@
 
 .upload-audio-button {
     position: relative;
+    margin: 0;
     display: inline-block;
     vertical-align: middle;
     width: fit-content;
@@ -50,6 +51,7 @@
 
 .upload-audio-button p {
     margin: 0;
+    font-size: 2.5vw;
 }
 
 .upload-audio-button input[type="file"] {

@@ -1,12 +1,14 @@
 .nav-bar{
+    padding: 1% 0px;
     display: flex;
     background-color: #051014;
     color: white;
-    height: 80px;
+    height: 15%;
     min-height: fit-content;
     justify-content: space-between;
     align-items: center;
     min-width: fit-content;
+    z-index: 2;
 }
 
 .back-arrow{
@@ -25,7 +27,7 @@
 .menu-button{
     display: flex;
     flex-direction: column;
-    margin-left: 2vw;
+    margin-left: 10%;
 }
 
 .menu-button:hover{
@@ -44,7 +46,7 @@
     font-size: 4ch;
     padding: 0;
     margin: 0;
-    padding-left: 3rem;
+    padding-left: 15%;
 }
 
 .brand-name:hover{
