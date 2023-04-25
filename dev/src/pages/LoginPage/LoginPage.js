@@ -86,7 +86,7 @@ export default function LoginPage(){
         setValidEmail(true)
         setPasswordsNoMatch(false)
         setPasswordValidFormat(true)
-        setValidCredentials(false)
+        setValidCredentials(true)
     }
 
     async function handleSubmit(e){
