@@ -29,7 +29,7 @@ export default function VisualizationPage(){
         <div className="visualization-page">
             <NavBar openMenu={toggleShowMenu} />
             <main className="content-container">
-                {showMenu && <Menu menuItems={menuItems} />}
+                {showMenu && <Menu menuItems={menuItems} showMenuButton={false} />}
                 <div className="visualization-container">
                     <div className="canvas-wrapper">
                         <Sketches.TestSketch3 audioLink={audioLink} />
