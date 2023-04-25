@@ -13,13 +13,17 @@ export default function HomePage(){
             entries.forEach(entry => {
               if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                entry.target.style.animationPlayState = "running";
               }
             });
           }, {
-            threshold: 1.0
+            threshold: 0.5
           });
       
           const element = document.querySelector('.description');
+          const element2 = document.querySelector('.second img');
+
+          observer.observe(element2);
           observer.observe(element);
       
           // cleanup function
@@ -55,6 +59,24 @@ export default function HomePage(){
             {/* <video className="visual-vid" src={audioVid} autoPlay={true} /> */}
             <button className="last">Let's Go!</button>
             <br />
+            {/* Animation when hovering over the audiovision */}
+            <div className="audio-visualizer">
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+              <div className="bar"></div>
+            </div>
         </main>
     )
 }
