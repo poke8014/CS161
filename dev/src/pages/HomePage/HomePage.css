@@ -83,7 +83,7 @@ html{
     flex: 1;
     cursor: pointer;
     animation: slide-down 1.2s ease-in-out forwards;
-    transition: filter 3s ease-in-out;
+    transition: filter 1s ease-in-out;
     /* background-color: violet; */
 }
 
