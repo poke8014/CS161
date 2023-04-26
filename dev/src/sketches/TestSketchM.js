@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 function TestSketchM(props) {
-  const { audioLink } = props;
+  const { audioLink, width, height } = props;
   const canvasRef = useRef(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const animationRef = useRef(null);
@@ -56,7 +56,7 @@ function TestSketchM(props) {
           let x = 0;
 
           for (let i = 0; i < dataArray.length; i++) {
-            const barHeight = dataArray[i];
+            const barHeight = dataArray[i] * 5;
 
             canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
             canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
@@ -117,8 +117,8 @@ function TestSketchM(props) {
   return (
     <canvas
       ref={canvasRef}
-      width={600}
-      height={400}
+      width={width}
+      height={height}
       style={{ border: '1px solid black' }}
     />
   );
