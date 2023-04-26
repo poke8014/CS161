@@ -16,6 +16,7 @@ export default function UploadPage() {
     const { setFileData, selectedFile, setSelectedFile } = useContext(FileContext);
     
     const [guestAudios, setGuestAudios] = React.useState([])
+    const [isLoading, setIsLoading] = useState(false);
     const [menuItems, setMenuItems] = React.useState([]);
 
     const [existingAudioSelected, setExistingAudioSelected] = React.useState(false)
@@ -26,6 +27,7 @@ export default function UploadPage() {
 
     async function handleAudioUpload(e){
         e.preventDefault();
+        setIsLoading(true)
         if (existingAudioSelected){
             let existingAudioId = selectedFile[1]
             for (let audio in guestAudios){
@@ -55,6 +57,8 @@ export default function UploadPage() {
                 navigate("/visualization")
             } catch (err) {
                 console.error("Error uploading file:", err);
+            }finally{
+                setIsLoading(false)
             }
         }
     }
@@ -127,6 +131,7 @@ export default function UploadPage() {
     return (
         <div className="upload-page">
             <NavBar openMenu={toggleShowMenu} />
+            {isLoading && <div className="loading-overlay">Getting your audio ready for visualizing...</div>}
             <div className="content">
                 {showMenu && 
                     <Menu menuItems={menuItems}
