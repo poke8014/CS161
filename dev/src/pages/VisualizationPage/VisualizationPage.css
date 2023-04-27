@@ -29,4 +29,5 @@ html{
     border-radius: 10px;
     background-color: rgb(63, 84, 204);
     color: white;
+    cursor: pointer;
 }
