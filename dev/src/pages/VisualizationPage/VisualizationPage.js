@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react"
+import React, { useContext } from "react"
 import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
@@ -37,7 +37,7 @@ export default function VisualizationPage(){
         }else{
             setAudioLink(defaultAudio.link)
         }
-    },[defaultAudio])
+    },[defaultAudio, fileData])
 
     React.useEffect(() => {
         if (audioLink)
@@ -47,9 +47,9 @@ export default function VisualizationPage(){
     React.useLayoutEffect(() => {
         function handleResize() {
             if (visualizationContainerSizeRef.current) {
-            let { offsetWidth, offsetHeight } = visualizationContainerSizeRef.current;
-            setCanvasWidth(offsetWidth)
-            setCanvasHeight(offsetHeight)
+                let { offsetWidth, offsetHeight } = visualizationContainerSizeRef.current;
+                setCanvasWidth(offsetWidth)
+                setCanvasHeight(offsetHeight)
             }
         }
         
