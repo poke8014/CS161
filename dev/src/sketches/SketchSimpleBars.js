@@ -1,7 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 function SketchSimpleBars(props) {
+
+  // properties passed through the visualization component
   const { audioLink, width, height } = props;
+
   const canvasRef = useRef(null);
   const playRef = useRef(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
@@ -20,11 +23,10 @@ function SketchSimpleBars(props) {
 
     const handleClick = () => {
       if (!audioPlaying) {
-        //playButton.style.visibility = 'hidden'
         // create audio context
         audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
 
-        // create analyser node
+        // create analyser
         analyser = audioCtxRef.current.createAnalyser();
         analyser.fftSize = 256;
 
@@ -94,11 +96,9 @@ function SketchSimpleBars(props) {
       }
     };
 
-    // canvas.addEventListener('click', handleClick);
     playButton.addEventListener('click', handleClick);
 
     return () => {
-      canvas.removeEventListener('click', handleClick);
       playButton.removeEventListener('click', handleClick);
       if (audioPlaying) {
         if (audioElementRef.current)
