@@ -98,7 +98,7 @@ html{
     text-align: center;
     font-weight: 500;
     opacity: 0; /* start with opacity at 0 */
-    animation: fadeInUpwards 1.5s ease-in-out forwards;
+    animation: fadeInUpwards 1.2s ease-in-out forwards;
     animation-play-state: paused;
 }
 
