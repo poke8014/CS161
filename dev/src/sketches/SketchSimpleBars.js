@@ -60,7 +60,7 @@ function SketchSimpleBars(props) {
           let x = 0;
 
           for (let i = 0; i < dataArray.length; i++) {
-            const barHeight = dataArray[i] * 5;
+            const barHeight = dataArray[i] * 5.5;
 
             canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
             canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
