@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react"
 import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
-import TestSketchSimple from "../../sketches/TestSketchSimple"
+import SketchSimpleBars from "../../sketches/SketchSimpleBars"
 import { FileContext } from "../../components/FileContext"
 import "./VisualizationPage.css"
 
@@ -81,7 +81,7 @@ export default function VisualizationPage(){
             <main className="content-container">
                 {/* {showMenu && <Menu menuItems={menuItems} />} */}
                 <div className="visualization-container" ref={visualizationContainerSizeRef}>
-                    {audioReady && <TestSketchSimple audioLink={audioLink} width={canvasWidth - 10} height={canvasHeight - 10}/>}
+                    {audioReady && <SketchSimpleBars audioLink={audioLink} width={canvasWidth - 10} height={canvasHeight - 10}/>}
                 </div>
             </main>
         </div>
