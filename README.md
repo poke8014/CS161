@@ -11,7 +11,6 @@ Audiovision is a web based software project that allows users to visualize their
 - Express
 - React
 - Node.js
-- p5.js
 
 Github: https://github.com/poke8014/CS161
 
