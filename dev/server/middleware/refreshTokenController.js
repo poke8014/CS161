@@ -19,7 +19,10 @@ async function handleRefreshToken(req, res) {
             if (err || foundUser.email !== decodedInfo.email) return res.sendStatus(403)
             const email = foundUser.email
             const accessToken = jwt.sign(
-                { "email": decodedInfo.email },
+                {
+                    userID: foundUser._id,
+                    email: decodedInfo.email
+                },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '300s' }
             );

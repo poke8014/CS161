@@ -136,8 +136,8 @@ export default function LoginPage(){
                             }
             );
             console.log(response?.data.success)
-            const accessToken = response?.data?.accessToken
-            setAuth(`{ ${userLoginInfo.email}, ${userLoginInfo.password}, ${accessToken} }`)
+            const { accessToken, userId } = response?.data;
+            setAuth({ email: userLoginInfo.email, password: userLoginInfo.password, accessToken, userId });
             setUserLoginInfo({
                 "email": "",
                 "password": ""
