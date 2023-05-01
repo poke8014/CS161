@@ -4,7 +4,8 @@ import { useHistory, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
 import uploadIcon from "../../images/upload.png";
-import { FileContext } from "../../components/FileContext";
+import { FileContext } from "../../context/FileContext";
+import useAuth from "../../hooks/useAuth";
 import "./UploadPage.css";
 
 export default function UploadPage() {
@@ -14,6 +15,7 @@ export default function UploadPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const { setFileData, selectedFile, setSelectedFile } = useContext(FileContext);
+    const { userID } = useAuth();
     
     const [guestAudios, setGuestAudios] = React.useState([])
     const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +30,7 @@ export default function UploadPage() {
     async function handleAudioUpload(e){
         e.preventDefault();
         setIsLoading(true)
+
         if (existingAudioSelected){
             let existingAudioId = selectedFile[1]
             for (let audio in guestAudios){
@@ -42,6 +45,10 @@ export default function UploadPage() {
         }else{
             const formData = new FormData();
             formData.append("audiofile", file);
+            if (userID) {
+                formData.append("userID", userID);
+            }
+            // formData.append("userID", userID ?  userID : null);
             try {
                 const response = await axios.post("http://localhost:8000/audioFiles/uploadAudio", formData, {
                     headers: {

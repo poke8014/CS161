@@ -3,7 +3,7 @@ import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar"
 import Menu from "../../components/Menu/Menu"
 import SketchSimpleBars from "../../sketches/SketchSimpleBars"
-import { FileContext } from "../../components/FileContext"
+import { FileContext } from "../../context/FileContext"
 import "./VisualizationPage.css"
 
 export default function VisualizationPage(){

@@ -43,8 +43,7 @@ router.get('/defaultAudio', async (req, res) => {
 
 // Posting file to s3 and mongoDB
 router.post('/uploadAudio', upload.single('audiofile'), async (req, res) => {
-    const file = req.file;
-    await uploadAudio(file, res);
+    await uploadAudio(req, res);
 });
 
 module.exports = router;
