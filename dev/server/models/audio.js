@@ -12,7 +12,8 @@ const audioSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required: false
+        required: false,
+        sparse: true
     },
     guest: {
         type: Boolean

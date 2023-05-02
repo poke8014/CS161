@@ -50,7 +50,8 @@ export default function UploadPage() {
             }
             // formData.append("userID", userID ?  userID : null);
             try {
-                const response = await axios.post("http://localhost:8000/audioFiles/uploadAudio", formData, {
+                const apiURL = "http://localhost:8000/audioFiles/uploadAudio";
+                const response = await axios.post(apiURL, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     }

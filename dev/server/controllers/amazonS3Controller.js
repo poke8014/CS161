@@ -14,7 +14,7 @@ async function uploadAudio(req, res) {
     console.log("Received userID:", userID);
     const file = req.file;
     const params = {
-        Key: file.originalname,
+        Key: (userID ? "" : "guest/") + file.originalname,
         Bucket: s3_bucket_name,
         Body: file.buffer,
         ContentType: 'audio/mpeg'
@@ -23,16 +23,19 @@ async function uploadAudio(req, res) {
     try {
         // upload to s3
         const result = await s3.upload(params).promise();
-        // creating mongoDB object
-        const audio = new Audio({
-            title: file.originalname,
-            link: result.Location,
-            userID: userID && userID !== "null" ? userID : undefined,
-            guest: !userID || userID === "null" ? true : false
-        });
-        console.log(audio);
-        // uploading to mongoDB
-        await audio.save();
+        // if user is logged in, save to mongoDB
+        if (userID) {
+            // creating mongoDB object
+            const audio = new Audio({
+                title: file.originalname,
+                link: result.Location,
+                userID: userID,
+                guest: false
+            });
+            console.log(audio);
+            // uploading to mongoDB
+            await audio.save();
+        }
         res.status(201).json(result);
     } catch (err) {
         console.error('Error in uploadAudio:', err);
