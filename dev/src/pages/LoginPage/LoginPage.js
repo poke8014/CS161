@@ -103,6 +103,7 @@ export default function LoginPage(){
                                             password: userLoginInfo.password,
                                             accessToken: loggedInStatus.accessToken }));
                     localStorage.setItem("userID", loggedInStatus.userID);
+                    console.log("UserID after login: ", loggedInStatus.userID); // Add this line to check the value of userID
                     navigate(from, {replace: true})
                 }else{
                     setValidCredentials(false)
@@ -150,6 +151,7 @@ export default function LoginPage(){
                 "email": "",
                 "password": ""
             });
+            return { accessToken, userID };
         } catch (error) {
             return false
         }
