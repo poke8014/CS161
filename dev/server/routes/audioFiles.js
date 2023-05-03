@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 //get existing audios for guest
 router.get('/existingAudioFiles', async (req, res) => {
     try {
-        const audioFiles = await Audio.find({guest : true});
+        const audioFiles = await Audio.find({menu_audio : true});
         res.json(audioFiles);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -34,7 +34,7 @@ router.get('/existingAudioFiles', async (req, res) => {
 //get default audio
 router.get('/defaultAudio', async (req, res) => {
     try {
-        const audioFiles = await Audio.findOne({guest : true});
+        const audioFiles = await Audio.findOne({menu_audio : true});
         res.json(audioFiles);
     } catch (err) {
         res.status(500).json({ message: err.message });
