@@ -2,7 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 
 function SketchSimpleBars(props) {
   // properties passed through the visualization component
-  const { audioLink, width, height } = props;
+  const { 
+    audioLink, 
+    width, 
+    height 
+  } = props;
 
   const canvasRef = useRef(null);
   const playRef = useRef(null);
