@@ -11,6 +11,9 @@ const audioSchema = new mongoose.Schema({
     },
     guest: {
         type: Boolean
+    },
+    menu_audio: {
+        type: Boolean
     }
 })
 
