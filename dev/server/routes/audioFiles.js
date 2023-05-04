@@ -31,6 +31,16 @@ router.get('/existingAudioFiles', async (req, res) => {
     }
 });
 
+// getting user audio files
+router.get('/userAudioFiles/:userID', async (req, res) => {
+    try {
+        const audioFiles = await Audio.find({ userID: req.params.userID });
+        res.json(audioFiles);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 //get default audio
 router.get('/defaultAudio', async (req, res) => {
     try {

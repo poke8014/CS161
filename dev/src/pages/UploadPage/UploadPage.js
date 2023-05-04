@@ -18,6 +18,7 @@ export default function UploadPage() {
     const { userID } = useAuth();
     
     const [guestAudios, setGuestAudios] = React.useState([])
+    const [userAudios, setUserAudios] = React.useState([])
     const [isLoading, setIsLoading] = useState(false);
     const [menuItems, setMenuItems] = React.useState([]);
 
@@ -33,12 +34,13 @@ export default function UploadPage() {
 
         if (existingAudioSelected){
             let existingAudioId = selectedFile[1]
-            for (let audio in guestAudios){
-                if (guestAudios[audio]._id == existingAudioId){
+            const allAudios = [...guestAudios, ...userAudios];
+            for (let audio of guestAudios.concat(userAudios)){
+                if (audio._id === existingAudioId){
                     setFileData({
-                        Location: guestAudios[audio].link
-                    })
-                    break 
+                        Location: audio.link,
+                    });
+                    break;
                 }
             }
             navigate("/visualization")
@@ -48,7 +50,6 @@ export default function UploadPage() {
             if (userID) {
                 formData.append("userID", userID);
             }
-            // formData.append("userID", userID ?  userID : null);
             try {
                 const apiURL = "http://localhost:8000/audioFiles/uploadAudio";
                 const response = await axios.post(apiURL, formData, {
@@ -61,6 +62,7 @@ export default function UploadPage() {
                     ...response.data,
                     url: response.data.Location          // set audio link in context
                 });
+                setSelectedFile([file.name, response.data.key]);
                 console.log(file);
                 navigate("/visualization")
             } catch (err) {
@@ -89,11 +91,11 @@ export default function UploadPage() {
         console.log(guestAudios)
         console.log(file)
         let audioExists = false
-        if (selectedFile){
-            for (let audio in guestAudios){
-                if (guestAudios[audio]._id == selectedFile[1]){
-                    audioExists = true
-                    break
+        if (selectedFile) {
+            for (let audio of guestAudios.concat(userAudios)) { // Change this line
+                if (audio._id == selectedFile[1]) {
+                    audioExists = true;
+                    break;
                 }
             }
         }
@@ -102,6 +104,7 @@ export default function UploadPage() {
         }else{
             setExistingAudioSelected(false) 
         }
+        console.log("Existing audio selected: ", existingAudioSelected); // Add this line
     }, [selectedFile])
 
     React.useEffect(() => {
@@ -127,14 +130,39 @@ export default function UploadPage() {
     },[])
 
     React.useEffect(() => {
-        let titles = guestAudios.map(audio => {
+        if (userID) {
+            const options = {method: 'GET', url: `http://localhost:8000/audioFiles/userAudioFiles/${userID}`};
+            axios.request(options).then(function (response) {
+                setUserAudios(response.data);
+                console.log("Fetched user audios: ", response.data);
+            }).catch(function (error) {
+                console.error(error);
+            });
+        } else {
+            setUserAudios([]);
+        }
+    }, [userID]);
+
+    React.useEffect(() => {
+        let guestTitles = guestAudios.map(audio => {
             return [
                 audio.title.replace(/[^a-zA-Z ]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
                 audio._id
             ]
-        })
-        setMenuItems(titles)
-    },[guestAudios])
+        });
+        let userTitles = userAudios.map(audio => {
+            return [
+                audio.title.replace(/[^a-zA-Z ]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+                audio._id
+            ]
+        });
+
+        if (file) {
+            userTitles = [...userTitles, [file.name, file.name]];
+        }
+        
+        setMenuItems([...guestTitles, ...userTitles]);
+    },[guestAudios, userAudios]);
 
     return (
         <div className="upload-page">
@@ -145,6 +173,7 @@ export default function UploadPage() {
                     <Menu menuItems={menuItems}
                     selected={selectedFile}
                     setSelected={setSelectedFile}
+                    uploadedFile={file}
                 />}
                 <div className="upload-container">
                     <div className="upload-box">
