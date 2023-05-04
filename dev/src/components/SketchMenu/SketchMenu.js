@@ -6,12 +6,23 @@ export default function SketchMenu(){
     const [selectedStyle, setSelectedStyle] = React.useState("simple")
     const [colorSelected, setColorSelected] = React.useState("red")
 
+    const [barHeight, setBarHeight] = React.useState(5)
+    const [fft, setFft] = React.useState(256)
+
     function handleSelectFileClick(e){
         setSelectedStyle(e.target.id)
     }
 
     function handleSelectColorClick(e){
         setColorSelected(e.target.id)
+    }
+
+    function handleHeightChange(e){
+        setBarHeight(e.target.value)
+    }
+
+    function handleFftChange(e){
+        setFft(e.target.value)
     }
 
     return (
@@ -37,23 +48,23 @@ export default function SketchMenu(){
                     style={{backgroundColor: "white"}} onClick={handleSelectColorClick}></div>
             </div>
             <div className="height-selection">
-                <label for="height">Choose bar height: </label>
-                <select name="height" id="height">
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5" selected>5</option>
+                <label htmlFor="height">Choose bar height: </label>
+                <select name="height" id="height" value={barHeight} onChange={handleHeightChange}>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
                 </select>
             </div>
             <div className="fft">
-                <label for="fft">FFT Size (Frequency):</label>
-                <select name="fft" id="fft">
-                    <option value="32">32</option>
-                    <option value="64">64</option>
-                    <option value="128">128</option>
-                    <option value="256" selected>256</option>
-                    <option value="512">512</option>
-                    <option value="1024">1024</option>
+                <label htmlFor="fft">FFT Size (Frequency):</label>
+                <select name="fft" id="fft" value={fft} onChange={handleFftChange}>
+                    <option value={32}>32</option>
+                    <option value={64}>64</option>
+                    <option value={128}>128</option>
+                    <option value={256}>256</option>
+                    <option value={512}>512</option>
+                    <option value={1024}>1024</option>
                 </select>
             </div>
         </menu>
