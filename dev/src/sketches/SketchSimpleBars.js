@@ -5,12 +5,16 @@ function SketchSimpleBars(props) {
   const { 
     audioLink, 
     width, 
-    height 
+    height,
+    barColor,
+    barH = 5.5,
+    fftSize = 256
   } = props;
 
   const canvasRef = useRef(null);
   const playRef = useRef(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const animationRef = useRef(null);
   const audioCtxRef = useRef(null);
   const audioElementRef = useRef(null);
@@ -31,7 +35,7 @@ function SketchSimpleBars(props) {
 
         // create analyser
         analyser = audioCtxRef.current.createAnalyser();
-        analyser.fftSize = 256;
+        analyser.fftSize = fftSize;
 
         // connect analyser to audio source
         audioElementRef.current = new Audio(audioLink);
@@ -46,6 +50,7 @@ function SketchSimpleBars(props) {
         }
 
         // start audio playback
+        audioElementRef.current.currentTime = currentTime;
         audioElementRef.current.play();
         setAudioPlaying(true);
 
@@ -54,7 +59,7 @@ function SketchSimpleBars(props) {
         dataArray = new Uint8Array(bufferLength);
 
         // draw visualizations
-        const draw = () => {
+        const drawFrequency = () => {
           analyser.getByteFrequencyData(dataArray);
 
           canvasCtx.fillStyle = 'rgb(0, 0, 0)';
@@ -64,22 +69,53 @@ function SketchSimpleBars(props) {
           let x = 0;
 
           for (let i = 0; i < dataArray.length; i++) {
-            const barHeight = dataArray[i] * 5.5;
+            const barHeight = dataArray[i] * barH;
 
-            canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+            canvasCtx.fillStyle = barColor;
             canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
 
             x += barWidth + 1;
           }
 
-          animationRef.current = requestAnimationFrame(draw);
+          animationRef.current = requestAnimationFrame(drawFrequency);
         };
 
-        draw();
+        const drawWaveform = () => {
+          analyser.getByteTimeDomainData(dataArray);
+        
+          canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+          canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        
+          canvasCtx.lineWidth = 2;
+          canvasCtx.strokeStyle = barColor;
+        
+          canvasCtx.beginPath();
+          const sliceWidth = WIDTH * 1.0 / dataArray.length;
+          let x = 0;
+          for (let i = 0; i < dataArray.length; i++) {
+            const v = dataArray[i] / 128.0;
+            const y = v * HEIGHT / 2;
+        
+            if (i === 0) {
+              canvasCtx.moveTo(x, y);
+            } else {
+              canvasCtx.lineTo(x, y);
+            }
+        
+            x += sliceWidth;
+          }
+        
+          canvasCtx.stroke();
+          animationRef.current = requestAnimationFrame(drawWaveform);
+        };
+
+        drawWaveform();
       } else {
         // pause audio playback
-        if (audioElementRef.current)
+        if (audioElementRef.current){
+          setCurrentTime(audioElementRef.current.currentTime)
           audioElementRef.current.pause();
+        }
         setAudioPlaying(false);
         cancelAnimationFrame(animationRef.current);
         if (analyser !== null)
@@ -128,7 +164,7 @@ function SketchSimpleBars(props) {
         ref={canvasRef}
         width={width}
         height={height}
-        style={{ border: '1px solid black' }}
+        // style={{ border: '1px solid black' }}
       />
       <button ref={playRef} className='play-button'>Play/Pause</button>
     </main>
