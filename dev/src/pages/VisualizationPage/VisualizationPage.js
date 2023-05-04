@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import axios from "axios";
 import NavBar from "../../components/NavBar/NavBar"
-import Menu from "../../components/Menu/Menu"
+import SketchMenu from "../../components/SketchMenu/SketchMenu"
 import SketchSimpleBars from "../../sketches/SketchSimpleBars"
 import { FileContext } from "../../components/FileContext"
 import "./VisualizationPage.css"
@@ -59,35 +59,25 @@ export default function VisualizationPage(){
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [visualizationContainerSizeRef]);
+    }, [visualizationContainerSizeRef, showMenu]);
 
     function toggleShowMenu(){
         setShowMenu(prev => !prev)
     }
 
-    // const menuItems = [
-    //     "Click on an existing audio",
-    //     "Audio 1",
-    //     "Audio 2",
-    //     "Audio 3",
-    //     "Audio 4",
-    //     "Audio 5",
-    //     "Audio 6"
-    // ];
-
     return (
         <div className="visualization-page">
-            <NavBar openMenu={toggleShowMenu} showMenuButton={false} />
+            <NavBar openMenu={toggleShowMenu}/>
             <main className="content-container">
-                {/* {showMenu && <Menu menuItems={menuItems} />} */}
+                {showMenu && <SketchMenu />}
                 <div className="visualization-container" ref={visualizationContainerSizeRef}>
                     {audioReady && <SketchSimpleBars 
                         audioLink={audioLink} 
                         width={canvasWidth - 10} 
                         height={canvasHeight - 10}
-                        barColor='rgb(124,252,0)'
-                        barH={5.5}
-                        fftSize={256}
+                        barColor='red'
+                        barH={4}
+                        fftSize={256*2}
                     />}
                 </div>
             </main>
