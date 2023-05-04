@@ -10,14 +10,10 @@ export default function Menu({ menuItems, selected, setSelected, uploadedFile })
             setSelected(menuItems[menuItems.length - 1]);
             setLastItemAdded(true);
         }
-    }, [menuItems, selected, setSelected, lastItemAdded]);
-
-    React.useEffect(() => {
-        if (uploadedFile && selected[0] !== uploadedFile.name) {
-            setSelected([uploadedFile.name, uploadedFile.name]);
-        }
-    }, [uploadedFile, selected, setSelected]);
-    
+        return(() => {
+            setLastItemAdded(false)
+        })
+    }, [menuItems, uploadedFile]);    
 
     const renderMenuItems = menuItems?.map((item) => (
         <p
