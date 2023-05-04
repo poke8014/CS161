@@ -180,7 +180,7 @@ html{
 
 .audio-visualizer {
     visibility: hidden;
-    opacity: 20%;
+    opacity: 15%;
     width: 100%;
     height: fit-content;
     display: flex;
@@ -195,8 +195,8 @@ html{
 }
 
 .bar {
-    width: 3vw;
-    height: 6vw;
+    width: 2.5vw;
+    height: 5.5vw;
     margin: 0 2%;
     background-color: #ffffff;
     border-radius: 5px;
