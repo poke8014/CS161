@@ -81,7 +81,14 @@ export default function VisualizationPage(){
             <main className="content-container">
                 {/* {showMenu && <Menu menuItems={menuItems} />} */}
                 <div className="visualization-container" ref={visualizationContainerSizeRef}>
-                    {audioReady && <SketchSimpleBars audioLink={audioLink} width={canvasWidth - 10} height={canvasHeight - 10}/>}
+                    {audioReady && <SketchSimpleBars 
+                        audioLink={audioLink} 
+                        width={canvasWidth - 10} 
+                        height={canvasHeight - 10}
+                        barColor='rgb(124,252,0)'
+                        barH={5.5}
+                        fftSize={256}
+                    />}
                 </div>
             </main>
         </div>
