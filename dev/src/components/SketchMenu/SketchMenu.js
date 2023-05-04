@@ -1,0 +1,61 @@
+import React from "react"
+import "./SketchMenu.css"
+
+export default function SketchMenu(){
+
+    const [selectedStyle, setSelectedStyle] = React.useState("simple")
+    const [colorSelected, setColorSelected] = React.useState("red")
+
+    function handleSelectFileClick(e){
+        setSelectedStyle(e.target.id)
+    }
+
+    function handleSelectColorClick(e){
+        setColorSelected(e.target.id)
+    }
+
+    return (
+        <menu>
+            <div className="visualization-selector">
+                <p id="simple" className={`simple-bar ${selectedStyle === "simple" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick}>Simple Bar</p>
+                <p id="wave" className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick}>Wave Form</p>
+            </div>
+            <div id="color" className="color-selection">
+                <div id="red" className={colorSelected === "red" ? "color-selected" : ""} 
+                    style={{backgroundColor: "red"}} onClick={handleSelectColorClick}></div>
+                <div id="green" className={colorSelected === "green" ? "color-selected" : ""} 
+                    style={{backgroundColor: "green"}} onClick={handleSelectColorClick}></div>
+                <div id="blue" className={colorSelected === "blue" ? "color-selected" : ""} 
+                    style={{backgroundColor: "blue"}} onClick={handleSelectColorClick}></div>
+                <div id="yellow" className={colorSelected === "yellow" ? "color-selected" : ""} 
+                    style={{backgroundColor: "yellow"}} onClick={handleSelectColorClick}></div>
+                <div id="orange" className={colorSelected === "orange" ? "color-selected" : ""} 
+                    style={{backgroundColor: "orange"}} onClick={handleSelectColorClick}></div>
+                <div id="white" className={colorSelected === "white" ? "color-selected" : ""} 
+                    style={{backgroundColor: "white"}} onClick={handleSelectColorClick}></div>
+            </div>
+            <div className="height-selection">
+                <label for="height">Choose bar height: </label>
+                <select name="height" id="height">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5" selected>5</option>
+                </select>
+            </div>
+            <div className="fft">
+                <label for="fft">FFT Size (Frequency):</label>
+                <select name="fft" id="fft">
+                    <option value="32">32</option>
+                    <option value="64">64</option>
+                    <option value="128">128</option>
+                    <option value="256" selected>256</option>
+                    <option value="512">512</option>
+                    <option value="1024">1024</option>
+                </select>
+            </div>
+        </menu>
+    )
+}
