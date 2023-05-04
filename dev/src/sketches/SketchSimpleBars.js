@@ -58,7 +58,7 @@ function SketchSimpleBars(props) {
         const bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
 
-        // draw visualizations
+        //// draw visualizations ////
         const drawFrequency = () => {
           analyser.getByteFrequencyData(dataArray);
 
@@ -109,7 +109,38 @@ function SketchSimpleBars(props) {
           animationRef.current = requestAnimationFrame(drawWaveform);
         };
 
-        drawWaveform();
+        const draw = () => {
+          let radius = Math.min(WIDTH, HEIGHT) / 2 * 0.8;
+          let centerX = WIDTH / 2;
+          let centerY = HEIGHT / 2;
+          let barWidth = 2 * Math.PI / dataArray.length;
+        
+          analyser.getByteFrequencyData(dataArray);
+        
+          canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+          canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+        
+          canvasCtx.beginPath();
+        
+          for (let i = 0; i < dataArray.length; i++) {
+            const amplitude = dataArray[i];
+            const angle = (Math.PI / 2) - (i * barWidth);
+            const x = centerX + Math.cos(angle) * (radius + amplitude * 0.5);
+            const y = centerY - Math.sin(angle) * (radius + amplitude * 0.5);
+            const barHeight = amplitude * 0.5;
+        
+            canvasCtx.moveTo(x, y);
+            canvasCtx.lineTo(x, y - barHeight);
+          }
+        
+          canvasCtx.strokeStyle = barColor;
+          canvasCtx.stroke();
+        
+          animationRef.current = requestAnimationFrame(draw);
+        };                 
+        
+        drawFrequency();
+        //////////////////////////////////////////////////////////////
       } else {
         // pause audio playback
         if (audioElementRef.current){
