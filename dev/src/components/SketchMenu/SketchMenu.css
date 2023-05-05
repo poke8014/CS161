@@ -24,8 +24,10 @@ menu{
 .visualization-selector p{
     /* background-color: green; */
     justify-content: space-between;
-    flex: 1;
-    padding: 4%;
+    /* flex: 1; */
+    padding: 2%;
+    margin: 0;
+    font-size: 2vh;
 }
 
 .visualization-selector p:hover{
