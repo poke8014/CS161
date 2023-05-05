@@ -1,13 +1,13 @@
 import React from "react"
+import { VisualContext } from "../../context/VisualContext"
 import "./SketchMenu.css"
 
 export default function SketchMenu(){
 
-    const [selectedStyle, setSelectedStyle] = React.useState("simple")
-    const [colorSelected, setColorSelected] = React.useState("red")
-
-    const [barHeight, setBarHeight] = React.useState(5)
-    const [fft, setFft] = React.useState(256)
+    const { 
+        selectedStyle, setSelectedStyle, colorSelected, 
+        setColorSelected, barHeight, setBarHeight, fft, setFft
+    } = React.useContext(VisualContext)
 
     function handleSelectFileClick(e){
         setSelectedStyle(e.target.id)
