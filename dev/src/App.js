@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { FileProvider } from './components/FileContext';
+import { VisualProvider } from "./context/VisualContext";
 import UploadPage from "./pages/UploadPage/UploadPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import VisualizationPage from "./pages/VisualizationPage/VisualizationPage"
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className="App">
       <FileProvider>
+      <VisualProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
 
@@ -23,6 +25,7 @@ function App() {
 
             <Route path='/' element={<HomePage />} />
             <Route path="upload" element={<UploadPage />} />
+           
             <Route path="visualization" element={<VisualizationPage/>} />
 
           </Route>
@@ -30,6 +33,7 @@ function App() {
             <Route path="*" element={<p>Not found</p>} />
           </Route>
         </Routes>
+        </VisualProvider>
       </FileProvider>
     </div>
   );
