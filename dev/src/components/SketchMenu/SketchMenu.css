@@ -25,9 +25,9 @@ menu{
     /* background-color: green; */
     justify-content: space-between;
     /* flex: 1; */
-    padding: 2%;
+    padding: 1%;
     margin: 0;
-    font-size: 2vh;
+    font-size: 1.8vh;
 }
 
 .visualization-selector p:hover{
@@ -64,4 +64,8 @@ menu{
     box-shadow: #ACBDBA 0px 0px 5px;
     border-radius: 5px;
     scale: 1.25;
+}
+
+select{
+    font-size: 2.5vh;
 }
