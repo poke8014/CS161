@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { VisualContext } from "../context/VisualContext"
 
 function SketchSimpleBars(props) {
   // properties passed through the visualization component
@@ -6,11 +7,9 @@ function SketchSimpleBars(props) {
     audioLink, 
     width, 
     height,
-    barColor,
-    barH = 5.5,
-    fftSize = 256,
-    drawStyle = "simple"
   } = props;
+
+  const { selectedStyle, colorSelected, barHeight, fft} = React.useContext(VisualContext)
 
   const canvasRef = useRef(null);
   const playRef = useRef(null);
@@ -20,11 +19,15 @@ function SketchSimpleBars(props) {
   const audioCtxRef = useRef(null);
   const audioElementRef = useRef(null);
 
+  async function clickButton(){
+    await playRef.current.click();
+  }
+
   useEffect(() => {
-    if (audioPlaying){
       console.log("change")
-    }
-  }, [barColor, barH, fftSize, drawStyle])
+      if (audioPlaying)
+        clickButton();
+  }, [colorSelected, barHeight, fft, selectedStyle])
 
 
   useEffect(() => {
@@ -43,7 +46,7 @@ function SketchSimpleBars(props) {
 
         // create analyser
         analyser = audioCtxRef.current.createAnalyser();
-        analyser.fftSize = fftSize;
+        analyser.fftSize = fft;
 
         // connect analyser to audio source
         audioElementRef.current = new Audio(audioLink);
@@ -66,15 +69,14 @@ function SketchSimpleBars(props) {
         const bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
 
-        // // add event listener to restart the song when it ends
-        // audioElementRef.current.addEventListener('ended', () => {
-        //   audioElementRef.current.currentTime = 0;
-        //   audioElementRef.current.play();
-        //   audioElementRef.current.pause();
-        // });
+        // add event listener to restart the song when it ends
+        audioElementRef.current.addEventListener('ended', () => {
+          audioElementRef.current.currentTime = 0;
+          audioElementRef.current.pause();
+        });
 
         //// draw visualizations ////
-        if (drawStyle === "simple"){
+        if (selectedStyle === "simple"){
           const drawFrequency = () => {
             analyser.getByteFrequencyData(dataArray);
 
@@ -85,10 +87,10 @@ function SketchSimpleBars(props) {
             let x = 0;
 
             for (let i = 0; i < dataArray.length; i++) {
-              const barHeight = dataArray[i] * barH;
+              const barH = dataArray[i] * barHeight;
 
-              canvasCtx.fillStyle = barColor;
-              canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
+              canvasCtx.fillStyle = colorSelected;
+              canvasCtx.fillRect(x, HEIGHT - barH / 2, barWidth, barH / 2);
 
               x += barWidth + 1;
             }
@@ -96,7 +98,7 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawFrequency);
           };
           drawFrequency()
-        }else if (drawStyle === "wave"){
+        }else if (selectedStyle === "wave"){
           const drawWaveform = () => {
             analyser.getByteTimeDomainData(dataArray);
           
@@ -104,7 +106,7 @@ function SketchSimpleBars(props) {
             canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
           
             canvasCtx.lineWidth = 2;
-            canvasCtx.strokeStyle = barColor;
+            canvasCtx.strokeStyle = colorSelected;
           
             canvasCtx.beginPath();
             const sliceWidth = WIDTH * 1.0 / dataArray.length;
@@ -126,39 +128,71 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawWaveform);
           };
           drawWaveform()
+        }else if (selectedStyle === "circle"){
+          // const drawCircleForm = () => {
+          //   analyser.getByteFrequencyData(dataArray);
+          
+          //   canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+          //   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+          
+          //   const radius = Math.min(WIDTH, HEIGHT); // Adjust the size of the circle
+          //   const centerX = WIDTH / 2;
+          //   const centerY = HEIGHT / 2;
+          
+          //   const barWidth = (2 * Math.PI * radius) / dataArray.length;
+          //   let angle = 0;
+          
+          //   for (let i = 0; i < dataArray.length; i++) {
+          //     const barH = (dataArray[i] / 255) * (radius - 20);
+          
+          //     const x = centerX + (barH * Math.cos(angle));
+          //     const y = centerY + (barH * Math.sin(angle));
+          
+          //     canvasCtx.fillStyle = colorSelected;
+          //     canvasCtx.fillRect(x, y, barWidth, 3); // Adjust the height and thickness of the bars as desired
+          
+          //     angle += barWidth;
+          //   }
+          
+          //   animationRef.current = requestAnimationFrame(drawCircleForm);
+          // };
+          
+          // drawCircleForm();
+          const drawFrequency = () => {
+            analyser.getByteFrequencyData(dataArray);
+          
+            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+          
+            const barCount = dataArray.length;
+            const angleStep = (2 * Math.PI) / barCount;
+            const radius = Math.min(WIDTH, HEIGHT) / 6;
+            const barWidth = (2 * Math.PI * radius) / barCount;
+          
+            for (let i = 0; i < barCount; i++) {
+              const amplitude = dataArray[i] / 255;
+              const angle = i * angleStep;
+              const centerX = WIDTH / 2;
+              const centerY = HEIGHT / 2;
+              const barHeight = amplitude * radius;
+          
+              const startX = centerX + radius * Math.cos(angle);
+              const startY = centerY + radius * Math.sin(angle);
+              const endX = startX + barHeight * Math.cos(angle);
+              const endY = startY + barHeight * Math.sin(angle);
+          
+              canvasCtx.beginPath();
+              canvasCtx.strokeStyle = colorSelected;
+              canvasCtx.lineWidth = barWidth;
+              canvasCtx.moveTo(startX, startY);
+              canvasCtx.lineTo(endX, endY);
+              canvasCtx.stroke();
+            }
+          
+            animationRef.current = requestAnimationFrame(drawFrequency);
+          };                
+          drawFrequency();
         }
-
-        // const draw = () => {
-        //   let radius = Math.min(WIDTH, HEIGHT) / 2 * 0.8;
-        //   let centerX = WIDTH / 2;
-        //   let centerY = HEIGHT / 2;
-        //   let barWidth = 2 * Math.PI / dataArray.length;
-        
-        //   analyser.getByteFrequencyData(dataArray);
-        
-        //   canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        //   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-        
-        //   canvasCtx.beginPath();
-        
-        //   for (let i = 0; i < dataArray.length; i++) {
-        //     const amplitude = dataArray[i];
-        //     const angle = (Math.PI / 2) - (i * barWidth);
-        //     const x = centerX + Math.cos(angle) * (radius + amplitude * 0.5);
-        //     const y = centerY - Math.sin(angle) * (radius + amplitude * 0.5);
-        //     const barHeight = amplitude * 0.5;
-        
-        //     canvasCtx.moveTo(x, y);
-        //     canvasCtx.lineTo(x, y - barHeight);
-        //   }
-        
-        //   canvasCtx.strokeStyle = barColor;
-        //   canvasCtx.stroke();
-        
-        //   animationRef.current = requestAnimationFrame(draw);
-        // };                 
-        
-        // drawWaveform()
         //////////////////////////////////////////////////////////////
       } else {
         // pause audio playback
@@ -214,9 +248,9 @@ function SketchSimpleBars(props) {
         ref={canvasRef}
         width={width}
         height={height}
-        // style={{ border: '1px solid black' }}
+        // style={{ border: '1px solid green' }}
       />
-      <button ref={playRef} className='play-button'>Play/Pause</button>
+      <button ref={playRef} className={`play-button ${audioPlaying ? "" : "play"}`}>Play/Pause</button>
     </main>
   );
 }
