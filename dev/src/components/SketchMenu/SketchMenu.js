@@ -32,6 +32,8 @@ export default function SketchMenu(){
                                 onClick={handleSelectFileClick}>Simple Bar</p>
                 <p id="wave" className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick}>Wave Form</p>
+                <p id="circle" className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick}>Circle Form</p>
             </div>
             <div id="color" className="color-selection">
                 <div id="red" className={colorSelected === "red" ? "color-selected" : ""} 
@@ -54,6 +56,8 @@ export default function SketchMenu(){
                     <option value={3}>3</option>
                     <option value={4}>4</option>
                     <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
                 </select>
             </div>
             <div className="fft">
@@ -65,6 +69,7 @@ export default function SketchMenu(){
                     <option value={256}>256</option>
                     <option value={512}>512</option>
                     <option value={1024}>1024</option>
+                    <option value={2048}>2048</option>
                 </select>
             </div>
         </menu>
