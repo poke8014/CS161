@@ -4,7 +4,6 @@ import NavBar from "../../components/NavBar/NavBar"
 import SketchMenu from "../../components/SketchMenu/SketchMenu"
 import SketchSimpleBars from "../../sketches/SketchSimpleBars"
 import { FileContext } from "../../components/FileContext"
-import { VisualContext } from "../../context/VisualContext"
 import "./VisualizationPage.css"
 
 export default function VisualizationPage(){
@@ -18,8 +17,6 @@ export default function VisualizationPage(){
     const [canvasWidth, setCanvasWidth] = React.useState(null)
     const [canvasHeight, setCanvasHeight] = React.useState(null)
     const visualizationContainerSizeRef = React.useRef(null)
-
-    const { selectedStyle, colorSelected, barHeight, fft} = React.useContext(VisualContext)
 
     React.useEffect(() => {
         const fetchDefaultAudio = async () => {
@@ -77,11 +74,7 @@ export default function VisualizationPage(){
                     {audioReady && <SketchSimpleBars 
                         audioLink={audioLink} 
                         width={canvasWidth - 10} 
-                        height={canvasHeight - 10}
-                        barColor={colorSelected}
-                        barH={barHeight}
-                        fftSize={fft}
-                        drawStyle={selectedStyle}
+                        height={canvasHeight}
                     />}
                 </div>
             </main>
