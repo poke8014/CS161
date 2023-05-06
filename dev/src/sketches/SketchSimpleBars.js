@@ -129,69 +129,74 @@ function SketchSimpleBars(props) {
           };
           drawWaveform()
         }else if (selectedStyle === "circle"){
-          // const drawCircleForm = () => {
-          //   analyser.getByteFrequencyData(dataArray);
-          
-          //   canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-          //   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-          
-          //   const radius = Math.min(WIDTH, HEIGHT); // Adjust the size of the circle
-          //   const centerX = WIDTH / 2;
-          //   const centerY = HEIGHT / 2;
-          
-          //   const barWidth = (2 * Math.PI * radius) / dataArray.length;
-          //   let angle = 0;
-          
-          //   for (let i = 0; i < dataArray.length; i++) {
-          //     const barH = (dataArray[i] / 255) * (radius - 20);
-          
-          //     const x = centerX + (barH * Math.cos(angle));
-          //     const y = centerY + (barH * Math.sin(angle));
-          
-          //     canvasCtx.fillStyle = colorSelected;
-          //     canvasCtx.fillRect(x, y, barWidth, 3); // Adjust the height and thickness of the bars as desired
-          
-          //     angle += barWidth;
-          //   }
-          
-          //   animationRef.current = requestAnimationFrame(drawCircleForm);
-          // };
-          
-          // drawCircleForm();
-          const drawFrequency = () => {
+          const drawParticlesForm = () => {
             analyser.getByteFrequencyData(dataArray);
           
             canvasCtx.fillStyle = 'rgb(0, 0, 0)';
             canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
           
-            const barCount = dataArray.length;
-            const angleStep = (2 * Math.PI) / barCount;
-            const radius = Math.min(WIDTH, HEIGHT) / 6;
-            const barWidth = (2 * Math.PI * radius) / barCount;
+            const radius = Math.min(WIDTH, HEIGHT); // Adjust the size of the circle
+            const centerX = WIDTH / 2;
+            const centerY = HEIGHT / 2;
           
-            for (let i = 0; i < barCount; i++) {
-              const amplitude = dataArray[i] / 255;
-              const angle = i * angleStep;
-              const centerX = WIDTH / 2;
-              const centerY = HEIGHT / 2;
-              const barHeight = amplitude * radius;
+            const barWidth = (2 * Math.PI * radius) / dataArray.length;
+            let angle = 0;
           
-              const startX = centerX + radius * Math.cos(angle);
-              const startY = centerY + radius * Math.sin(angle);
-              const endX = startX + barHeight * Math.cos(angle);
-              const endY = startY + barHeight * Math.sin(angle);
+            for (let i = 0; i < dataArray.length; i++) {
+              const barH = (dataArray[i] / 255) * (radius - 60);
           
-              canvasCtx.beginPath();
-              canvasCtx.strokeStyle = colorSelected;
-              canvasCtx.lineWidth = barWidth;
-              canvasCtx.moveTo(startX, startY);
-              canvasCtx.lineTo(endX, endY);
-              canvasCtx.stroke();
+              const x = centerX + (barH * Math.cos(angle));
+              const y = centerY + (barH * Math.sin(angle));
+          
+              canvasCtx.fillStyle = colorSelected;
+              canvasCtx.fillRect(x, y, barWidth, 3); // Adjust the height and thickness of the bars as desired
+          
+              angle += barWidth;
             }
           
-            animationRef.current = requestAnimationFrame(drawFrequency);
-          };                
-          drawFrequency();
+            animationRef.current = requestAnimationFrame(drawParticlesForm);
+          };
+          
+          drawParticlesForm();
+          
+          // const drawCircleForm = () => {
+          //   analyser.getByteTimeDomainData(dataArray);
+            
+          //   canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+          //   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+            
+          //   canvasCtx.lineWidth = 2;
+          //   canvasCtx.strokeStyle = colorSelected;
+            
+          //   const baseRadius = Math.min(WIDTH, HEIGHT) / 6; // Adjust the factor to control the size of the circle
+          //   const maxRadius = baseRadius + 20; // Adjust the maximum radius for the pulsing effect
+          //   const minRadius = baseRadius - 20; // Adjust the minimum radius for the pulsing effect
+          //   const pulseSpeed = 0.0001; // Adjust the speed of the pulsing effect
+            
+          //   const radius = baseRadius + Math.sin(Date.now() * pulseSpeed) * (maxRadius - minRadius);
+          //   const centerX = WIDTH / 2;
+          //   const centerY = HEIGHT / 2;
+            
+          //   canvasCtx.beginPath();
+            
+          //   for (let i = 0; i < dataArray.length; i++) {
+          //     const angle = (i / dataArray.length) * (2 * Math.PI);
+          //     const x = centerX + (radius * Math.cos(angle));
+          //     const y = centerY + (radius * Math.sin(angle));
+              
+          //     const barHeight = (dataArray[i] / 128.0) * (radius - 20);
+              
+          //     canvasCtx.moveTo(x, y);
+          //     canvasCtx.lineTo(x + (barHeight * Math.cos(angle)), y + (barHeight * Math.sin(angle)));
+          //   }
+            
+          //   canvasCtx.closePath();
+          //   canvasCtx.stroke();
+            
+          //   animationRef.current = requestAnimationFrame(drawCircleForm);
+          // };
+          
+          // drawCircleForm();        
         }
         //////////////////////////////////////////////////////////////
       } else {
