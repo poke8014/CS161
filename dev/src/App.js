@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import { FileProvider } from './components/FileContext';
 import { VisualProvider } from "./context/VisualContext";
+import { FileProvider } from "./context/FileContext";
 import UploadPage from "./pages/UploadPage/UploadPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import VisualizationPage from "./pages/VisualizationPage/VisualizationPage"

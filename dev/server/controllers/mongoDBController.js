@@ -38,12 +38,12 @@ async function handleLogin(req, res) {
     if (match){
         // JWTs
         const accessToken = jwt.sign(
-            {"email": foundUser.email},
+            { userID: foundUser._id, email: foundUser.email },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '300s' }
         )
         const refreshToken = jwt.sign(
-            {"email": foundUser.email},
+            { userID: foundUser._id, email: foundUser.email },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1h' }
         )
@@ -52,7 +52,7 @@ async function handleLogin(req, res) {
         const updatedInDB = await User.findOneAndUpdate({email: foundUser.email}, {refreshToken: refreshToken});
 
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000 });
-        res.json({ accessToken, success: 'User is logged in!' });
+        res.json({ accessToken,userID: foundUser._id, success: 'User is logged in!' });
     }else{
         res.sendStatus(401)
     }   

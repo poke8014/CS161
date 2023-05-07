@@ -31,6 +31,16 @@ router.get('/existingAudioFiles', async (req, res) => {
     }
 });
 
+// getting user audio files
+router.get('/userAudioFiles/:userID', async (req, res) => {
+    try {
+        const audioFiles = await Audio.find({ userID: req.params.userID });
+        res.json(audioFiles);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 //get default audio
 router.get('/defaultAudio', async (req, res) => {
     try {
@@ -43,8 +53,7 @@ router.get('/defaultAudio', async (req, res) => {
 
 // Posting file to s3 and mongoDB
 router.post('/uploadAudio', upload.single('audiofile'), async (req, res) => {
-    const file = req.file;
-    await uploadAudio(file, res);
+    await uploadAudio(req, res);
 });
 
 module.exports = router;

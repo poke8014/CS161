@@ -1,7 +1,7 @@
 import React from "react";
 import "./Menu.css"
 
-export default function Menu({ menuItems, selected, setSelected }){
+export default function Menu({ menuItems, selected, setSelected, uploadedFile }){
 
     const [lastItemAdded, setLastItemAdded] = React.useState(false);
 
@@ -10,7 +10,10 @@ export default function Menu({ menuItems, selected, setSelected }){
             setSelected(menuItems[menuItems.length - 1]);
             setLastItemAdded(true);
         }
-    }, [menuItems, selected, setSelected, lastItemAdded]);
+        return(() => {
+            setLastItemAdded(false)
+        })
+    }, [menuItems, uploadedFile]);    
 
     const renderMenuItems = menuItems?.map((item, index) => (
         <p
