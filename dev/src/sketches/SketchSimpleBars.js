@@ -188,7 +188,6 @@ function SketchSimpleBars(props) {
           
           drawCircleForm();  
         }
-        //////////////////////////////////////////////////////////////
       } else {
         // pause audio playback
         if (audioElementRef.current){
@@ -243,7 +242,6 @@ function SketchSimpleBars(props) {
         ref={canvasRef}
         width={width}
         height={height}
-        // style={{ border: '1px solid green' }}
       />
       <button ref={playRef} className={`play-button ${audioPlaying ? "" : "play"}`}>Play/Pause</button>
     </main>
