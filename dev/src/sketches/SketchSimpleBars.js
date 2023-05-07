@@ -19,17 +19,6 @@ function SketchSimpleBars(props) {
   const audioCtxRef = useRef(null);
   const audioElementRef = useRef(null);
 
-  async function clickButton(){
-    await playRef.current.click();
-  }
-
-  useEffect(() => {
-      console.log("change")
-      if (audioPlaying)
-        clickButton();
-  }, [colorSelected, barHeight, fft, selectedStyle])
-
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const playButton = playRef.current;
@@ -128,7 +117,7 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawWaveform);
           };
           drawWaveform()
-        }else if (selectedStyle === "circle"){
+        }else if (selectedStyle === "particles"){
           const drawParticlesForm = () => {
             analyser.getByteFrequencyData(dataArray);
           
@@ -157,46 +146,47 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawParticlesForm);
           };
           
-          drawParticlesForm();
-          
-          // const drawCircleForm = () => {
-          //   analyser.getByteTimeDomainData(dataArray);
+          drawParticlesForm();      
+        }
+        else if (selectedStyle === "circle"){
+          const drawCircleForm = () => {
+            analyser.getByteTimeDomainData(dataArray);
             
-          //   canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-          //   canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
             
-          //   canvasCtx.lineWidth = 2;
-          //   canvasCtx.strokeStyle = colorSelected;
+            canvasCtx.lineWidth = 2;
+            canvasCtx.strokeStyle = colorSelected;
             
-          //   const baseRadius = Math.min(WIDTH, HEIGHT) / 6; // Adjust the factor to control the size of the circle
-          //   const maxRadius = baseRadius + 20; // Adjust the maximum radius for the pulsing effect
-          //   const minRadius = baseRadius - 20; // Adjust the minimum radius for the pulsing effect
-          //   const pulseSpeed = 0.0001; // Adjust the speed of the pulsing effect
+            const baseRadius = Math.min(WIDTH, HEIGHT) / 6; // Adjust the factor to control the size of the circle
+            const maxRadius = baseRadius + 20; // Adjust the maximum radius for the pulsing effect
+            const minRadius = baseRadius - 20; // Adjust the minimum radius for the pulsing effect
+            const pulseSpeed = 0.0001; // Adjust the speed of the pulsing effect
             
-          //   const radius = baseRadius + Math.sin(Date.now() * pulseSpeed) * (maxRadius - minRadius);
-          //   const centerX = WIDTH / 2;
-          //   const centerY = HEIGHT / 2;
+            const radius = baseRadius + Math.sin(Date.now() * pulseSpeed) * (maxRadius - minRadius);
+            const centerX = WIDTH / 2;
+            const centerY = HEIGHT / 2;
             
-          //   canvasCtx.beginPath();
+            canvasCtx.beginPath();
             
-          //   for (let i = 0; i < dataArray.length; i++) {
-          //     const angle = (i / dataArray.length) * (2 * Math.PI);
-          //     const x = centerX + (radius * Math.cos(angle));
-          //     const y = centerY + (radius * Math.sin(angle));
+            for (let i = 0; i < dataArray.length; i++) {
+              const angle = (i / dataArray.length) * (2 * Math.PI);
+              const x = centerX + (radius * Math.cos(angle));
+              const y = centerY + (radius * Math.sin(angle));
               
-          //     const barHeight = (dataArray[i] / 128.0) * (radius - 20);
+              const barHeight = (dataArray[i] / 128.0) * (radius - 20);
               
-          //     canvasCtx.moveTo(x, y);
-          //     canvasCtx.lineTo(x + (barHeight * Math.cos(angle)), y + (barHeight * Math.sin(angle)));
-          //   }
+              canvasCtx.moveTo(x, y);
+              canvasCtx.lineTo(x + (barHeight * Math.cos(angle)), y + (barHeight * Math.sin(angle)));
+            }
             
-          //   canvasCtx.closePath();
-          //   canvasCtx.stroke();
+            canvasCtx.closePath();
+            canvasCtx.stroke();
             
-          //   animationRef.current = requestAnimationFrame(drawCircleForm);
-          // };
+            animationRef.current = requestAnimationFrame(drawCircleForm);
+          };
           
-          // drawCircleForm();        
+          drawCircleForm();  
         }
         //////////////////////////////////////////////////////////////
       } else {
@@ -245,7 +235,7 @@ function SketchSimpleBars(props) {
         audioCtxRef.current = null;
       }
     };
-  }, [audioLink, audioPlaying]);
+  }, [audioLink, audioPlaying, colorSelected, barHeight, fft, selectedStyle, width, height]);
 
   return (
     <main>
