@@ -32,6 +32,8 @@ export default function SketchMenu(){
                                 onClick={handleSelectFileClick}>Simple Bar</p>
                 <p id="wave" className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick}>Wave Form</p>
+                <p id="particles" className={`circle-form ${selectedStyle === "particles" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick}>Particles Form</p>
                 <p id="circle" className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick}>Circle Form</p>
             </div>
@@ -50,7 +52,7 @@ export default function SketchMenu(){
                     style={{backgroundColor: "white"}} onClick={handleSelectColorClick}></div>
             </div>
             <div className="height-selection">
-                <label htmlFor="height">Choose bar height: </label>
+                <label htmlFor="height">Choose Bar Height: </label>
                 <select name="height" id="height" value={barHeight} onChange={handleHeightChange}>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
