@@ -15,9 +15,9 @@ export default function Menu({ menuItems, selected, setSelected, uploadedFile })
         })
     }, [menuItems, uploadedFile]);    
 
-    const renderMenuItems = menuItems?.map((item) => (
+    const renderMenuItems = menuItems?.map((item, index) => (
         <p
-        key={item[0]}
+        key={item[0] + index}
         className={item === selected ? "selected" : ""}
         onClick={() => setSelected(item)}
         >
