@@ -63,6 +63,7 @@ export default function UploadPage() {
                     url: response.data.Location          // set audio link in context
                 });
                 setSelectedFile([file.name, response.data.key]);
+                localStorage.setItem('audioID', response.data.Location);
                 console.log(file);
                 navigate("/visualization")
             } catch (err) {
