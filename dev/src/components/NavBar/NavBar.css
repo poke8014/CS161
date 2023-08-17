@@ -3,8 +3,7 @@
     display: flex;
     background-color: #051014;
     color: white;
-    height: 10%;
-    min-height: fit-content;
+    height: fit-content;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
@@ -55,7 +54,7 @@
 
 .login-button{
     background-color: #ACBDBA;
-    padding: 2px 20px;
+    padding: 0.5rem 1rem;
     border-radius: 12px;
     margin-right: 4vw;
 }
@@ -127,4 +126,13 @@
     margin: 0;
     padding: 2px 5px;
     font-size: small;
+}
+
+@media (max-width: 375px) {
+    .brand-name{
+        font-size: 2ch;
+    }
+    .login-text{
+        font-size: medium;
+    }
 }
