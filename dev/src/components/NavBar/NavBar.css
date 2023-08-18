@@ -133,6 +133,12 @@
         font-size: 2ch;
     }
     .login-text{
-        font-size: medium;
+        font-size: small;
+    }
+    .user-icon{
+        height: 0.6rem;
+    }
+    .login-button{
+        padding: 0.4rem;
     }
 }
