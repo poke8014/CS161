@@ -1,5 +1,9 @@
 import React from "react"
 import { VisualContext } from "../../context/VisualContext"
+import Bars from "../../images/bars.png"
+import Wave from "../../images/wave.png"
+import Particles from "../../images/particles.png"
+import Circle from "../../images/circle.png"
 import "./SketchMenu.css"
 
 export default function SketchMenu(){
@@ -28,14 +32,14 @@ export default function SketchMenu(){
     return (
         <menu>
             <div className="visualization-selector">
-                <p id="simple" className={`simple-bar ${selectedStyle === "simple" ? "selected" : ""}`} 
-                                onClick={handleSelectFileClick}>Simple Bar</p>
-                <p id="wave" className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
-                                onClick={handleSelectFileClick}>Wave Form</p>
-                <p id="particles" className={`circle-form ${selectedStyle === "particles" ? "selected" : ""}`} 
-                                onClick={handleSelectFileClick}>Particles Form</p>
-                <p id="circle" className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
-                                onClick={handleSelectFileClick}>Circle Form</p>
+                <img id="simple" src={Bars} className={`simple-bar ${selectedStyle === "simple" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick} />
+                <img id="wave" src={Wave} className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick} />
+                <img id="particles" src={Particles} className={`circle-form ${selectedStyle === "particles" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick} />
+                <img id="circle" src={Circle} className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
+                                onClick={handleSelectFileClick} />
             </div>
             <div id="color" className="color-selection">
                 <div id="red" className={colorSelected === "red" ? "color-selected" : ""} 
