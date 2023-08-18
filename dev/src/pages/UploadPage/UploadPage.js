@@ -11,7 +11,7 @@ import "./UploadPage.css";
 
 export default function UploadPage() {
     
-    const [showMenu, setShowMenu] = React.useState(true);
+    const [showMenu, setShowMenu] = React.useState(false);
     const [file, setFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
@@ -181,8 +181,7 @@ export default function UploadPage() {
                     uploadedFile={file}
                 />}
                 <div className="upload-container">
-                    <div className="upload-box">
-                    <FileUploader handleChange={handleFileChange} types={audioFormats} onTypeError={(err) => setErrorMessage(err)}>
+                    <FileUploader classes="upload-box" handleChange={handleFileChange} types={audioFormats} onTypeError={(err) => setErrorMessage(err)}>
                         <div className="upload-options">   
                                 <label className="upload-audio-button">
                                     <div className="upload-content">
@@ -196,8 +195,7 @@ export default function UploadPage() {
                                     <p>Drag and Drop Here!</p>
                                 </div>
                         </div>
-                        </FileUploader>
-                    </div>
+                    </FileUploader>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <button className="submit-button" type="submit" disabled={!file && !existingAudioSelected} onClick={handleAudioUpload}>Visualize</button>
                 </div>

@@ -26,18 +26,7 @@
     background-color: #727F84;
 }
 
-.upload-box label{
-    width: fit-content;
-    height: auto;
-    display: flex;
-}
-
 .upload-options {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
     text-align: center;
 }
 
