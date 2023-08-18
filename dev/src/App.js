@@ -7,13 +7,12 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import VisualizationPage from "./pages/VisualizationPage/VisualizationPage"
 import HomePage from './pages/HomePage/HomePage';
 import Layout from "./components/Layout";
-import RequireAuth from "./components/RequireAuth"
 import PersistentLogin from "./components/PersistentLogin";
 import "./App.css"
 
 function App() {
   return (
-    <div className="App">
+    <>
       <FileProvider>
       <VisualProvider>
         <Routes>
@@ -35,7 +34,7 @@ function App() {
         </Routes>
         </VisualProvider>
       </FileProvider>
-    </div>
+      </>
   );
 }
 
