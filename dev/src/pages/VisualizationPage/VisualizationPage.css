@@ -1,8 +1,8 @@
-html{
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
+/* .visualization-page .nav-bar{
+  position: absolute;
+  right: 0;
+  left: 0;
+} */
 
 .visualization-page{
   height: 100%;
@@ -13,25 +13,35 @@ html{
 .content-container{
   width: 100%;
   height: 100%;
-  flex: 1 1 auto;
   display: flex;
+  flex-direction: column;
   background-color: black;
+  justify-content: center;
+  align-items: center;
 }
 
 .visualization-container{
-  margin: 2%;
+  margin: 0;
   flex: 1;
+  width: 100%;
   text-align: center;
   /* background-color: red; */
   overflow: auto;
 }
 
+.visualization-container canvas{
+  width: 95%;
+}
+
 .play-button{
+  width: fit-content;
   padding: 5px 15px;
+  margin-bottom: 2rem;
   border-radius: 10px;
   background-color: #727F84;
   color: black;
-  font-weight: 700;
+  font-weight: bold;
+  font-size: clamp(1rem, 1vw, 2rem);
   cursor: pointer;
 }
 
@@ -41,7 +51,7 @@ html{
 
 .play-button.play{
   background-color: green;
-  animation: button-pulse 1.5s ease-in-out infinite;
+  animation: button-pulse 2s ease-in-out infinite;
 }
 
 .play-button.play:hover{
