@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
 import uploadIcon from "../../images/upload.png";
@@ -48,7 +48,7 @@ export default function UploadPage() {
 
         if (existingAudioSelected){
             let existingAudioId = selectedFile[1]
-            const allAudios = [...guestAudios, ...userAudios];
+            // const allAudios = [...guestAudios, ...userAudios];
             for (let audio of guestAudios.concat(userAudios)){
                 if (audio._id === existingAudioId){
                     setFileData({
@@ -92,13 +92,13 @@ export default function UploadPage() {
     }
 
     React.useEffect(() => {
-        console.log(selectedFile)
-        console.log(guestAudios)
-        console.log(file)
+        // console.log(selectedFile)
+        // console.log(guestAudios)
+        // console.log(file)
         let audioExists = false
         if (selectedFile) {
-            for (let audio of guestAudios.concat(userAudios)) { // Change this line
-                if (audio._id == selectedFile[1]) {
+            for (let audio of guestAudios.concat(userAudios)) {
+                if (audio._id === selectedFile[1]) {
                     audioExists = true;
                     break;
                 }
@@ -109,8 +109,8 @@ export default function UploadPage() {
         }else{
             setExistingAudioSelected(false) 
         }
-        console.log("Existing audio selected: ", existingAudioSelected); // Add this line
-    }, [selectedFile])
+        // console.log("Existing audio selected: ", existingAudioSelected);
+    }, [selectedFile, guestAudios, userAudios])
 
     React.useEffect(() => {
         setMenuItems(prev => {
@@ -121,7 +121,6 @@ export default function UploadPage() {
                 ]
             ]
         })
-        console.log(file)
     },[file])
 
     React.useEffect(() => {
@@ -167,7 +166,7 @@ export default function UploadPage() {
         }
         
         setMenuItems([...guestTitles, ...userTitles]);
-    },[guestAudios, userAudios]);
+    },[guestAudios, userAudios, file]);
 
     return (
         <div className="upload-page">
