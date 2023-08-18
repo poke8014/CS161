@@ -8,10 +8,13 @@ export const VisualProvider = ({children}) => {
 
     const [barHeight, setBarHeight] = React.useState(6)
     const [fft, setFft] = React.useState(1024)
+    const playRef = React.useRef(null);
+    const [audioPlaying, setAudioPlaying] = React.useState(false);
 
     return (
         <VisualContext.Provider value={{
-            selectedStyle, setSelectedStyle, colorSelected, setColorSelected, barHeight, setBarHeight, fft, setFft
+            selectedStyle, setSelectedStyle, colorSelected, setColorSelected, barHeight, 
+            setBarHeight, fft, setFft, playRef, audioPlaying, setAudioPlaying
         }}>
             {children}
         </VisualContext.Provider>
