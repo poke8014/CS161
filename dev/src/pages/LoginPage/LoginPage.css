@@ -27,7 +27,7 @@
 
 .form-type{
     padding: 2vh 0;
-    font-size: 5ch;
+    font-size: clamp(2rem, 2.5vw, 5rem);
     font-weight: bold;
     margin: 0;
 }
@@ -45,7 +45,7 @@
     border-radius: 10px;
     border: 1px solid rgb(103, 103, 103);
     margin: 0;
-    font-size: 3ch;
+    font-size: clamp(1.5rem, 1.5vw, 3rem);
     padding: 1.5vh 0;
     background-color: #727F84;
     color: #051014;
@@ -73,13 +73,14 @@
 .login-signup-box .form-submit{
     background-color: #003A92;
     color: white;
-    font-size: 4ch;
+    font-size: clamp(1.5rem, 2vw, 5rem);
     margin: 0;
 }
 
 .no-account, .signup-now-button{
     margin: 0;
-    font-size: large;
+    text-align: center;
+    font-size: clamp(1.2rem, 1vw, 2rem);
 }
 
 .signup-now-button{
@@ -106,15 +107,21 @@
 .login-signup-box .error{
     display: block;
     text-align: left;
-    color: red;
+    color: white;
+    width: fit-content;
     opacity: 80%;
+    background-color: black;
     font-size: larger;
+    border-bottom: 1px solid red;
+    font-size: clamp(0.8rem, 1vw, 2rem);
 }
 
 .password-requirements{
+    font-size: clamp(1rem, 1vw, 2rem);
     text-align: center;
+    width: 80%;
     margin: 0;
-    padding: 5px 0px;
+    padding: 0.5rem 0px;
     color: white;
     background-color: black;
     border-radius: 10px;
@@ -132,12 +139,30 @@
     text-align: left;
 }
 
-.valid-req{
+.invalid-req::before{
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em; 
+    margin-left: -1em;
+    color: red;
+}
+
+.valid-req::before{
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em; 
+    margin-left: -1em;
     color: green;
 }
 
+.valid-req{
+    list-style: none;
+}
+
 .invalid-req{
-    color: red;
+    list-style: none;
 }
 
 .user-created {
@@ -175,5 +200,12 @@
     to {
         opacity: 0;
         transform: translateY(20px);
+    }
+}
+
+@media (max-width: 800px) {
+    .login-signup-box{
+        width: 90%;
+        height: 90%;
     }
 }
