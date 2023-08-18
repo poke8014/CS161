@@ -154,4 +154,7 @@
     .upload-box{
         width: 90%;
     }
+    .submit-button {
+        z-index: 1;
+    }
 }
