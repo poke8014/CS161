@@ -41,7 +41,7 @@ export default function NavBar({openMenu, showMenuButton=true, showLoginButton=t
                     <div></div>
                 </div>}
                 {showBackArrow && 
-                <img className="back-arrow" src={backArrow} onClick={handleBrandClick}/>}
+                <img alt="back arrow" className="back-arrow" src={backArrow} onClick={handleBrandClick}/>}
                 <p className="brand-name" onClick={handleBrandClick}>audiovision</p>
             </div>
             {showLoginButton ?

@@ -55,7 +55,7 @@ export default function LoginPage(){
         let oneUpper = /[A-Z]/.test(userSignUpInfo.password)
         let oneLow = /[a-z]/.test(userSignUpInfo.password)
         let oneNum = /[0-9]/.test(userSignUpInfo.password)
-        let specialChars = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/
+        let specialChars = /[~`!^#$%&*+=\-\]\\';,/{}|\\":<>]/
         let symbol = specialChars.test(userSignUpInfo.password)
 
         setPasswordReq( prevReq => {
@@ -78,7 +78,7 @@ export default function LoginPage(){
         }else{
             setPasswordValidFormat(false)
         }
-    }, [passwordReq])
+    }, [passwordReq, userSignUpInfo.password])
 
     function changeFormType(e){
         e.preventDefault();
@@ -155,12 +155,11 @@ export default function LoginPage(){
         } catch (error) {
             return false
         }
-        return true
     }
 
     async function postNewAccount(){
         try{
-            const response = await axiosPrivate.post(SIGNUP_URL, 
+            await axiosPrivate.post(SIGNUP_URL, 
                             JSON.stringify(userSignUpInfo),
                             {
                                 headers: {'Content-Type': 'application/json'},
@@ -169,7 +168,7 @@ export default function LoginPage(){
             );
             setEmailTaken(false)
         }catch (error){
-            if (error.response.data.message == "Email already taken")
+            if (error.response.data.message === "Email already taken")
                 setEmailTaken(true)
             return false;
         }
@@ -195,7 +194,7 @@ export default function LoginPage(){
     }
 
     function checkEmail(e){
-        let regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        let regExp = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/
         let answer
         if (e === "Login"){
             answer = regExp.test(userLoginInfo.email)
