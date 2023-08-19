@@ -4,6 +4,7 @@ menu{
     width: max-content;
     margin: 0;
     padding: 1rem;
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -72,4 +73,11 @@ menu{
 
 select{
     font-size: 2.5vh;
+}
+
+@media (max-width: 375px) {
+    menu{
+        right: 0;
+        width: auto;
+    }
 }
