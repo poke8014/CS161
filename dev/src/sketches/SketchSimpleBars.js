@@ -29,7 +29,7 @@ function SketchSimpleBars(props) {
     const handleClick = () => {
       if (!audioPlaying) {
         // create audio context
-        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+        audioCtxRef.current = new window.AudioContext();
 
         // create analyser
         analyser = audioCtxRef.current.createAnalyser();
