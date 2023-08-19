@@ -9,6 +9,7 @@
 }
 
 .content {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex: 1 1 auto;
@@ -150,11 +151,28 @@
     text-align: center;
 }
 
+.saveAudios{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #727F84;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: clamp(0.7rem, 0.8vw, 2rem);
+}
+
 @media (max-width: 800px) {
     .upload-box{
         width: 90%;
     }
     .submit-button {
         z-index: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .saveAudios{
+        left: 0;
+        text-align: center;
     }
 }
