@@ -77,7 +77,7 @@ export default function UploadPage() {
                     url: response.data.Location          // set audio link in context
                 });
                 setSelectedFile([file.name, response.data.key]);
-                // console.log(file);
+                localStorage.setItem('audioID', response.data.Location);
                 navigate("/visualization")
             } catch (err) {
                 console.error("Error uploading file:", err);

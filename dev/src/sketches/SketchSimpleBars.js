@@ -17,6 +17,20 @@ function SketchSimpleBars(props) {
   const audioCtxRef = useRef(null);
   const audioElementRef = useRef(null);
 
+  const [style, setStyle] = useState("")
+  const [color, setColor] = useState("")
+  const [fftValue, setFftValue] = useState("")
+  const [bHeight, setBHeight] = useState("")
+
+  useEffect(() => {
+    setStyle(selectedStyle)
+    setColor(colorSelected)
+    setFftValue(fft)
+    setBHeight(barHeight)
+    if (audioElementRef?.current)
+      setCurrentTime(audioElementRef.current.currentTime)
+  }, [colorSelected, barHeight, fft, selectedStyle, width, currentTime])
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const playButton = playRef.current;
@@ -33,7 +47,7 @@ function SketchSimpleBars(props) {
 
         // create analyser
         analyser = audioCtxRef.current.createAnalyser();
-        analyser.fftSize = fft;
+        analyser.fftSize = fftValue;
 
         // connect analyser to audio source
         audioElementRef.current = new Audio(audioLink);
@@ -60,10 +74,11 @@ function SketchSimpleBars(props) {
         audioElementRef.current.addEventListener('ended', () => {
           audioElementRef.current.currentTime = 0;
           audioElementRef.current.pause();
+          audioElementRef.current.play();
         });
 
         //// draw visualizations ////
-        if (selectedStyle === "simple"){
+        if (style === "simple"){
           const drawFrequency = () => {
             analyser.getByteFrequencyData(dataArray);
 
@@ -74,9 +89,9 @@ function SketchSimpleBars(props) {
             let x = 0;
 
             for (let i = 0; i < dataArray.length; i++) {
-              const barH = dataArray[i] * barHeight;
+              const barH = dataArray[i] * bHeight;
 
-              canvasCtx.fillStyle = colorSelected;
+              canvasCtx.fillStyle = color;
               canvasCtx.fillRect(x, HEIGHT - barH / 2, barWidth, barH / 2);
 
               x += barWidth + 1;
@@ -85,7 +100,7 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawFrequency);
           };
           drawFrequency()
-        }else if (selectedStyle === "wave"){
+        }else if (style === "wave"){
           const drawWaveform = () => {
             analyser.getByteTimeDomainData(dataArray);
           
@@ -93,7 +108,7 @@ function SketchSimpleBars(props) {
             canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
           
             canvasCtx.lineWidth = 2;
-            canvasCtx.strokeStyle = colorSelected;
+            canvasCtx.strokeStyle = color;
           
             canvasCtx.beginPath();
             const sliceWidth = WIDTH * 1.0 / dataArray.length;
@@ -115,7 +130,7 @@ function SketchSimpleBars(props) {
             animationRef.current = requestAnimationFrame(drawWaveform);
           };
           drawWaveform()
-        }else if (selectedStyle === "particles"){
+        }else if (style === "particles"){
           const drawParticlesForm = () => {
             analyser.getByteFrequencyData(dataArray);
           
@@ -135,7 +150,7 @@ function SketchSimpleBars(props) {
               const x = centerX + (barH * Math.cos(angle));
               const y = centerY + (barH * Math.sin(angle));
           
-              canvasCtx.fillStyle = colorSelected;
+              canvasCtx.fillStyle = color;
               canvasCtx.fillRect(x, y, barWidth, 3); // Adjust the height and thickness of the bars as desired
           
               angle += barWidth;
@@ -146,7 +161,7 @@ function SketchSimpleBars(props) {
           
           drawParticlesForm();      
         }
-        else if (selectedStyle === "circle"){
+        else if (style === "circle"){
           const drawCircleForm = () => {
             analyser.getByteTimeDomainData(dataArray);
             
@@ -154,11 +169,11 @@ function SketchSimpleBars(props) {
             canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
             
             canvasCtx.lineWidth = 2;
-            canvasCtx.strokeStyle = colorSelected;
+            canvasCtx.strokeStyle = color;
             
             const baseRadius = Math.min(WIDTH, HEIGHT) / 6; // Adjust the factor to control the size of the circle
             const maxRadius = baseRadius + 20; // Adjust the maximum radius for the pulsing effect
-            const minRadius = baseRadius - 20; // Adjust the minimum radius for the pulsing effect
+            const minRadius = baseRadius - 10; // Adjust the minimum radius for the pulsing effect
             const pulseSpeed = 0.0001; // Adjust the speed of the pulsing effect
             
             const radius = baseRadius + Math.sin(Date.now() * pulseSpeed) * (maxRadius - minRadius);

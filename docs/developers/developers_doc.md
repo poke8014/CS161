@@ -3,4 +3,4 @@
 2) ~~Combining the package.json and .gitignore files~~
 3) ~~fixing menu-resizing problem~~
 4) ~~Finish implementing the design of the login page~~
-5) Still working on implementing the sketches in the visualization page. We’ve encountered issues using the P5 library in React.
+5) ~~Still working on implementing the sketches in the visualization page. We’ve encountered issues using the P5 library in React.~~

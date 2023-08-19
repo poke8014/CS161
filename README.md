@@ -4,15 +4,18 @@ Codescapes
 Luc Tang, Miguel Vazquez
 
 ---
-Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. Users can input their own audio files or choose from a database of audio files.
+## Audiovision
+
+Github: https://github.com/poke8014/CS161
 
 ## Tech Stack
 - MongoDB
+- Amazon S3
 - Express
 - React
 - Node.js
 
-Github: https://github.com/poke8014/CS161
+Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. Users can input their own audio files or choose from a database of audio files.
 
 ---
 
