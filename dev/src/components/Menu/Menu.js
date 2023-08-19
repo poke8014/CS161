@@ -6,9 +6,11 @@ export default function Menu({ menuItems, selected, setSelected, uploadedFile })
     const [lastItemAdded, setLastItemAdded] = React.useState(false);
 
     React.useEffect(() => {
-        if (menuItems.length > 6 && !lastItemAdded) {
-            setSelected(menuItems[menuItems.length - 1]);
-            setLastItemAdded(true);
+        if (menuItems){
+            if (menuItems.length > 6 && !lastItemAdded) {
+                setSelected(menuItems[menuItems.length - 1]);
+                setLastItemAdded(true);
+            }
         }
         return(() => {
             setLastItemAdded(false)

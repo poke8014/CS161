@@ -4,9 +4,12 @@ import NavBar from "../../components/NavBar/NavBar"
 import SketchMenu from "../../components/SketchMenu/SketchMenu"
 import SketchSimpleBars from "../../sketches/SketchSimpleBars"
 import { FileContext } from "../../context/FileContext"
+import { VisualContext } from "../../context/VisualContext"
 import "./VisualizationPage.css"
 
 export default function VisualizationPage(){
+
+    const { playRef, audioPlaying } = React.useContext(VisualContext)
 
     const [showMenu, setShowMenu] = React.useState(false);
     const [defaultAudio, setDefaultAudio] = React.useState({});
@@ -72,8 +75,8 @@ export default function VisualizationPage(){
     return (
         <div className="visualization-page">
             <NavBar openMenu={toggleShowMenu}/>
-            <main className="content-container">
-                {showMenu && <SketchMenu />}
+            {showMenu && <SketchMenu />}
+            <div className="content-container">
                 <div className="visualization-container" ref={visualizationContainerSizeRef}>
                     {audioReady && <SketchSimpleBars 
                         audioLink={audioLink} 
@@ -81,7 +84,8 @@ export default function VisualizationPage(){
                         height={canvasHeight}
                     />}
                 </div>
-            </main>
+                <button ref={playRef} className={`play-button ${audioPlaying ? "" : "play"}`}>Play/Pause</button>
+            </div>
         </div>
     );
 }

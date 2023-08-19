@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { useHistory, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Menu from "../../components/Menu/Menu";
 import uploadIcon from "../../images/upload.png";
 import { FileContext } from "../../context/FileContext";
+import { FileUploader } from "react-drag-drop-files";
 import useAuth from "../../hooks/useAuth";
 import "./UploadPage.css";
 
 export default function UploadPage() {
     
-    const [showMenu, setShowMenu] = React.useState(true);
+    const [showMenu, setShowMenu] = React.useState(false);
     const [file, setFile] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
@@ -23,6 +24,19 @@ export default function UploadPage() {
     const [menuItems, setMenuItems] = React.useState([]);
 
     const [existingAudioSelected, setExistingAudioSelected] = React.useState(false)
+
+    const audioFormats = [
+        'MP3',
+        'WAV',
+        'FLAC',
+        'AAC',
+        'OGG',
+        'WMA',
+        'M4A',
+        'AIFF',
+        'APE',
+        'ALAC'
+    ];   
     
     function toggleShowMenu(){
         setShowMenu(prevState => !prevState);
@@ -34,7 +48,7 @@ export default function UploadPage() {
 
         if (existingAudioSelected){
             let existingAudioId = selectedFile[1]
-            const allAudios = [...guestAudios, ...userAudios];
+            // const allAudios = [...guestAudios, ...userAudios];
             for (let audio of guestAudios.concat(userAudios)){
                 if (audio._id === existingAudioId){
                     setFileData({
@@ -57,14 +71,13 @@ export default function UploadPage() {
                         "Content-Type": "multipart/form-data"
                     }
                 });
-                console.log("File uploaded:", response.data);
+                // console.log("File uploaded:", response.data);
                 setFileData({
                     ...response.data,
                     url: response.data.Location          // set audio link in context
                 });
                 setSelectedFile([file.name, response.data.key]);
                 localStorage.setItem('audioID', response.data.Location);
-                console.log(file);
                 navigate("/visualization")
             } catch (err) {
                 console.error("Error uploading file:", err);
@@ -74,27 +87,18 @@ export default function UploadPage() {
         }
     }
 
-    function handleFileChange(e) {
-        const selectedFile = e.target.files[0];
-        const validExt = ['audio/mpeg'];
-
-        if (selectedFile && validExt.includes(String(selectedFile.type))) {
-            setFile(selectedFile);
-            setErrorMessage("")
-        } else {
-            setFile(null);
-            setErrorMessage("Invalid file type. Please upload an audio file.");
-        }
+    function handleFileChange(file) {
+        setFile(file);
     }
 
     React.useEffect(() => {
-        console.log(selectedFile)
-        console.log(guestAudios)
-        console.log(file)
+        // console.log(selectedFile)
+        // console.log(guestAudios)
+        // console.log(file)
         let audioExists = false
         if (selectedFile) {
-            for (let audio of guestAudios.concat(userAudios)) { // Change this line
-                if (audio._id == selectedFile[1]) {
+            for (let audio of guestAudios.concat(userAudios)) {
+                if (audio._id === selectedFile[1]) {
                     audioExists = true;
                     break;
                 }
@@ -105,8 +109,8 @@ export default function UploadPage() {
         }else{
             setExistingAudioSelected(false) 
         }
-        console.log("Existing audio selected: ", existingAudioSelected); // Add this line
-    }, [selectedFile])
+        // console.log("Existing audio selected: ", existingAudioSelected);
+    }, [selectedFile, guestAudios, userAudios])
 
     React.useEffect(() => {
         setMenuItems(prev => {
@@ -117,7 +121,6 @@ export default function UploadPage() {
                 ]
             ]
         })
-        console.log(file)
     },[file])
 
     React.useEffect(() => {
@@ -127,7 +130,9 @@ export default function UploadPage() {
         }).catch(function (error) {
             console.error(error);
         });
-        return () => setMenuItems([])
+        return () => {
+            setMenuItems([])
+        }
     },[])
 
     React.useEffect(() => {
@@ -135,7 +140,7 @@ export default function UploadPage() {
             const options = {method: 'GET', url: `http://localhost:8000/audioFiles/userAudioFiles/${userID}`};
             axios.request(options).then(function (response) {
                 setUserAudios(response.data);
-                console.log("Fetched user audios: ", response.data);
+                // console.log("Fetched user audios: ", response.data);
             }).catch(function (error) {
                 console.error(error);
             });
@@ -163,7 +168,7 @@ export default function UploadPage() {
         }
         
         setMenuItems([...guestTitles, ...userTitles]);
-    },[guestAudios, userAudios]);
+    },[guestAudios, userAudios, file]);
 
     return (
         <div className="upload-page">
@@ -176,11 +181,10 @@ export default function UploadPage() {
                     setSelected={setSelectedFile}
                     uploadedFile={file}
                 />}
+                { !userID ? <div className="saveAudios">Login or Create an Account to <b>SAVE your Audios</b></div> : '' }
                 <div className="upload-container">
-                    <div className="upload-box">
-                        <div className="upload-options">
-                            <form>
-                                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    <FileUploader classes="upload-box" handleChange={handleFileChange} types={audioFormats} onTypeError={(err) => setErrorMessage(err)}>
+                        <div className="upload-options">   
                                 <label className="upload-audio-button">
                                     <div className="upload-content">
                                         <p>Upload Audio File</p>
@@ -188,13 +192,13 @@ export default function UploadPage() {
                                     </div>
                                     <input type="file" onChange={handleFileChange} />
                                 </label>
-                            </form>
-                            <div className="drag-drop-area">
-                                <p>Or</p>
-                                <p>Drag and Drop Here!</p>
-                            </div>
+                                <div className="drag-drop-area">
+                                    <p>Or</p>
+                                    <p>Drag and Drop Here!</p>
+                                </div>
                         </div>
-                    </div>
+                    </FileUploader>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <button className="submit-button" type="submit" disabled={!file && !existingAudioSelected} onClick={handleAudioUpload}>Visualize</button>
                 </div>
             </div>

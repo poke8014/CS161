@@ -9,11 +9,9 @@ function SketchSimpleBars(props) {
     height,
   } = props;
 
-  const { selectedStyle, colorSelected, barHeight, fft} = React.useContext(VisualContext)
+  const { selectedStyle, colorSelected, barHeight, fft, playRef, audioPlaying, setAudioPlaying } = React.useContext(VisualContext)
 
   const canvasRef = useRef(null);
-  const playRef = useRef(null);
-  const [audioPlaying, setAudioPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const animationRef = useRef(null);
   const audioCtxRef = useRef(null);
@@ -45,7 +43,7 @@ function SketchSimpleBars(props) {
     const handleClick = () => {
       if (!audioPlaying) {
         // create audio context
-        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+        audioCtxRef.current = new window.AudioContext();
 
         // create analyser
         analyser = audioCtxRef.current.createAnalyser();
@@ -249,17 +247,14 @@ function SketchSimpleBars(props) {
         audioCtxRef.current = null;
       }
     };
-  }, [audioLink, audioPlaying, style, color, fftValue, bHeight, currentTime]);
+  }, [audioLink, audioPlaying, colorSelected, barHeight, fft, selectedStyle, width, height, currentTime, playRef, setAudioPlaying]);
 
   return (
-    <main>
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
       />
-      <button ref={playRef} style={{zIndex: 99999}} className={`play-button ${audioPlaying ? "" : "play"}`}>Play/Pause</button>
-    </main>
   );
 }
 

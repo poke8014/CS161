@@ -1,6 +1,6 @@
 import NavBar from "../../components/NavBar/NavBar"
 import React from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import "./LoginPage.css"
@@ -96,14 +96,14 @@ export default function LoginPage(){
             if (emailValid){
                 const loggedInStatus = await loginUser();
                 if (loggedInStatus){
-                    console.log("location: " + from)
+                    // console.log("location: " + from)
                     setLoggedIn(true)
                     localStorage.setItem("loggedIn", true);
                     localStorage.setItem("auth", JSON.stringify({ email: userLoginInfo.email,
                                             password: userLoginInfo.password,
                                             accessToken: loggedInStatus.accessToken }));
                     localStorage.setItem("userID", loggedInStatus.userID);
-                    console.log("UserID after login: ", loggedInStatus.userID); // Add this line to check the value of userID
+                    // console.log("UserID after login: ", loggedInStatus.userID); // Add this line to check the value of userID
                     navigate(from, {replace: true})
                 }else{
                     setValidCredentials(false)
@@ -142,8 +142,8 @@ export default function LoginPage(){
                                 withCredentials: true
                             }
             );
-            console.log(response?.data.success)
-            console.log('Login response: ', response);
+            // console.log(response?.data.success)
+            // console.log('Login response: ', response);
             const { accessToken, userID } = response?.data;
             setAuth({ email: userLoginInfo.email, password: userLoginInfo.password, accessToken });
             setUserID(userID)
@@ -221,7 +221,7 @@ export default function LoginPage(){
             />
             <div className="login-signup-container">
                 <form className="login-signup-box" method="post">
-                    <p className="form-type">{formLogin ? "Welcome Back!": "Join Us!"}</p>
+                    <p className="form-type">{formLogin ? "Welcome Back!": "Join audiovision!"}</p>
                     <div className="user-input">
                         <input 
                             type={"email"} 
@@ -245,7 +245,7 @@ export default function LoginPage(){
                         />
                         { !validCredentials ? <label htmlFor="password"className="error">The password and/or email entered does not match our records!</label> : ""}
                     </div>
-                    {formLogin ? <p className="forgot-password">Forgot Password?</p>
+                    {formLogin ? ""
                         :   <div className="user-input">
                                 <input type={"password"} placeholder="Confirm Password" name="confirmPassword" 
                                     onChange={handleChange} value={userSignUpInfo.confirmPassword}/>

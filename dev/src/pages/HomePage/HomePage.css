@@ -1,16 +1,9 @@
-html{
-    background-color: #ACBDBA;
-    font-family: monospace;
-    margin: 0;
-    height: 100%;
-}
-
 .home-page{
     margin: 0;
     padding: 0;
-    height: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .first{
@@ -24,6 +17,7 @@ html{
 .first .left{
     display: flex;
     flex-direction: column;
+    align-items: center;
     /* background-color: red; */
     width: 45%;
 }
@@ -34,24 +28,23 @@ html{
     margin: 0;
     padding: 0;
     /* background-color: blueviolet; */
-    font-size: 3.4vw;
+    font-size: clamp(2em, 3.4vw, 6em);
     width: 100%;
 }
 
 .start{
-    margin: auto;
+    margin: 3rem 0;
     background-color: black;
     color: white;
     width: 15vw;
     height: 15vw;
     max-width: 180px;
     max-height: 180px;
-    min-width: 50px;
-    min-height: 50px;
+    min-width: 70px;
+    min-height: 70px;
     border-radius: 100%;
-    font-size: 2vw;
+    font-size: clamp(1.5em, 2vw, 4em);
     border: 0;
-    margin-top: 20%;
     font-weight: 600;
     cursor: pointer;
     animation: pulse 3s infinite;
@@ -65,7 +58,6 @@ html{
 
 .first .left span{
     display: block;
-    padding: auto;
     text-align: center;
 }
 
@@ -94,7 +86,7 @@ html{
 .description{
     margin: 0;
     padding: 3% 10%;
-    font-size: 3.5vw;
+    font-size: clamp(2rem, 3.5vw, 7em);
     text-align: center;
     font-weight: 500;
     opacity: 0; /* start with opacity at 0 */
@@ -128,7 +120,7 @@ html{
     left: 35%;
     transform: translate(-35%, -50%);
     flex: 1;
-    font-size: 4.4vw;
+    font-size: clamp(2em, 4.4vw, 8em);
     padding: 0;
     font-weight: 500;
 }
@@ -139,7 +131,7 @@ html{
     margin-top: 10%;
     padding: 5% 10%;
     padding-bottom: 0;
-    font-size: 4.5vw;
+    font-size: clamp(2em, 4.5vw, 8em);
     text-align: center;
     color: #161D20;
     font-weight: 500;
@@ -156,14 +148,11 @@ html{
     margin: auto;
     background-color: black;
     color: white;
-    width: 15vw;
-    height: 15vw;
-    max-width: 200px;
-    max-height: 200px;
-    min-width: 50px;
-    min-height: 50px;
-    border-radius: 5%;
-    font-size: 2vw;
+    width: fit-content;
+    height: auto;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    font-size: clamp(1rem, 2vw, 5rem);
     border: 0;
     margin-top: -5%;
     margin-bottom: 5%;
@@ -239,6 +228,7 @@ html{
 
 .audio-visual{
     font-weight: bolder;
+    scale: 1.3;
 }
 
 
@@ -303,5 +293,79 @@ html{
     to {
         transform: translateY(0);
         opacity: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    .first{
+        flex-direction: column-reverse;
+        padding: 0;
+        margin: 0;
+        height: 100svh;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .first .left{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .first .left p{
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .audiovision-span{
+        width: fit-content;
+        margin-top: 1em;
+    }
+
+    .first img{
+        width: 100%;
+        height: 40%;
+        flex: none;
+        object-fit: contain;
+        padding: 0;
+        margin: 0;
+    }
+
+    .description{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100svh;
+    }
+
+    .second{
+        flex-direction: column-reverse;
+        padding: 0;
+        margin: 0;
+        height: 100svh;
+        width: 100%;
+        /* background-color: red; */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .second img{
+        object-fit: contain;
+        width: 100%;
+    }
+
+    .visual-vid{
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) and (orientation: landscape) {
+    .first{
+        margin-top: 6em;
     }
 }

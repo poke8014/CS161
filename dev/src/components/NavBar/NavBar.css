@@ -3,8 +3,7 @@
     display: flex;
     background-color: #051014;
     color: white;
-    height: 10%;
-    min-height: fit-content;
+    height: fit-content;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
@@ -21,12 +20,13 @@
 .menu-logo{
     display: flex;
     align-items: center;
+    column-gap: 2rem;
+    margin-left: 1rem;
 }
 
 .menu-button{
     display: flex;
     flex-direction: column;
-    margin-left: 10%;
 }
 
 .menu-button:hover{
@@ -45,7 +45,6 @@
     font-size: 4ch;
     padding: 0;
     margin: 0;
-    padding-left: 15%;
 }
 
 .brand-name:hover{
@@ -55,7 +54,7 @@
 
 .login-button{
     background-color: #ACBDBA;
-    padding: 2px 20px;
+    padding: 0.5rem 1rem;
     border-radius: 12px;
     margin-right: 4vw;
 }
@@ -127,4 +126,23 @@
     margin: 0;
     padding: 2px 5px;
     font-size: small;
+}
+
+@media (max-width: 375px) {
+    .brand-name{
+        font-size: 2ch;
+    }
+    .login-text{
+        font-size: small;
+    }
+    .user-icon{
+        height: 0.6rem;
+    }
+    .login-button{
+        padding: 0.4rem;
+    }
+    .menu-logo{
+        margin-left: 0.4rem;
+        column-gap: 0.8rem;
+    }
 }

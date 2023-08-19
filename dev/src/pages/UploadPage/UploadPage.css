@@ -2,11 +2,14 @@
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .content {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex: 1 1 auto;
@@ -17,7 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* margin: auto; */
+    justify-content: center;
     width: 60%;
     height: 75%;
     border-radius: 30px;
@@ -25,22 +28,21 @@
 }
 
 .upload-options {
-    margin: auto;
     text-align: center;
 }
 
 .upload-audio-button {
     position: relative;
     margin: 0;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     vertical-align: middle;
     width: fit-content;
     height: auto;
     border-radius: 15px;
     background-color: #051014;
     color: white;
-    font-size: 2rem;
-    padding: 10px 20px;
+    padding: 0.5rem 1rem;
     transition: all 0.25s ease-out;
     cursor: pointer;
 }
@@ -51,7 +53,7 @@
 
 .upload-audio-button p {
     margin: 0;
-    font-size: 2.5vw;
+    font-size: clamp(1.5rem, 2.5vw, 4rem);
 }
 
 .upload-audio-button input[type="file"] {
@@ -71,8 +73,8 @@
 }
 
 .upload-icon {
-    margin-left: 10px;
-    width: 2.2rem;
+    margin-left: 0.5rem;
+    width: clamp(1.5rem, 2.2vw, 4rem);
     height: auto;
 }
 
@@ -82,7 +84,7 @@
 
 .drag-drop-area p {
     color: #051014;
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 2.5vw, 4rem);
     margin: 0;
 }
 
@@ -147,4 +149,30 @@
 
 .loading-overlay{
     text-align: center;
+}
+
+.saveAudios{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #727F84;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: clamp(0.7rem, 0.8vw, 2rem);
+}
+
+@media (max-width: 800px) {
+    .upload-box{
+        width: 90%;
+    }
+    .submit-button {
+        z-index: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .saveAudios{
+        left: 0;
+        text-align: center;
+    }
 }
