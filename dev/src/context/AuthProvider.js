@@ -13,7 +13,7 @@ export const AuthProvider = ({children}) => {
         const storedUserID = localStorage.getItem("userID");
     
         if (loggedInStatus && storedAuth && storedUserID) {
-          console.log("UserID in AuthProvider: ", storedUserID); // Add this line to check the value of userID
+          // console.log("UserID in AuthProvider: ", storedUserID); // Add this line to check the value of userID
           setLoggedIn(loggedInStatus);
           setAuth(storedAuth);
           setUserID(storedUserID);
