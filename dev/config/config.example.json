@@ -1,7 +1,0 @@
-{
-    "db_url": "xxxxxxxxxx",
-    "s3_access_key": "xxxxxxxxxx",
-    "s3_secret_access_key": "xxxxxxxxxx",
-    "s3_bucket_name": "xxxxxxxxxx",
-    "s3_bucket_region":"xxxxxxxxxx"
-}
