@@ -71,13 +71,13 @@ export default function UploadPage() {
                         "Content-Type": "multipart/form-data"
                     }
                 });
-                console.log("File uploaded:", response.data);
+                // console.log("File uploaded:", response.data);
                 setFileData({
                     ...response.data,
                     url: response.data.Location          // set audio link in context
                 });
                 setSelectedFile([file.name, response.data.key]);
-                console.log(file);
+                // console.log(file);
                 navigate("/visualization")
             } catch (err) {
                 console.error("Error uploading file:", err);
@@ -130,7 +130,9 @@ export default function UploadPage() {
         }).catch(function (error) {
             console.error(error);
         });
-        return () => setMenuItems([])
+        return () => {
+            setMenuItems([])
+        }
     },[])
 
     React.useEffect(() => {
@@ -138,7 +140,7 @@ export default function UploadPage() {
             const options = {method: 'GET', url: `http://localhost:8000/audioFiles/userAudioFiles/${userID}`};
             axios.request(options).then(function (response) {
                 setUserAudios(response.data);
-                console.log("Fetched user audios: ", response.data);
+                // console.log("Fetched user audios: ", response.data);
             }).catch(function (error) {
                 console.error(error);
             });
@@ -179,6 +181,7 @@ export default function UploadPage() {
                     setSelected={setSelectedFile}
                     uploadedFile={file}
                 />}
+                { !userID ? <div className="saveAudios">Login or Create an Account to <b>SAVE your Audios</b></div> : '' }
                 <div className="upload-container">
                     <FileUploader classes="upload-box" handleChange={handleFileChange} types={audioFormats} onTypeError={(err) => setErrorMessage(err)}>
                         <div className="upload-options">   
