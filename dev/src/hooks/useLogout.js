@@ -15,7 +15,7 @@ export default function useLogout(){
         localStorage.removeItem("userID");
 
         try{
-            const res = await axios('/users/logout', {
+            await axios('/users/logout', {
                 withCredentials: true
             });
         }catch(error){

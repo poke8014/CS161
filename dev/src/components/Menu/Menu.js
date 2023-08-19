@@ -15,7 +15,7 @@ export default function Menu({ menuItems, selected, setSelected, uploadedFile })
         return(() => {
             setLastItemAdded(false)
         })
-    }, [menuItems, uploadedFile]);    
+    }, [menuItems, uploadedFile, lastItemAdded, setSelected]);    
 
     const renderMenuItems = menuItems?.map((item, index) => (
         <p

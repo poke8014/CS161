@@ -32,13 +32,13 @@ export default function SketchMenu(){
     return (
         <menu>
             <div className="visualization-selector">
-                <img id="simple" src={Bars} className={`simple-bar ${selectedStyle === "simple" ? "selected" : ""}`} 
+                <img title="Bar Visualization" alt="bar visualization" id="simple" src={Bars} className={`simple-bar ${selectedStyle === "simple" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick} />
-                <img id="wave" src={Wave} className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
+                <img title="Wave Visualization" alt="wave visualization" id="wave" src={Wave} className={`wave-form ${selectedStyle === "wave" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick} />
-                <img id="particles" src={Particles} className={`circle-form ${selectedStyle === "particles" ? "selected" : ""}`} 
+                <img title="Particles Visualization" alt="particles visualization" id="particles" src={Particles} className={`circle-form ${selectedStyle === "particles" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick} />
-                <img id="circle" src={Circle} className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
+                <img title="Circles Visualization" alt="circle visualization" id="circle" src={Circle} className={`circle-form ${selectedStyle === "circle" ? "selected" : ""}`} 
                                 onClick={handleSelectFileClick} />
             </div>
             <div id="color" className="color-selection">

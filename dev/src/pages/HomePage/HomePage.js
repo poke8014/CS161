@@ -64,7 +64,7 @@ export default function HomePage(){
                   </p>
                   <button className="start" onClick={handleClick}>Let's Go!</button>
               </div>
-              <img src={catChill} />
+              <img alt="cat sitting on a couch chilling with headphones on" src={catChill} />
           </div>
           <p className="description" ref={descriptionText}>
               <span className="audio-visual" onMouseEnter={handleMouseEnter} 
@@ -73,7 +73,7 @@ export default function HomePage(){
               browse our collection, and experience a whole new way of visualizing sound.
           </p>
           <div className="second">
-              <img src={headMusic} ref={musicImage}/>
+              <img alt="music head" src={headMusic} ref={musicImage}/>
               <p>Let <span className="audio-visual" onMouseEnter={handleMouseEnter} 
               onMouseLeave={handleMouseLeave}>audiovision</span> reveal the hidden emotions in your favorite music</p>
           </div>
@@ -82,7 +82,7 @@ export default function HomePage(){
               onMouseLeave={handleMouseLeave}>audiovision</span> uses audio data analysis to create stunning 
               visualizations that bring your audio to life. 
           </p>
-          <img src={audioVid} className="visual-vid" />
+          <img alt="audio visualization" src={audioVid} className="visual-vid" />
           {/* <video className="visual-vid" src={audioVid} autoPlay={true} /> */}
           <button className="last" onClick={handleClick}>Let's Go!</button>
           <br />
