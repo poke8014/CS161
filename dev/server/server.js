@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const PORT = 8000
+require("dotenv").config()
 
-const { db_url } = require("../config/config.json");
 const userRouter = require('./routes/users');
 const audioRouter = require('./routes/audioFiles');
 const refresh = require("./routes/refresh")
@@ -31,7 +31,7 @@ app.use('/refresh', refresh);
 
 async function connect() {
   try {
-    await mongoose.connect(String(db_url));
+    await mongoose.connect(String(process.env.db_url));
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error(error);
