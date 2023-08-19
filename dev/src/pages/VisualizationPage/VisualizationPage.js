@@ -16,10 +16,10 @@ export default function VisualizationPage(){
     const { fileData } = useContext(FileContext);
     const [audioLink, setAudioLink] = React.useState(null);
     const [audioReady, setAudioReady] = React.useState(false);
-    const selectedAudioLink = localStorage.getItem('audioLink');
-    const [canvasWidth, setCanvasWidth] = React.useState(null);
-    const [canvasHeight, setCanvasHeight] = React.useState(null);
-    const visualizationContainerSizeRef = React.useRef(null);
+
+    const [canvasWidth, setCanvasWidth] = React.useState(null)
+    const [canvasHeight, setCanvasHeight] = React.useState(null)
+    const visualizationContainerSizeRef = React.useRef(null)
 
     React.useEffect(() => {
         const fetchDefaultAudio = async () => {
@@ -33,10 +33,6 @@ export default function VisualizationPage(){
       
         fetchDefaultAudio();
     },[])
-
-    React.useEffect(() => {
-        console.log("selected audio link: ", localStorage.getItem("audioLink"));
-    }, []);
 
     React.useEffect(() => {
         if (fileData){
