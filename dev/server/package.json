@@ -4,7 +4,7 @@
     "description": "audiovision server",
     "main": "server.js",
     "scripts": {
-        "start": "nodemon server.js"
+        "start": "node server.js"
     },
     "keywords": [],
     "author": "Luc Tang and Miguel Vazquez",
