@@ -96,14 +96,14 @@ export default function LoginPage(){
             if (emailValid){
                 const loggedInStatus = await loginUser();
                 if (loggedInStatus){
-                    console.log("location: " + from)
+                    // console.log("location: " + from)
                     setLoggedIn(true)
                     localStorage.setItem("loggedIn", true);
                     localStorage.setItem("auth", JSON.stringify({ email: userLoginInfo.email,
                                             password: userLoginInfo.password,
                                             accessToken: loggedInStatus.accessToken }));
                     localStorage.setItem("userID", loggedInStatus.userID);
-                    console.log("UserID after login: ", loggedInStatus.userID); // Add this line to check the value of userID
+                    // console.log("UserID after login: ", loggedInStatus.userID); // Add this line to check the value of userID
                     navigate(from, {replace: true})
                 }else{
                     setValidCredentials(false)
@@ -142,8 +142,8 @@ export default function LoginPage(){
                                 withCredentials: true
                             }
             );
-            console.log(response?.data.success)
-            console.log('Login response: ', response);
+            // console.log(response?.data.success)
+            // console.log('Login response: ', response);
             const { accessToken, userID } = response?.data;
             setAuth({ email: userLoginInfo.email, password: userLoginInfo.password, accessToken });
             setUserID(userID)
