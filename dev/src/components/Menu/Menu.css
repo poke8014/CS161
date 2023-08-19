@@ -59,5 +59,6 @@
         bottom: 0;
         top: 0;
         width: auto;
+        justify-content: flex-start;
     }
 }
