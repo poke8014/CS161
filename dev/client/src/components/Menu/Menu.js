@@ -3,19 +3,17 @@ import "./Menu.css"
 
 export default function Menu({ menuItems, selected, setSelected, uploadedFile }){
 
-    const [lastItemAdded, setLastItemAdded] = React.useState(false);
-
     React.useEffect(() => {
-        if (menuItems){
-            if (menuItems.length > 6 && !lastItemAdded) {
-                setSelected(menuItems[menuItems.length - 1]);
-                setLastItemAdded(true);
+        if (uploadedFile){
+            if (menuItems.length > 5) {
+                lastSelected()
             }
         }
-        return(() => {
-            setLastItemAdded(false)
-        })
-    }, [menuItems, uploadedFile, lastItemAdded, setSelected]);    
+    }, [menuItems, uploadedFile]);    
+
+    function lastSelected(){
+        setSelected(menuItems[menuItems.length - 1]);
+    }
 
     const renderMenuItems = menuItems?.map((item, index) => (
         <p
