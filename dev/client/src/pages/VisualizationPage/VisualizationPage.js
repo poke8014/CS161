@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import axios from "axios";
+import axios from "../../axios";
 import NavBar from "../../components/NavBar/NavBar"
 import SketchMenu from "../../components/SketchMenu/SketchMenu"
 import SketchSimpleBars from "../../sketches/SketchSimpleBars"
@@ -24,7 +24,7 @@ export default function VisualizationPage(){
     React.useEffect(() => {
         const fetchDefaultAudio = async () => {
             try {
-              const response = await axios.get('http://localhost:8000/audioFiles/defaultAudio');
+              const response = await axios.get('/audioFiles/defaultAudio');
               setDefaultAudio(response.data);
             } catch (error) {
               console.error(error);

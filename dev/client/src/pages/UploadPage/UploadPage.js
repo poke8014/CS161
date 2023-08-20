@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
@@ -65,7 +65,7 @@ export default function UploadPage() {
                 formData.append("userID", userID);
             }
             try {
-                const apiURL = "http://localhost:8000/audioFiles/uploadAudio";
+                const apiURL = "/audioFiles/uploadAudio";
                 const response = await axios.post(apiURL, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data"
@@ -124,7 +124,7 @@ export default function UploadPage() {
     },[file])
 
     React.useEffect(() => {
-        const options = {method: 'GET', url: 'http://localhost:8000/audioFiles/existingAudioFiles'};
+        const options = {method: 'GET', url: '/audioFiles/existingAudioFiles'};
         axios.request(options).then(function (response) {
         setGuestAudios(response.data)
         }).catch(function (error) {
@@ -137,7 +137,7 @@ export default function UploadPage() {
 
     React.useEffect(() => {
         if (userID) {
-            const options = {method: 'GET', url: `http://localhost:8000/audioFiles/userAudioFiles/${userID}`};
+            const options = {method: 'GET', url: `/audioFiles/userAudioFiles/${userID}`};
             axios.request(options).then(function (response) {
                 setUserAudios(response.data);
                 // console.log("Fetched user audios: ", response.data);
