@@ -12,7 +12,7 @@ const refresh = require("./routes/refresh")
 const cookieParser = require("cookie-parser")
 
 const corsOptions ={
-  origin:'https://audiovision.netlify.app/', 
+  origin:'https://audiovision.netlify.app', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
