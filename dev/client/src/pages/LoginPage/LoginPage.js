@@ -15,7 +15,6 @@ export default function LoginPage(){
     const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
-    //to be used when the download button is implemented
     const location = useLocation();
     const from = location.state?.from?.pathName || "/";
 
