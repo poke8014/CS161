@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Audio = require('../models/audio');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
 const { memoryStorage } = require('multer');
 const { uploadAudio } = require('../controllers/amazonS3Controller');
 
@@ -12,14 +11,14 @@ const storage = memoryStorage();
 const upload = multer({ storage });
 
 // Getting all audio files
-router.get('/', async (req, res) => {
-    try {
-        const audioFiles = await Audio.find();
-        res.json(audioFiles);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// router.get('/', async (req, res) => {
+//     try {
+//         const audioFiles = await Audio.find();
+//         res.json(audioFiles);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// });
 
 //get existing audios for guest
 router.get('/existingAudioFiles', async (req, res) => {
