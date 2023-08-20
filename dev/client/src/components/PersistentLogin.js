@@ -2,6 +2,7 @@ import {Outlet} from "react-router-dom"
 import react from "react"
 import useRefreshToken from "../hooks/useRefreshToken"
 import useAuth from "../hooks/useAuth"
+import Loading from "./Loading"
 
 export default function PersistentLogin(){
     const [loading, setLoading] = react.useState(true)
@@ -32,7 +33,7 @@ export default function PersistentLogin(){
     return(
         <>
             {loading
-                ? <p>Loading...</p>
+                ? <Loading />
                 : <Outlet />
             }
         </>
