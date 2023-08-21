@@ -9,24 +9,32 @@ import "./SketchMenu.css"
 export default function SketchMenu(){
 
     const { 
-        selectedStyle, setSelectedStyle, colorSelected, 
-        setColorSelected, barHeight, setBarHeight, fft, setFft
+        selectedStyle, setSelectedStyle, colorSelected, fft, setFft,
+        setColorSelected, barHeight, setBarHeight, playRef, setAudioPlaying
     } = React.useContext(VisualContext)
 
-    function handleSelectFileClick(e){
-        setSelectedStyle(e.target.id)
+    async function handleSelectFileClick(e){
+        await setSelectedStyle(e.target.id)
+        await setAudioPlaying(false)
+        await playRef.current.click()
     }
 
-    function handleSelectColorClick(e){
-        setColorSelected(e.target.id)
+    async function handleSelectColorClick(e){
+        await setColorSelected(e.target.id)
+        await setAudioPlaying(false)
+        await playRef.current.click()
     }
 
-    function handleHeightChange(e){
-        setBarHeight(e.target.value)
+    async function handleHeightChange(e){
+        await setBarHeight(e.target.value)
+        await setAudioPlaying(false)
+        await playRef.current.click()
     }
 
-    function handleFftChange(e){
-        setFft(e.target.value)
+    async function handleFftChange(e){
+        await setFft(e.target.value)
+        await setAudioPlaying(false)
+        await playRef.current.click()
     }
 
     return (
