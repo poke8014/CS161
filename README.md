@@ -6,7 +6,8 @@ Luc Tang, Miguel Vazquez
 ---
 ## Audiovision
 
-Github: https://github.com/poke8014/CS161
+- Link to website: https://audiovision.netlify.app/
+- Github: https://github.com/poke8014/CS161
 
 ## Tech Stack
 - MongoDB
