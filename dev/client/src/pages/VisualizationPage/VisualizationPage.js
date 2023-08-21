@@ -80,7 +80,8 @@ export default function VisualizationPage(){
                         height={canvasHeight}
                     />}
                 </div>
-                <button ref={playRef} className={`play-button ${audioPlaying ? "" : "play"}`}>Play/Pause</button>
+                <button ref={playRef} className={`play-button ${audioPlaying ? "" : "play"}`}>{audioPlaying ? "Pause" : "Play"}</button>
+                {audioPlaying && <p className="pauseAudioInfo">Pausing the audio will save current time</p>}
             </div>
         </div>
     );
