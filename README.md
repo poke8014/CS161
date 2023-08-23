@@ -16,7 +16,10 @@ Luc Tang, Miguel Vazquez
 - React
 - Node.js
 
-Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. Users can input their own audio files or choose from a database of audio files.
+Audiovision is a web based software project that allows users to visualize their audio files in a unique and interactive way. 
+Users can customize how the visualizer looks like.
+Users can input their own audio files or choose from a database of audio files. 
+Users can visualize their audios with/without an accout. Creating an account lets the user save their audio files. 
 
 ---
 
