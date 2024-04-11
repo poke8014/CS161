@@ -1,11 +1,10 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
-import "./HomePage.css"
 import catChill from "../../images/music-g0ceccf190_1280.png"
 import headMusic from "../../images/had-white.png"
-//import audioVid from "../../images/audio-wave-37169.mp4"
 import audioVid from "../../images/sound.png"
 import NavBar from "../../components/NavBar/NavBar"
+import "./HomePage.css"
 
 export default function HomePage(){
 
@@ -64,7 +63,7 @@ export default function HomePage(){
                   </p>
                   <button className="start" onClick={handleClick}>Let's Go!</button>
               </div>
-              <img alt="cat sitting on a couch chilling with headphones on" src={catChill} />
+              <img loading="lazy" alt="cat sitting on a couch chilling with headphones on" src={catChill} />
           </div>
           <p className="description" ref={descriptionText}>
               <span className="audio-visual" onMouseEnter={handleMouseEnter} 
@@ -73,7 +72,7 @@ export default function HomePage(){
               browse our collection, and experience a whole new way of visualizing sound.
           </p>
           <div className="second">
-              <img alt="music head" src={headMusic} ref={musicImage}/>
+              <img loading="lazy" alt="music head" src={headMusic} ref={musicImage}/>
               <p>Let <span className="audio-visual" onMouseEnter={handleMouseEnter} 
               onMouseLeave={handleMouseLeave}>audiovision</span> reveal the hidden emotions in your favorite music</p>
           </div>
@@ -82,7 +81,7 @@ export default function HomePage(){
               onMouseLeave={handleMouseLeave}>audiovision</span> uses audio data analysis to create stunning 
               visualizations that bring your audio to life. 
           </p>
-          <img alt="audio visualization" src={audioVid} className="visual-vid" />
+          <img loading="lazy" alt="audio visualization" src={audioVid} className="visual-vid" />
           {/* <video className="visual-vid" src={audioVid} autoPlay={true} /> */}
           <button className="last" onClick={handleClick}>Let's Go!</button>
           <br />

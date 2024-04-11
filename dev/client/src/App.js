@@ -3,13 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import { VisualProvider } from "./context/VisualContext";
 import { FileProvider } from "./context/FileContext";
 import Loading from "./components/Loading"
-
 const UploadPage = lazy(() => import("./pages/UploadPage/UploadPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const VisualizationPage = lazy(() => import("./pages/VisualizationPage/VisualizationPage"));
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const Layout = lazy(() => import("./components/Layout"));
-const PersistentLogin = lazy(() => import("./components/PersistentLogin"));
+import PersistentLogin from "./components/PersistentLogin"
+import HomePage from "./pages/HomePage/HomePage"
+import Layout from "./components/Layout"
 import "./App.css"
 
 function App() {
@@ -17,8 +16,7 @@ function App() {
     <>
       <FileProvider>
       <VisualProvider>
-      <Suspense fallback={<Loading />}
-      >
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Layout />}>
 
