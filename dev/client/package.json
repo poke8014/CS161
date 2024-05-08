@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "audiovision client",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "vite --port 3000",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "keywords": [],
   "author": "Luc Tang and Miguel Vazquez",
@@ -15,10 +16,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-drag-drop-files": "^2.3.10",
-    "react-router-dom": "^6.8.1",
-    "react-scripts": "^5.0.1"
+    "react-router-dom": "^6.8.1"
   },
-  "private": true,
   "browserslist": {
     "production": [
       ">0.2%",
@@ -32,6 +31,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.11"
   }
 }
