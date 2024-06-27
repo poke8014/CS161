@@ -9,14 +9,13 @@ export default function useRefreshToken() {
       const response = await axios.get("/refresh", {
         timeout: 3000,
         withCredentials: true,
-      });
-      setAuth((prev) => {
+      }).then(setAuth((prev) => {
         return {
           ...prev,
           accessToken: response.data.accessToken,
           email: response.data.email,
         };
-      });
+      }));
       return response.data.accessToken;
     } catch (error) {
       throw error;
