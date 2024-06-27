@@ -7,6 +7,7 @@ export default function useRefreshToken() {
   async function refresh() {
     try {
       const response = await axios.get("/refresh", {
+        timeout: 3000,
         withCredentials: true,
       });
       setAuth((prev) => {
